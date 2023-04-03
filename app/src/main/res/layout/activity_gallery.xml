@@ -9,21 +9,27 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/list_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constrainStart_toStartOf="parent"
-        app:layout_constrainStart_toTopOf="parent"/>
+        android:theme="@style/Toolbar">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/gallery_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="For Shop"
+            android:textSize="30dp"
+            android:textColor="#F386FD"
+            android:layout_gravity="center"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/gallery_recyclerView"/>
 
 
 

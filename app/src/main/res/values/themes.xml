@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">#F386FD</item>
         <item name="colorPrimaryVariant">#F386FD</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">#F386FD</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#F386FD</item>
         <item name="colorSecondaryVariant">#F386FD</item>
@@ -12,5 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#F386FD</item>
         <!-- Customize your theme here. -->
+    </style>
+    <style name="Toolbar" parent="Theme.4Shop">
+        <item name="android:textColorSecondary">#F386FD</item>
     </style>
 </resources>

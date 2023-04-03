@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/main_setting"
+        android:title="main_setting"
+        android:icon="@drawable/more"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/main_rate"
+        android:title="main_rate"
+        android:icon="@drawable/rate"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/main_ai"
+        android:title="main_ai"
+        android:icon="@drawable/ai"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/main_filter"
+        android:title="main_filter"
+        android:icon="@drawable/filter"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/main_sharp"
+        android:title="main_sharp"
+        android:icon="@drawable/sharp"
+        app:showAsAction="always"/>
+
+</menu>
