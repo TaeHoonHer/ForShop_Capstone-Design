@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+=======
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all,windows,macos,java,visualstudiocode,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,windows,macos,java,visualstudiocode,gradle
 
@@ -230,3 +247,4 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,windows,macos,java,visualstudiocode,gradle
+>>>>>>> 6299c140de2b47da2e44515297a7f73cdd6a5b6b
