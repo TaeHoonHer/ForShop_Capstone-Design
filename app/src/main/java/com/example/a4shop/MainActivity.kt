@@ -1,15 +1,18 @@
 package com.example.a4shop
 
 import android.Manifest
+import android.content.ContentUris
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.Intent.ACTION_PICK
 import android.content.pm.PackageManager
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.hardware.Camera
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -19,17 +22,28 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import com.bumptech.glide.Glide
 import com.example.a4shop.databinding.ActivityGalleryBinding
 import com.example.a4shop.databinding.ActivityMainBinding
+import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+
+private const val REQUEST_CODE_FOR_IMAGE_CAPTURE = 100
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.PictureCallback {
     lateinit var binding: ActivityMainBinding
+    private lateinit var photoFile: File
 
     private var camera: Camera? = null
     private var surfaceHolder: SurfaceHolder? = null
     private var showGrid = false
+    val GET_GALLERY_IMAGE = 200
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +53,16 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         // Gallery버튼 클릭시 Gallery화면으로 전환
         val galleryBtn = findViewById<ImageButton>(R.id.gallery_btn)
         galleryBtn.setOnClickListener {
-            startActivity(Intent(this, GalleryActivity::class.java))
+            val intent = Intent(this, GalleryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        // 버튼 클릭시 내장된 갤러리 오픈
+        binding.storageBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            startActivityForResult(intent, GET_GALLERY_IMAGE)
         }
 
         // 카메라 권한이 허용되지 않은 경우 권한 요청
@@ -52,18 +75,17 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         surfaceHolder!!.addCallback(this)
 
         // 촬영 버튼 click listener 추가
-        val takePictureButton = findViewById<Button>(R.id.button_take_picture)
-        takePictureButton.setOnClickListener {
+        binding.buttonTakePicture.setOnClickListener {
             camera?.takePicture(null, null, this)
         }
 
         // 토글버튼 구현
-        val guideToggleBtn = findViewById<SwitchCompat>(R.id.guideline_btn)
-        guideToggleBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.guidelineBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked) {
-                guideToggleBtn.isChecked = true
+                binding.guidelineBtn.isChecked = true
             }
         }
+
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {

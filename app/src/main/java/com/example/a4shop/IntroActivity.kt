@@ -18,9 +18,9 @@ class IntroActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, GalleryActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000L + Random.nextLong(4000))
+        }, 2000L + Random.nextLong(3000))
     }
 }

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.4Shop" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#F386FD</item>
+        <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryVariant">#F386FD</item>
         <item name="colorOnPrimary">#F386FD</item>
         <!-- Secondary brand color. -->

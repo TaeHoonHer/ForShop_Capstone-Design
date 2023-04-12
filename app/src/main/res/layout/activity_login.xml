@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Toolbar">
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/logo"/>
+
+    <EditText
+        android:id="@+id/et_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_logo"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Username"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_id"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="30dp"
+        android:textStyle="bold"
+        android:background="@drawable/btn_pink"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="30dp"
+        android:textStyle="bold"
+        android:background="@drawable/btn_pink"
+        android:text="Sign Up" />
+
+</RelativeLayout>
