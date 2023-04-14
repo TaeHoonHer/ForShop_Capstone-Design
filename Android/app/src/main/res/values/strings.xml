@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">4Shop</string>
-    <string name="grid_toggle_description">Toggle grid view</string>
-    <string name="hashitem1">#산</string>
-    <string name="hashitem2">#바다</string>
-    <string name="hashitem3">#태양</string>
-</resources>
