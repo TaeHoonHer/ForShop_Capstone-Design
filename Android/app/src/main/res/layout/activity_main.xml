@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/more"/>
+        <ImageButton
+            android:layout_width="56dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/rate"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ai"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/filter"/>
+        <ImageButton
+            android:id="@+id/gallery_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/sharp"/>
+    </LinearLayout>
+
+    <SurfaceView
+        android:id="@+id/surfaceView_camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="410dp"
+        android:layout_below="@id/menu_bar"
+        android:layout_marginTop="15dp"/>
+
+    <com.example.a4shop.GridOverlayView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:background="@drawable/grid_view" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/guideline_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:showText="true"
+        app:track="@drawable/guide_track"
+        android:thumbTextPadding="24dp"
+        android:switchMinWidth="0dp"
+        android:textOff="Off"
+        android:textOn="On"
+        android:textColor="@color/white"
+        android:layout_above="@id/button_take_picture"
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_take_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_take_picture"
+        android:width="50dp"
+        android:height="90dp"
+        android:elevation="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:contextClickable="true"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/storage_btn"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/localstorage"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@id/button_take_picture"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="99dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/reverse_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/reload"
+        android:layout_alignLeft="@id/button_take_picture"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="99dp"
+        tools:ignore="DuplicateIds" />
+
+
+
+
+</RelativeLayout>
