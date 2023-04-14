@@ -63,12 +63,12 @@
         android:layout_below="@id/menu_bar"
         android:layout_marginTop="15dp"/>
 
-    <View
+    <com.example.a4shop.GridOverlayView
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
-        android:background="@drawable/grid_view"/>
+        android:background="@drawable/grid_view" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/guideline_btn"
@@ -84,7 +84,7 @@
         android:textColor="@color/white"
         android:layout_above="@id/button_take_picture"
         android:layout_marginBottom="50dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_take_picture"

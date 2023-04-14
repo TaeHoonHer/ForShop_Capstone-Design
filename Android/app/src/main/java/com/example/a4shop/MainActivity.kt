@@ -18,6 +18,7 @@ import android.view.*
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
     private var surfaceHolder: SurfaceHolder? = null
     private var showGrid = false
     val GET_GALLERY_IMAGE = 200
+
+    private lateinit var guidelineBtn: SwitchCompat
+    private lateinit var gridOverlayView: GridOverlayView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,18 +78,22 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         }
 
         // 토글버튼 구현
-        binding.guidelineBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked) {
-                binding.guidelineBtn.isChecked = true
-            }
+        val guidelineBtn = findViewById<SwitchCompat>(R.id.guideline_btn)
+        val surfaceView = findViewById<SurfaceView>(R.id.surfaceView_camera_preview)
+        val gridOverlayView = findViewById<GridOverlayView>(R.id.grid_view)
+
+        guidelineBtn.setOnCheckedChangeListener { _, isChecked ->
+            gridOverlayView.showGrid = isChecked
         }
 
         // 카메라 전환 버튼
         binding.reverseBtn.setOnClickListener {
             switchCamera()
         }
-
     }
+
+
+
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         // 카메라 미리보기
