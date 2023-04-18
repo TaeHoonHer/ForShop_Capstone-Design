@@ -24,7 +24,7 @@ public class Article {
     private Long id;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private UserAccount userAccount;
 
