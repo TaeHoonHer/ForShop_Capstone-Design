@@ -1,0 +1,35 @@
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.forshop.project: debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/forshop
+    username: devuser
+    password: asdf1234  #TODO: 비밀번호를 직접 노출하므로 추후 수정 요망
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  sql.init.mode: always
+  data:
+    rest:
+      detection-strategy: annotated
+      base-path: /api
+
+
+
+
