@@ -75,7 +75,7 @@
             android:layout_marginTop="10dp"
             android:padding="15dp"
             android:background="@drawable/bd_imgcontainer"
-            android:elevation="20dp">
+            android:elevation="15dp">
 
             <!-- user 데이터 제목 -->
             <TextView

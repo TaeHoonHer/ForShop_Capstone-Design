@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/filter_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:background="@drawable/filter_btn"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:text=""
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:textAlignment="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"/>
+
+</LinearLayout>

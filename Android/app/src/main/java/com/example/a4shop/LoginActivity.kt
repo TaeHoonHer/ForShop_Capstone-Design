@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.a4shop.databinding.ActivityGalleryBinding
 import com.example.a4shop.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

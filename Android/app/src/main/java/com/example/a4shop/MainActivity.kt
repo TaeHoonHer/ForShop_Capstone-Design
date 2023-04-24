@@ -18,6 +18,7 @@ import android.view.*
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -36,7 +37,13 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
     private var cameraId = Camera.CameraInfo.CAMERA_FACING_FRONT
     private var surfaceHolder: SurfaceHolder? = null
     private var showGrid = false
-    val GET_GALLERY_IMAGE = 200
+
+    private lateinit var guidelineBtn: SwitchCompat
+    private lateinit var gridOverlayView: GridOverlayView
+
+    companion object {
+        private const val GET_GALLERY_IMAGE = 200
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,10 +81,12 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         }
 
         // 토글버튼 구현
-        binding.guidelineBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked) {
-                binding.guidelineBtn.isChecked = true
-            }
+        val guidelineBtn = findViewById<SwitchCompat>(R.id.guideline_btn)
+        val surfaceView = findViewById<SurfaceView>(R.id.surfaceView_camera_preview)
+        val gridOverlayView = findViewById<GridOverlayView>(R.id.grid_view)
+
+        binding.guidelineBtn.setOnCheckedChangeListener { _, isChecked ->
+            gridOverlayView.showGrid = isChecked
         }
 
         // 카메라 전환 버튼
@@ -85,6 +94,12 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
             switchCamera()
         }
 
+        // mydata 누를시 데이터 액티비티로 이동
+        binding.mydataBtn.setOnClickListener {
+            val intent = Intent(this, MydataActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -101,6 +116,38 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         //  surface 변경되면 카메라 미리보기 중단, 재시작
         camera?.stopPreview()
         camera?.setDisplayOrientation(90)
+
+        val parameters = camera?.parameters
+        val sizes = parameters?.supportedPreviewSizes
+
+        // SurfaceView의 크기 가져오기
+        val surfaceViewWidth = binding.surfaceViewCameraPreview.width
+        val surfaceViewHeight = binding.surfaceViewCameraPreview.height
+
+        // 카메라 미리보기의 최적화 크기 계산
+        var bestSize: Camera.Size? = null
+        if (sizes != null) {
+            for (size in sizes) {
+                if (size.width <= surfaceViewWidth && size.height <= surfaceViewHeight) {
+                    if (bestSize == null) {
+                        bestSize = size
+                    } else {
+                        val resultArea = bestSize.width * bestSize.height
+                        val newArea = size.width * size.height
+                        if (newArea > resultArea) {
+                            bestSize = size
+                        }
+                    }
+                }
+            }
+        }
+
+        // 카메라 미리보기 크기 조정
+        if (bestSize != null) {
+            parameters?.setPreviewSize(bestSize.width, bestSize.height)
+            camera?.parameters = parameters
+        }
+
         camera?.startPreview()
     }
 
@@ -112,40 +159,11 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
     }
 
     override fun onPictureTaken(data: ByteArray?, camera: Camera?) {
-        // Do something with the picture data here
+        // 갤러리에 있는 사진을 누르면 가져오기
         Toast.makeText(this, "Picture taken", Toast.LENGTH_SHORT).show()
 
         // 촬영 후 카메라 미리보기 재실행
         camera?.startPreview()
-    }
-
-    private fun drawGrid() {
-        val canvas = surfaceHolder?.lockCanvas() ?: return
-
-        try {
-            canvas.drawColor(Color.TRANSPARENT, android.graphics.PorterDuff.Mode.CLEAR)
-
-            if (showGrid) {
-                val width = canvas.width
-                val height = canvas.height
-                val cellSize = 50
-                val paint = Paint().apply {
-                    color = Color.BLACK
-                    style = Paint.Style.STROKE
-                    strokeWidth = 2f
-                }
-
-                for (x in 0 until width step cellSize) {
-                    canvas.drawLine(x.toFloat(), 0f, x.toFloat(), height.toFloat(), paint)
-                }
-
-                for (y in 0 until height step cellSize) {
-                    canvas.drawLine(0f, y.toFloat(), width.toFloat(), y.toFloat(), paint)
-                }
-            }
-        } finally {
-            surfaceHolder?.unlockCanvasAndPost(canvas)
-        }
     }
 
     // 카메라 후면 전환 메소드
@@ -170,7 +188,9 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
             camera = Camera.open(cameraId)
             camera?.setDisplayOrientation(90) // 카메라 미리보기 화면 회전 설정
             camera?.setPreviewDisplay(surfaceHolder) // 카메라 미리보기 화면 설정
+
             camera?.startPreview()
+
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -246,7 +266,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         }
 
         val matrix = Matrix()
-        matrix.setRotate(degrees.toFloat(), bitmap.width.toFloat() / 3, bitmap.height.toFloat() / 3)
+        matrix.setRotate(degrees.toFloat(), bitmap.width.toFloat() / 2, bitmap.height.toFloat() / 2)
 
         return try {
             val rotatedBitmap =
