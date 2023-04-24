@@ -18,6 +18,15 @@
         android:theme="@style/Theme.4Shop"
         tools:targetApi="31">
         <activity
+            android:name=".MydataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PopupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".BoardActivity"
             android:exported="false" />
         <activity

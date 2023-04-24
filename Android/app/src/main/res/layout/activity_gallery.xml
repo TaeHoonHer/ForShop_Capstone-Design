@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,6 +27,7 @@
 
                 <TextView
                     android:id="@+id/gallery_title"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="For Shop"
@@ -35,43 +37,31 @@
             </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
+                android:id="@+id/filter_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/filter_item1"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/hashtag_filter"
-                    android:text="@string/hashitem1"
-                    android:textColor="@color/white"
-                    android:textSize="17dp"
+                <Button
+                    android:id="@+id/filter_plus"
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:text="+"
+                    android:backgroundTint="@drawable/filter_btn"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
                     android:textAlignment="center"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginLeft="20dp"/>
 
-                <TextView
-                    android:id="@+id/filter_item2"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/hashtag_filter"
-                    android:text="@string/hashitem2"
-                    android:textColor="@color/white"
-                    android:textSize="17dp"
-                    android:textAlignment="center"
-                    android:layout_marginStart="20dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/filter_recyclerview"
+                    tools:listitem="@layout/filter_items"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-                <TextView
-                    android:id="@+id/filter_item3"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/hashtag_filter"
-                    android:text="@string/hashitem3"
-                    android:textColor="@color/white"
-                    android:textSize="17dp"
-                    android:textAlignment="center"
-                    android:layout_marginStart="20dp"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
         <androidx.recyclerview.widget.RecyclerView
@@ -86,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             app:icon="@drawable/upload"
+            app:iconTint="#fff"
             app:layout_anchor="@id/gallery_recyclerView"
             app:layout_anchorGravity="bottom|right"
             android:id="@+id/add_btn"/>
