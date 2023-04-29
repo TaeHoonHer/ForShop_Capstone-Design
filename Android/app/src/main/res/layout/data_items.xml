@@ -1,13 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="20dp"
+    android:background="@drawable/databox"
+    android:elevation="10dp">
 
-    <View
-        android:layout_width="400dp"
-        android:layout_height="200dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-    </View>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/head"/>
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/cloth"/>
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pants"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/head_data"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text=""
+            android:textSize="23sp"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:fontFamily="@font/font_bmjua"/>
+
+        <TextView
+            android:id="@+id/up_data"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text=""
+            android:textSize="23sp"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:fontFamily="@font/font_bmjua"/>
+
+        <TextView
+            android:id="@+id/down_data"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text=""
+            android:textSize="23sp"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:fontFamily="@font/font_bmjua"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_data"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="50dp"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dt_check"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/icon_dtcheck"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dt_delete"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:background="@drawable/icon_dtdelete"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dspopup_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@drawable/dsdialog"
+    android:elevation="12dp"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp">
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="데이터 저장 하시겠습니까?"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="#EE70FA"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+
+        android:layout_gravity="center_horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/yes"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:text="Yes"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="#f386fd"
+            android:textSize="15sp"
+            android:background="@null"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/no"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:text="No"
+            android:textSize="15sp"
+            android:textColor="#7E7C7C"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

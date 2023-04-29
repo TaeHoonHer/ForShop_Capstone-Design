@@ -32,16 +32,15 @@ class GridOverlayView @JvmOverloads constructor(
 
         // 카메라 프리뷰의 크기를 가져오기
         val parentWidth = (parent as View).width.toFloat()
-        val parentHeight = (parent as View).height.toFloat()
+        val parentHeight = height.toFloat()
 
         val numCells = 3
-        val numCells2 = 4
 
         val cellWidth = parentWidth / numCells
-        val cellHeight = parentHeight / numCells2
+        val cellHeight = parentHeight / numCells
 
         // 격자 그리기
-        for (i in 1 until numCells2) {
+        for (i in 1 until numCells) {
             val startX = cellWidth * i
             canvas.drawLine(startX, 0f, startX, parentHeight, paint)
         }

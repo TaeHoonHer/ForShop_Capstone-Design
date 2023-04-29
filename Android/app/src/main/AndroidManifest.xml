@@ -18,6 +18,9 @@
         android:theme="@style/Theme.4Shop"
         tools:targetApi="31">
         <activity
+            android:name=".SusplashActivity"
+            android:exported="false" />
+        <activity
             android:name=".MydataActivity"
             android:exported="false" />
         <activity

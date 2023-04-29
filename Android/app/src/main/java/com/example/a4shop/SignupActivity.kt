@@ -22,8 +22,7 @@ class SignupActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.suCompletebtn.setOnClickListener {
-            Toast.makeText(this, "회원가입 완료!", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, SusplashActivity::class.java)
             startActivity(intent)
             finish()
         }
