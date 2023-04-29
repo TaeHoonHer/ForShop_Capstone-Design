@@ -18,40 +18,39 @@ import java.util.Objects;
 @Entity
 public class UserAccount extends AuditingFields{
 
-    @Id
-    @Column(nullable = false, length = 50)
-    private String userId;
+    @Id @GeneratedValue
+    private Long id;
+
+    @Setter @Column(length = 100, nullable = false)
+    private String email;
 
     @Setter
     @Column(nullable = false)
     private String userPassword;
 
-    @Setter @Column(length = 100)
-    private String email;
 
     @Setter @Column(length = 100)
     private String nickname;
 
-    private UserAccount(String userId, String userPassword, String email, String nickname) {
-        this.userId = userId;
+    private UserAccount(String userPassword, String email, String nickname) {
         this.userPassword = userPassword;
         this.email = email;
         this.nickname = nickname;
     }
 
-    public static UserAccount of(String userId, String userPassword, String email, String nickname) {
-        return new UserAccount(userId, userPassword, email, nickname);
+    public static UserAccount of(String userPassword, String email, String nickname) {
+        return new UserAccount(userPassword, email, nickname);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserAccount that)) return false;
-        return this.getUserId() != null && this.getUserId().equals(that.getUserId());
+        return this.getEmail() != null && this.getEmail().equals(that.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getUserId());
+        return Objects.hash(this.getEmail());
     }
 }
