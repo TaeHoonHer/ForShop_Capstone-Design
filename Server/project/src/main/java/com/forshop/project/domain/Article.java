@@ -18,7 +18,7 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-public class Article {
+public class Article extends AuditingFields{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -75,3 +75,4 @@ public class Article {
         return Objects.hash(this.getId());
     }
 }
+
