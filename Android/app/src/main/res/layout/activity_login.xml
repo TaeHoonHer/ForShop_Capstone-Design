@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbg2_9"
+    android:background="@drawable/loginbg3_9"
     tools:context=".LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,36 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="#030303"
+        android:background="#FAE2F3"
         android:theme="@style/Toolbar">
+
+        <TextView
+            android:id="@+id/gallery_title"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="For Shop"
+            android:textSize="30dp"
+            android:textColor="#F386FD"
+            android:layout_gravity="center"/>
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/login_title"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:text="LOGIN"
+        android:text="Login"
         android:textColor="#fff"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="80dp" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="150dp" />
 
     <EditText
         android:id="@+id/et_id"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:background="@drawable/lg_inbox"
         android:padding="10dp"
         android:layout_below="@id/login_title"
-        android:layout_marginTop="50dp"
         android:layout_marginHorizontal="30dp"
         android:hint="ID"
         android:textColorHint="#D3D3D3"/>
 
     <EditText
         android:id="@+id/et_password"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:background="@drawable/lg_inbox"
         android:padding="10dp"
@@ -54,10 +63,10 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginHorizontal="30dp"
         android:textStyle="bold"
         android:textColor="#fff"
@@ -66,7 +75,7 @@
 
     <Button
         android:id="@+id/btn_signup"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_login"
         android:layout_marginTop="20dp"

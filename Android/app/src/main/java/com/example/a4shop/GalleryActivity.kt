@@ -1,18 +1,20 @@
 package com.example.a4shop
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.a4shop.databinding.ActivityGalleryBinding
+import org.json.JSONArray
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.FileReader
+import java.io.FileWriter
 
 class GalleryActivity : AppCompatActivity() {
     lateinit var binding: ActivityGalleryBinding
@@ -51,6 +53,7 @@ class GalleryActivity : AppCompatActivity() {
         }
 
         var FArray = mutableListOf<Fcontents>()
+
         filterAdapter = FilterAdapter(FArray) { content ->
             // 눌렀을때 키워드 관련 이미지들 보이게 하기
         }
@@ -76,7 +79,7 @@ class GalleryActivity : AppCompatActivity() {
         when (item.getItemId()) {
             android.R.id.home -> startActivity(Intent(this, MainActivity::class.java))
             R.id.gallerySearch -> {
-                binding.galleryTitle.visibility = TextView.INVISIBLE;
+                binding.galleryTitle.visibility = View.GONE;
                 // gallerySearch MenuItem이 선택되었을 때의 동작을 구현
                 val searchView = item.actionView as androidx.appcompat.widget.SearchView
                 searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {

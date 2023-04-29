@@ -75,14 +75,22 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
         surfaceHolder = (findViewById<View>(R.id.surfaceView_camera_preview) as SurfaceView).holder
         surfaceHolder!!.addCallback(this)
 
+        var MDArray = mutableListOf<MDcontents>()
+
         // 촬영 버튼 click listener 추가
         binding.buttonTakePicture.setOnClickListener {
             takePhotoAndSave(this)
+
+            // 비율 데이터 저장 위한 dialog창 오픈
+            val dlg = DsDialog(this){ value ->
+                MDArray.add(value)
+                Toast.makeText(this, "데이터 저장완료", Toast.LENGTH_SHORT).show()
+            }
+
+            dlg.show()
         }
 
         // 토글버튼 구현
-        val guidelineBtn = findViewById<SwitchCompat>(R.id.guideline_btn)
-        val surfaceView = findViewById<SurfaceView>(R.id.surfaceView_camera_preview)
         val gridOverlayView = findViewById<GridOverlayView>(R.id.grid_view)
 
         binding.guidelineBtn.setOnCheckedChangeListener { _, isChecked ->
@@ -186,9 +194,40 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
 
             // 전환된 카메라로 다시 카메라 사용 시작
             camera = Camera.open(cameraId)
-            camera?.setDisplayOrientation(90) // 카메라 미리보기 화면 회전 설정
-            camera?.setPreviewDisplay(surfaceHolder) // 카메라 미리보기 화면 설정
 
+            camera?.setDisplayOrientation(90) // 카메라 미리보기 화면 회전 설정
+
+            // SurfaceView의 크기 가져오기
+            val surfaceViewWidth = binding.surfaceViewCameraPreview.width
+            val surfaceViewHeight = binding.surfaceViewCameraPreview.height
+
+            // 카메라 미리보기의 최적화 크기 계산
+            val parameters = camera?.parameters
+            val sizes = parameters?.supportedPreviewSizes
+            var bestSize: Camera.Size? = null
+            if (sizes != null) {
+                for (size in sizes) {
+                    if (size.width <= surfaceViewWidth && size.height <= surfaceViewHeight) {
+                        if (bestSize == null) {
+                            bestSize = size
+                        } else {
+                            val resultArea = bestSize.width * bestSize.height
+                            val newArea = size.width * size.height
+                            if (newArea > resultArea) {
+                                bestSize = size
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 카메라 미리보기 크기 조정
+            if (bestSize != null) {
+                parameters?.setPreviewSize(bestSize.width, bestSize.height)
+                camera?.parameters = parameters
+            }
+
+            camera?.setPreviewDisplay(surfaceHolder) // 카메라 미리보기 화면 설정
             camera?.startPreview()
 
 

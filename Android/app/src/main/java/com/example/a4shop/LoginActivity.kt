@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
 
             //로그인 기능 구현
             if (id == defaultId && password == defaultPassword) {
-                val intent = Intent(this, GalleryActivity::class.java)
+                val intent = Intent(this, UploadActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

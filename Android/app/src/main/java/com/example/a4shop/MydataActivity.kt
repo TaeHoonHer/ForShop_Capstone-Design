@@ -9,6 +9,7 @@ import com.example.a4shop.databinding.ActivityMydataBinding
 
 class MydataActivity : AppCompatActivity() {
     lateinit var binding: ActivityMydataBinding
+    private lateinit var mydataAdapter : MydataAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,13 @@ class MydataActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        var MDArray = mutableListOf<MDcontents>()
+        mydataAdapter = MydataAdapter(MDArray) { content ->
+            // content의 데이터를 가지고, 화면에 가이드라인 서비스 적용시키기
+        }
+        mydataAdapter.notifyDataSetChanged()
+        binding.mdRecyclerview.adapter = mydataAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
