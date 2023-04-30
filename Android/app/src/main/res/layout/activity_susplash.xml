@@ -11,8 +11,8 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/splash_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:lottie_rawRes="@raw/signup"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/checkpink"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
 
