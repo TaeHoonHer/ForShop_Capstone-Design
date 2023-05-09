@@ -1,0 +1,13 @@
+li img:hover {
+    animation : slow 0.5s ease-in forwards;
+}
+
+li video:hover {
+    animation : slow 0.5s ease-in forwards;
+}
+
+@keyframes slow {
+    100% {
+        width : 105%;
+    }
+}

@@ -1,0 +1,15 @@
+#main-header {
+  color: #fd86fd;
+}
+  
+#main-header:hover {
+  color: black;
+}
+
+.nav-link2 {
+  color: #fd86fd;
+}
+
+.nav-link2:hover {
+  color: black;
+}

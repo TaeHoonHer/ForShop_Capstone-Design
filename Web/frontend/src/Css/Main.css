@@ -1,0 +1,20 @@
+.MainHeader {
+    width: 100%;
+    height: 10vh;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.Banner {
+    width: 100%;
+    min-height: 50vh;
+    position: relative;
+    z-index: 0;
+}
+
+.MainContents {
+    flex: 1;
+    min-height: 100vh;
+    background-color: white;
+}
