@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback, Camera.Picture
     private var surfaceHolder: SurfaceHolder? = null
     private var showGrid = false
 
-    private lateinit var guidelineBtn: SwitchCompat
-    private lateinit var gridOverlayView: GridOverlayView
-
     companion object {
         private const val GET_GALLERY_IMAGE = 200
     }
