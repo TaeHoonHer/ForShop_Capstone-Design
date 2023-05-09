@@ -51,6 +51,20 @@ public class Article extends AuditingFields{
     @ToString.Exclude
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
 
+    protected Article() {}
+
+    private Article(UserAccount userAccount, Photo photo, String title, String content) {
+        this.userAccount = userAccount;
+        this.photo = photo;
+        this.title = title;
+        this.content = content;
+    }
+
+    public static Article of(UserAccount userAccount, Photo photo, String title, String content) {
+        return new Article(userAccount, photo, title, content);
+    }
+
+
     public void addHashtag(Hashtag hashtag) {
         this.getHashtags().add(hashtag);
     }
