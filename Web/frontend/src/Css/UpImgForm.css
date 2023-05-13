@@ -3,27 +3,31 @@ label.custom-file-upload input[type="file"] {
 }
 
 label.custom-file-upload {
+    margin-top: 30px;
     display: inline-block;
-    padding: 6px 12px;
+    width : 100px;
+    height : 50px;
+    padding-top: 10px;
     cursor: pointer;
     color: #fff;
-    font-size: 14px;
-    line-height: 1.42857143;
+    font-weight: bold;
+    font-size: 16px;
     white-space: nowrap;
     vertical-align: middle;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-    border-radius: 4px;
+    background-color: #f3baf8;
+    border-color: #f386fd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #f3baf8;
 }
 
 label.custom-file-upload:hover {
-    background-color: #286090;
-    border-color: #204d74;
+    background-color: #f3baf8;
+    border-color: #f386fd;
 }
 
 label.custom-file-upload:active {
-    background-color: #204d74;
-    border-color: #122b40;
+    background-color: #f386fd;
+    border-color: #ed4cfc;
 }
 
 .custom-file-upload input[type="file"]::-webkit-file-upload-button {
@@ -33,7 +37,9 @@ label.custom-file-upload:active {
 .custom-file-upload input[type="file"]::before {
     content: '파일 선택';
     display: inline-block;
-    background: #337ab7;
+    width : 100px;
+    height : 50px;
+    background: #f386fd;
     color: white;
     padding: 6px 12px;
     outline: none;
@@ -46,13 +52,13 @@ label.custom-file-upload:active {
     font-size: 14px;
     line-height: 1.42857143;
     border-radius: 4px;
-    border-color: #2e6da4;
+    border-color: #f7a1ff;
 }
 
 .custom-file-upload input[type="file"]::-webkit-file-upload-button:hover {
-    background: #286090;
+    background: #f477ff;
 }
 
 .custom-file-upload input[type="file"]::-webkit-file-upload-button:active {
-    background: #204d74;
+    background: #f3baf8;
 }

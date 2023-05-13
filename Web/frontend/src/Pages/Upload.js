@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
-import MainHeader from '../Components/MainHeader';
+import DetailHeader from '../Components/DetailHeader';
 import '../Css/Upload.css';
 
 const FadeInAnimation = keyframes`
@@ -90,7 +90,7 @@ function Upload() {
 
     return (
         <UploadHeaderWrapper>
-            <MainHeader/>
+            <DetailHeader/>
             <MenuList>
                 <MenuItem>
                     <li>

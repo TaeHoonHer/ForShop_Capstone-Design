@@ -1,11 +1,11 @@
 import '../Css/Login.css';
-import MainHeader from '../Components/MainHeader';
+import DetailHeader from '../Components/DetailHeader';
 import LoginForm from '../Components/LoginForm';
 
 function Login() {
     return (
         <div className="Login">
-            <MainHeader/>
+            <DetailHeader/>
             <LoginForm/>
         </div>
     )

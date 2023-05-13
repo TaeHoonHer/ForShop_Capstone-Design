@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import '../Css/MainHeader.css';
+import '../Css/DetailHeader.css';
 
 const UPLink = styled(Link)`
   display: flex;
@@ -11,32 +11,7 @@ const UPLink = styled(Link)`
   }
 `;
 
-const DropdownMenu = styled.ul`
-  position: absolute;
-  list-style-type : none;
-  top: 100%;
-  left: 0;
-  opacity: ${(props) => (props.isOpen ? '1' : '0')};
-  transform: ${(props) => (props.isOpen ? 'translateY(0)' : 'translateY(-10px)')};
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: ${(props) => (props.isOpen ? 'auto' : 'none')};
-  p {
-    font-size : 20px;
-    color : #f386fd;
-  }
-`;
-
-const DownLink = styled.button`
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color : #f386fd;
-  font-size : 20px;
-`;
-
-const MainHeaderWrapper = styled.div`
+const DetailHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,14 +46,13 @@ const MenuList = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  position : relative;
   margin-left: 40px;
   font-size: 20px;
   cursor: pointer;
   color: #fd86fd;
 `;
 
-function MainHeader() {
+function DetailHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDownClick = () => {
@@ -86,7 +60,7 @@ function MainHeader() {
   };
 
   return (
-    <MainHeaderWrapper id='main-header'>
+    <DetailHeaderWrapper id='detail-header'>
       <Logo>
         <img src='/img/Logo.png' alt='ForShop Logo' />
         <Link to='/'>
@@ -95,17 +69,11 @@ function MainHeader() {
       </Logo>
       <MenuList>
         <MenuItem>
-        <DownLink onClick={handleDownClick}>
-            <p className='nav-link2'>Images</p>
-            <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} />
-          </DownLink>
-          <DropdownMenu isOpen={isOpen}>
-            <li>
-              <Link to='/main'>
-                <p className='nav-link2'>Videos</p>
-              </Link>
-            </li>
-          </DropdownMenu>
+        <li>
+            <Link to='/main'>
+              <p className='nav-link2' style={{ color: '#fd86fd' }}>Home</p>
+            </Link>
+          </li>
         </MenuItem>
         <MenuItem>
           <li>
@@ -123,8 +91,8 @@ function MainHeader() {
           </li>
         </MenuItem>
       </MenuList>
-    </MainHeaderWrapper>
+    </DetailHeaderWrapper>
   );
 }
 
-export default MainHeader;
+export default DetailHeader;

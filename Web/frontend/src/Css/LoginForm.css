@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+.LoginBox {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    width : 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #ffffff 25%, #ff97db 75%);
+}
+
+.color {
+    position : absolute;
+    filter : blur(50px);
+}
+
+.LoginBox .color:nth-child(1) {
+    top : 150px;
+    width : 300px;
+    height : 300px;
+    background: #f9cef9;
+}
+
+.LoginBox .color:nth-child(2) {
+    bottom : 0px;
+    left : 100px;
+    width : 400px;
+    height : 400px;
+    background: #a4508b;
+}
+
+.LoginBox .color:nth-child(3) {
+    bottom : 50px;
+    right : 100px;
+    width : 300px;
+    height : 300px;
+    background: #9c7991;
+}
+
+.box {
+    position : relative;
+}
+
+.square {
+    position : absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border : 1px solid rgba(255, 255, 255, 0.5);
+    border-right : 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom : 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    animation : animate2 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes animate2 {
+    0% {
+        transform : translateY(-40px);
+    }
+    50% {
+        transform: translateY(40px);
+    }
+}
+
+.square:nth-child(1) {
+    top : -20px;
+    right : -60px;
+    width : 100px;
+    height : 100px;
+    z-index : 2;
+}
+
+.square:nth-child(2) {
+    top : 150px;
+    left : -100px;
+    width : 120px;
+    height : 120px;
+    z-index : 2;
+}
+
+.square:nth-child(3) {
+    bottom : 50px;
+    right : -60px;
+    width : 80px;
+    height : 80px;
+    z-index : 2;
+}
+
+.square:nth-child(4) {
+    bottom : -50px;
+    left : 100px;
+    width : 50px;
+    height : 50px;
+    z-index : 2;
+}
+
+.square:nth-child(5) {
+    top : -80px;
+    left : 140px;
+    width : 60px;
+    height : 60px;
+    z-index : 2;
+}
+
+.container {
+    position : relative;
+    width : 400px;
+    min-height : 400px;
+    background: linear-gradient(to bottom, #fba6dd, #ffffff);
+    border-radius: 10px;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border : 1px solid rgba(255, 255, 255, 0.5);
+    border-right : 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom : 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form {
+    position : relative;
+    width : 100%;
+    height : 100%;
+    padding : 40px;
+}
+
+.form h2 {
+    position: relative;
+    color : #fff;
+    font-size: 24px;
+    font-weight : 600;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+}
+
+.form h2::before {
+    content : '';
+    position: absolute;
+    left: 0;
+    bottom : -10px;
+    width : 80px;
+    height : 4px;
+    background: #fff;
+}
+
+.form .inputBox {
+    width : 100%;
+    margin-top: 20px;
+}
+
+.form .inputBox input {
+    width : 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border : none;
+    outline: none;
+    padding : 10px 20px;
+    border-radius: 35px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border : 1px solid rgba(255, 255, 255, 0.5);
+    border-right : 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom : 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 16px;
+    letter-spacing: 1px;
+    color : #fff;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+.form .inputBox input::placeholder {
+    color : #fff;
+}
+
+.form .inputBox input[type="submit"] {
+    background: #fff;
+    color: #666;
+    max-width: 100px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.forget {
+    margin-top : 5px;
+    color : #222;
+}
+
+.forget a {
+    color : #444;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.kakaoButton {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.kakaoButton img {
+    line-height: 100px;
+}

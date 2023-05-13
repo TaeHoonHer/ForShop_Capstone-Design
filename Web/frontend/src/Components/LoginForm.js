@@ -1,4 +1,4 @@
-import '../Css/Login.css';
+import '../Css/LoginForm.css';
 
 function LoginForm() {
   const squareArr = Array.from({ length: 5 }, (_, i) => i);
@@ -26,6 +26,9 @@ function LoginForm() {
                 </div>
                 <div className="inputBox">
                   <input type="submit" value="Login" />
+                  <button className="kakaoButton">
+                    <img src="/img/kakao_login.png" alt="Kakao Login" />
+                  </button>
                 </div>
                 <p className="forget">Forgot Password ? <a href="#">Click Here</a></p>
                 <p className="forget">Don't have an account ? <a href="#">Sign up</a></p>
