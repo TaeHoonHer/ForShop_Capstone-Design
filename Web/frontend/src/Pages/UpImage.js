@@ -6,6 +6,7 @@ import '../Css/UpImage.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const UpImgFormWrapper = styled.div`
   width: 100vw;
@@ -45,20 +46,32 @@ const FormContainer = styled.div`
 `;
 
 const FormHead = styled.div`
-  margin : 1% 0 1% 0;
-  padding : 0;
+    position : relative;
+  margin: 1% 0;
+  padding: 0;
   width: 100%;
   height: 50px;
-  display : flex;
-  justify-content : center;
-  align-items : center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   h2 {
     font-size: 2rem;
     text-align: center;
     letter-spacing: 2px;
     color: black;
+    margin: 0;
   }
+`;
+
+const LeftArrow = styled.img`
+  position : absolute;
+  top : 16px;
+  left : 30px;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor : pointer;
 `;
 
 const CheckBtn = styled.button`
@@ -81,7 +94,6 @@ const CheckBtn = styled.button`
   }
 `;
 
-
 const handleButtonClick = () => {
     toast.info('업로드 하시겠습니까?', {
       position: toast.POSITION.TOP_CENTER,
@@ -99,9 +111,12 @@ function UpImage() {
         <UpImgFormWrapper>
             <DetailHeader />
             <BackgroundOverlay />
-            <FormContainer>
+            <FormContainer className='FormContainer'>
                 <FormHead>
                     <div className='formhead'>
+                        <Link to ="/main">
+                            <LeftArrow img src ="/img/left-arrow.png"/>
+                        </Link>
                         <h2>Image Upload</h2>
                     </div>
                 </FormHead>
