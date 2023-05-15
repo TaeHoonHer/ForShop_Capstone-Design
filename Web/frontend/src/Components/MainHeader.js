@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainHeader.css';
-
-const DropdownMenu = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  p {
-    font-size : 20px;
-    color : #f386fd;
-  }
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
-`;
 
 const UPLink = styled(Link)`
   display: flex;
   img {
     margin-right : 8px;
     margin-top : 5px;
+  }
+`;
+
+const DropdownMenu = styled.ul`
+  position: absolute;
+  list-style-type : none;
+  top: 100%;
+  left: 0;
+  opacity: ${(props) => (props.isOpen ? '1' : '0')};
+  transform: ${(props) => (props.isOpen ? 'translateY(0)' : 'translateY(-10px)')};
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: ${(props) => (props.isOpen ? 'auto' : 'none')};
+  p {
+    font-size : 20px;
+    color : #f386fd;
   }
 `;
 
@@ -33,6 +37,10 @@ const DownLink = styled.button`
 `;
 
 const MainHeaderWrapper = styled.div`
+  position : abolsolute;
+  top : 0;
+  left : 0;
+  margin : 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,6 +75,7 @@ const MenuList = styled.ul`
 `;
 
 const MenuItem = styled.li`
+  position : relative;
   margin-left: 40px;
   font-size: 20px;
   cursor: pointer;
@@ -75,9 +84,22 @@ const MenuItem = styled.li`
 
 function MainHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuName, setMenuName] = useState('Images');
+  const navigate = useNavigate();
 
-  const handleDownClick = () => {
+  const handleDownClick = (e) => {
+    e.stopPropagation();
     setIsOpen(!isOpen);
+  };
+
+  const handleMenuClick = (name) => {
+    setMenuName(name);
+    setIsOpen(false);
+    if(name === 'Images'){
+      navigate('/main');
+    } else {
+      navigate('/main-video');
+    }
   };
 
   return (
@@ -89,19 +111,29 @@ function MainHeader() {
         </Link>
       </Logo>
       <MenuList>
-        <MenuItem>
-          <DownLink onClick={handleDownClick}>
-            <p className='nav-link2'>Images</p>
-            <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} />
-          </DownLink>
-          <DropdownMenu isOpen={isOpen}>
+      <MenuItem>
+      <DownLink>
+        <Link to={menuName === 'Images' ? '/main' : '/main-video'}>
+          <p className='nav-link2'>{menuName}</p>
+        </Link>
+        <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} onClick={handleDownClick} />
+      </DownLink>
+      <DropdownMenu isOpen={isOpen}>
+        {menuName === 'Images' ? (
+          <div onClick={() => handleMenuClick('Videos')}>
             <li>
-              <Link to='/main'>
-                <p className='nav-link2'>Videos</p>
-              </Link>
+              <p className='nav-link2'>Videos</p>
             </li>
-          </DropdownMenu>
-        </MenuItem>
+          </div>
+        ) : (
+          <div onClick={() => handleMenuClick('Images')}>
+            <li>
+              <p className='nav-link2'>Images</p>
+            </li>
+          </div>
+        )}
+      </DropdownMenu>
+    </MenuItem>
         <MenuItem>
           <li>
             <Link to='/login'>

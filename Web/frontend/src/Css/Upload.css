@@ -1,13 +1,25 @@
-li img:hover {
-    animation : slow 0.5s ease-in forwards;
-}
-
-li video:hover {
-    animation : slow 0.5s ease-in forwards;
-}
-
-@keyframes slow {
-    100% {
-        width : 105%;
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
     }
-}
+    25% {
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(0.75);
+    }
+    75% {
+      transform: scale(1.03);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  li img:hover {
+    animation: jellyAnimation 0.5s;
+  }
+
+  li video:hover {
+    animation: jellyAnimation 0.5s;
+  }

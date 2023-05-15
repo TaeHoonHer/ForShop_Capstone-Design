@@ -1,12 +1,12 @@
 import React from 'react';
 import '../Css/IntroLoad.css';
 import Intro from '../Components/Intro';
-import Header from '../Components/Header';
+import IntroHeader from '../Components/IntroHeader';
 
 function IntroLoad() {
     return (
         <>
-            <Header/>
+            <IntroHeader/>
             <Intro/>
         </>
     )

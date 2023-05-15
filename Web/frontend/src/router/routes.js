@@ -5,6 +5,8 @@ import Login from '../Pages/Login';
 import Upload from '../Pages/Upload';
 import UpImage from '../Pages/UpImage';
 import UpVideo from '../Pages/UpVideo';
+import AnVideo from '../Pages/AnVideo';
+import MainVideo from '../Pages/MainVideo';
 
 const routes = [
     {
@@ -34,6 +36,14 @@ const routes = [
     {
         path: '/upvideo',
         component: UpVideo
+    },
+    {
+        path: '/anvideo',
+        component: AnVideo
+    },
+    {
+        path: '/main-video',
+        component: MainVideo
     },
 ];
 

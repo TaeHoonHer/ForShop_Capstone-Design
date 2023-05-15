@@ -1,8 +1,15 @@
+.Main {
+    width : 100%;
+    min-height : 100vh; /* 이 부분을 변경하였습니다. */
+    scroll-behavior: auto;
+    overflow: auto; /* 이 부분을 추가하였습니다. */
+}
+
 .MainHeader {
     width: 100%;
-    height: 10vh;
+    min-height: 10vh;
     background-color: white;
-    position: relative;
+    position: absolute;
     z-index: 1;
 }
 
@@ -13,8 +20,8 @@
     z-index: 0;
 }
 
-.MainContents {
+.MainBox {
     flex: 1;
-    min-height: 100vh;
+    min-height: 40vh; /* 이 부분을 변경하였습니다. */
     background-color: white;
 }

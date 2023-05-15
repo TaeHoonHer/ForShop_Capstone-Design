@@ -1,0 +1,27 @@
+.Main {
+    width : 100%;
+    min-height : 100vh; /* 이 부분을 변경하였습니다. */
+    scroll-behavior: auto;
+    overflow: auto; /* 이 부분을 추가하였습니다. */
+}
+
+.MainHeader {
+    width: 100%;
+    min-height: 10vh;
+    background-color: white;
+    position: absolute;
+    z-index: 1;
+}
+
+.Banner {
+    width: 100%;
+    min-height: 50vh;
+    position: relative;
+    z-index: 0;
+}
+
+.MainBox {
+    flex: 1;
+    min-height: 40vh; /* 이 부분을 변경하였습니다. */
+    background-color: white;
+}
