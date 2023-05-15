@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainHeader.css';
 
 const UPLink = styled(Link)`
@@ -37,6 +37,10 @@ const DownLink = styled.button`
 `;
 
 const MainHeaderWrapper = styled.div`
+  position : abolsolute;
+  top : 0;
+  left : 0;
+  margin : 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -80,9 +84,22 @@ const MenuItem = styled.li`
 
 function MainHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuName, setMenuName] = useState('Images');
+  const navigate = useNavigate();
 
-  const handleDownClick = () => {
+  const handleDownClick = (e) => {
+    e.stopPropagation();
     setIsOpen(!isOpen);
+  };
+
+  const handleMenuClick = (name) => {
+    setMenuName(name);
+    setIsOpen(false);
+    if(name === 'Images'){
+      navigate('/main');
+    } else {
+      navigate('/main-video');
+    }
   };
 
   return (
@@ -94,19 +111,29 @@ function MainHeader() {
         </Link>
       </Logo>
       <MenuList>
-        <MenuItem>
-        <DownLink onClick={handleDownClick}>
-            <p className='nav-link2'>Images</p>
-            <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} />
-          </DownLink>
-          <DropdownMenu isOpen={isOpen}>
+      <MenuItem>
+      <DownLink>
+        <Link to={menuName === 'Images' ? '/main' : '/main-video'}>
+          <p className='nav-link2'>{menuName}</p>
+        </Link>
+        <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} onClick={handleDownClick} />
+      </DownLink>
+      <DropdownMenu isOpen={isOpen}>
+        {menuName === 'Images' ? (
+          <div onClick={() => handleMenuClick('Videos')}>
             <li>
-              <Link to='/main'>
-                <p className='nav-link2'>Videos</p>
-              </Link>
+              <p className='nav-link2'>Videos</p>
             </li>
-          </DropdownMenu>
-        </MenuItem>
+          </div>
+        ) : (
+          <div onClick={() => handleMenuClick('Images')}>
+            <li>
+              <p className='nav-link2'>Images</p>
+            </li>
+          </div>
+        )}
+      </DropdownMenu>
+    </MenuItem>
         <MenuItem>
           <li>
             <Link to='/login'>

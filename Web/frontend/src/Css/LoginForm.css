@@ -9,6 +9,71 @@
     background: linear-gradient(to bottom, #ffffff 25%, #ff97db 75%);
 }
 
+.sidebar {
+    position : absolute;
+    top : 0;
+    right : -100%;
+    width : 30%;
+    height : 100%;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    padding : 100px;
+}
+  
+.sidebar {
+  position : fixed;
+  background: #f098f8;
+  color : #fff;
+  transition : 0.5s;
+  padding : 40px;
+  z-index : 98;
+  font-size: 30px;
+}
+  
+.sidebar ul {
+  display : flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  width : 100%;
+  margin-top: 20px;
+}
+
+.sidebar ul li input {
+  width : 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border : none;
+  outline: none;
+  padding : 10px 20px;
+  border-radius: 35px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border : 1px solid rgba(255, 255, 255, 0.5);
+  border-right : 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom : 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color : #fff;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+.sidebar ul li input[type="submit"] {
+  background: #fff;
+  color: #666;
+  max-width: 100px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.sidebar ul li input[type="submit"]:hover {
+    animation: jellyAnimation 0.5s;
+}
+
 .color {
     position : absolute;
     filter : blur(50px);
@@ -87,7 +152,7 @@
 }
 
 .square:nth-child(4) {
-    bottom : -50px;
+    bottom : 0;
     left : 100px;
     width : 50px;
     height : 50px;
@@ -104,6 +169,7 @@
 
 .container {
     position : relative;
+    margin-bottom: 20%;
     width : 400px;
     min-height : 400px;
     background: linear-gradient(to bottom, #fba6dd, #ffffff);
@@ -147,6 +213,9 @@
 .form .inputBox {
     width : 100%;
     margin-top: 20px;
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .form .inputBox input {
@@ -179,24 +248,50 @@
     font-weight: 600;
 }
 
+.form .inputBox input[type="submit"]:hover {
+    animation: jellyAnimation 0.5s;
+}
+
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
 .forget {
     margin-top : 5px;
     color : #222;
 }
 
-.forget a {
+.forget button {
     color : #444;
     font-weight: 600;
     text-decoration: none;
-}
-
-.kakaoButton {
-    margin-left: 10px;
     background-color: transparent;
     border: none;
     cursor: pointer;
 }
 
-.kakaoButton img {
-    line-height: 100px;
+.forget button:hover {
+    color : #f386fd;
+}
+
+.kakaoButton {
+    margin-bottom: 12px;
+    padding : 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

@@ -94,7 +94,7 @@ function Upload() {
             <MenuList>
                 <MenuItem>
                     <li>
-                        <ImgLink to = '/upimg'>
+                        <ImgLink to = '/upimg' className='imglink'>
                             <img src='/img/person.jpg' alt='image button'/>
                             <p className='selOption'>Image</p>
                         </ImgLink>
@@ -102,7 +102,7 @@ function Upload() {
                 </MenuItem>
                 <MenuItem>
                     <li>
-                        <VdLink to = '/upvideo'>
+                        <VdLink to = '/upvideo' className='vdlink'>
                             <video autoPlay muted loop>
                                 <source src="../img/dance.mp4" type="video/mp4"></source>
                             </video>

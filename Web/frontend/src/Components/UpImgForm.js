@@ -136,11 +136,19 @@ function UpImgForm() {
 
     const handleFileUpload = useCallback((file) => {
       if (file) {
+        // Check if the file is an image
+        if (!file.type.startsWith('image/')) {
+          alert('이미지 데이터만 가능합니다.');
+          return;
+        }
+    
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
           setImageFile(reader.result);
         };
+      } else {
+        alert('No file chosen.');
       }
     }, []);
 

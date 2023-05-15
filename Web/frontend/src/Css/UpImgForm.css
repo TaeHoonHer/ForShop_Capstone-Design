@@ -23,7 +23,30 @@ label.custom-file-upload {
 label.custom-file-upload:hover {
     background-color: #f3baf8;
     border-color: #f386fd;
+    animation: jellyAnimation 0.5s;
 }
+
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .CheckBtn:hover {
+    animation: jellyAnimation 0.5s;
+  }
 
 label.custom-file-upload:active {
     background-color: #f386fd;
@@ -35,7 +58,6 @@ label.custom-file-upload:active {
 }
 
 .custom-file-upload input[type="file"]::before {
-    content: '파일 선택';
     display: inline-block;
     width : 100px;
     height : 50px;

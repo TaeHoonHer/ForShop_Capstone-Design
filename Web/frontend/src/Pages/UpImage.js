@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import UpImgForm from '../Components/UpImgForm';
 import '../Css/UpImage.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 const UpImgFormWrapper = styled.div`
@@ -46,7 +43,7 @@ const FormContainer = styled.div`
 `;
 
 const FormHead = styled.div`
-    position : relative;
+  position : relative;
   margin: 1% 0;
   padding: 0;
   width: 100%;
@@ -77,7 +74,7 @@ const LeftArrow = styled.img`
 const CheckBtn = styled.button`
   width: 80px;
   height: 50px;
-  margin-top : 50px;
+  margin : 0;
   background: #f386fd;
   backdrop-filter: blur(20px);
   border-radius : 20px;
@@ -94,19 +91,27 @@ const CheckBtn = styled.button`
   }
 `;
 
-const handleButtonClick = () => {
-    toast.info('업로드 하시겠습니까?', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: false,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
+const PopupWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transition : transform 0.4s, top 0.4s;
+  transform: translate(-50%, -50%);
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  transform: ${props => (props.visible ? 'translate(-50%, -50%) scale(10)' : 'translate(-50%, -50%) scale(0)')};
+`;
 
 function UpImage() {
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  const handlePopupOpen = () => {
+    setPopupVisible(true);
+  };
+
+  const handlePopupClose = () => {
+    setPopupVisible(false);
+  };
+
     return (
         <UpImgFormWrapper>
             <DetailHeader />
@@ -114,7 +119,7 @@ function UpImage() {
             <FormContainer className='FormContainer'>
                 <FormHead>
                     <div className='formhead'>
-                        <Link to ="/main">
+                        <Link to ="/upload">
                             <LeftArrow img src ="/img/left-arrow.png"/>
                         </Link>
                         <h2>Image Upload</h2>
@@ -122,10 +127,19 @@ function UpImage() {
                 </FormHead>
                 <UpImgForm />
                 <CheckBtn className="CheckBtn">
-                    <button type='button' onclick={handleButtonClick} className='check'>OK!</button>
+                    <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
                 </CheckBtn>
+                <PopupWrapper visible={popupVisible}>
+                  <div class = "popup" id = "popup">
+                    <img src = "/img/checked.png" alt="Success"/>
+                    <h2>Success!</h2>
+                    <p>Your upload has been successfully submitted!</p>
+                    <Link to ="/main">
+                      <button type = "button" class = "chBtn" onClick={handlePopupClose}>OK</button>
+                    </Link>
+                  </div>
+                </PopupWrapper>
             </FormContainer>
-            <ToastContainer />
         </UpImgFormWrapper>
     )
 }

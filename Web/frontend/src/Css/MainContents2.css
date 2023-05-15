@@ -1,0 +1,35 @@
+.MainContents {
+    padding: 20px;
+}
+
+.ContentsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.ContentsContainer div {
+    position: relative;
+}
+
+.ContentsContainer div video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fadeup {
+    animation: fadeup 1.5s ease forwards;
+    opacity : 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeup {
+    to {
+        opacity : 1;
+        transform: translateY(0);
+    }
+}

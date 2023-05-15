@@ -1,7 +1,7 @@
 import '../Css/Best.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../Components/Header';
+import IntroHeader from '../Components/IntroHeader';
 import styled from 'styled-components';
 
 const NextLink = styled(Link)`
@@ -23,7 +23,7 @@ function Best() {
 
   return (
     <div className="Intro">
-      <Header/>
+      <IntroHeader/>
       <div className="intro_box">
         <div className='to_main'>
           <NextLink to="/"><p>Back</p></NextLink>

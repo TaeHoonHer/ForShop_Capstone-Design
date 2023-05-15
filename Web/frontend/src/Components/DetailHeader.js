@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import '../Css/DetailHeader.css';
@@ -53,28 +53,16 @@ const MenuItem = styled.li`
 `;
 
 function DetailHeader() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDownClick = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <DetailHeaderWrapper id='detail-header'>
       <Logo>
         <img src='/img/Logo.png' alt='ForShop Logo' />
-        <Link to='/'>
+        <Link to='/main'>
           <p>ForShop</p>
         </Link>
       </Logo>
       <MenuList>
-        <MenuItem>
-        <li>
-            <Link to='/main'>
-              <p className='nav-link2' style={{ color: '#fd86fd' }}>Home</p>
-            </Link>
-          </li>
-        </MenuItem>
         <MenuItem>
           <li>
             <Link to='/login'>
