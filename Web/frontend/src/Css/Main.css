@@ -23,5 +23,5 @@
 .MainBox {
     flex: 1;
     min-height: 40vh; /* 이 부분을 변경하였습니다. */
-    background-color: white;
+    background-color: #fff;
 }

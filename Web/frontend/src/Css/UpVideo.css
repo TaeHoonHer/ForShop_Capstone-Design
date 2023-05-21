@@ -66,3 +66,11 @@
   box-shadow : 0 5px 5px rgba(0, 0, 0, 0.2);
   border : none;
 }
+
+.upMenu2 {
+  color : #f386fd;
+}
+
+.anMenu2:hover {
+  color : #f386fd;
+}

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import DetailHeader from '../Components/DetailHeader';
+import Footer from '../Components/Footer';
 import '../Css/Upload.css';
 
 const FadeInAnimation = keyframes`
@@ -111,6 +112,7 @@ function Upload() {
                     </li>
                 </MenuItem>
             </MenuList>
+            <Footer/>
         </UploadHeaderWrapper>
     )
 }

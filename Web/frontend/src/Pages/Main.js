@@ -4,6 +4,7 @@ import '../Css/Main.css'
 import Banner from '../Components/Banner';
 import MainHeader from '../Components/MainHeader';
 import MainContents from '../Components/MainContents';
+import Footer from '../Components/Footer';
 
 function Main() {
     return (
@@ -13,6 +14,7 @@ function Main() {
             <div className='MainBox'>
                 <MainContents/>
             </div>
+            <Footer/>
         </div>
     )
 }

@@ -27,26 +27,26 @@ label.custom-file-upload:hover {
 }
 
 @keyframes jellyAnimation {
-    0% {
-      transform: scale(1);
-    }
-    25% {
-      transform: scale(1.2);
-    }
-    50% {
-      transform: scale(0.8);
-    }
-    75% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
   }
-  
-  .CheckBtn:hover {
-    animation: jellyAnimation 0.5s;
+  25% {
+    transform: scale(1.2);
   }
+  50% {
+    transform: scale(0.8);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.CheckBtn:hover {
+  animation: jellyAnimation 0.5s;
+}
 
 label.custom-file-upload:active {
     background-color: #f386fd;

@@ -154,10 +154,10 @@ function UpVideo() {
                         <h2>Video Upload</h2>
                         <SelectForm>
                           <SelLink to = '/upvideo'>
-                            <button type = "button" className='upMenu'>UpLoad</button>
+                            <button type = "button" className='upMenu2'>UpLoad</button>
                           </SelLink>
                           <SelLink to = '/anvideo'>
-                            <button type = "button" className='anMenu'>Analyze</button>
+                            <button type = "button" className='anMenu2'>Analyze</button>
                           </SelLink>
                         </SelectForm>
                     </div>
