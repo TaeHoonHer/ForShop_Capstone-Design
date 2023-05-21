@@ -60,12 +60,7 @@ function Header() {
       </Logo>
       <MenuList>
         <MenuItem>
-          <Link to="/best">
-            <p className='nav-link' style={{ color: '#fd86fd' }}>Best Of 8</p>
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/main">
+          <Link to="/IntroimgMain">
             <p className='nav-link' style={{ color: '#fd86fd' }}>Home</p>
           </Link>
         </MenuItem>

@@ -7,19 +7,20 @@ import UpImage from '../Pages/UpImage';
 import UpVideo from '../Pages/UpVideo';
 import AnVideo from '../Pages/AnVideo';
 import MainVideo from '../Pages/MainVideo';
+import ImageBoard from '../Pages/ImageBoard';
 
 const routes = [
     {
         path: '/',
+        component: Best
+    },
+    {
+        path: '/IntroimgMain',
         component: IntroLoad
     },
     {
         path: '/main',
         component: Main
-    },
-    {
-        path: '/best',
-        component: Best
     },
     {
         path: '/login',
@@ -44,6 +45,10 @@ const routes = [
     {
         path: '/main-video',
         component: MainVideo
+    },
+    {
+        path: '/main/board',
+        component: ImageBoard
     },
 ];
 
