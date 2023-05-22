@@ -58,11 +58,18 @@ function DetailHeader() {
     <DetailHeaderWrapper id='detail-header'>
       <Logo>
         <img src='/img/Logo.png' alt='ForShop Logo' />
-        <Link to='/main'>
+        <Link to='/IntroimgMain'>
           <p>ForShop</p>
         </Link>
       </Logo>
       <MenuList>
+      <MenuItem>
+          <li>
+            <Link to='/main'>
+              <p className='nav-link2' style={{ color: '#fd86fd' }}>Home</p>
+            </Link>
+          </li>
+        </MenuItem>
         <MenuItem>
           <li>
             <Link to='/login'>

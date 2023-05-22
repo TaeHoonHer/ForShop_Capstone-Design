@@ -16,8 +16,7 @@ function Best() {
     { src: '/img/new2.mp4', alt: 'video2' },
     { src: '/img/new1.mp4', alt: 'video1' },
     { src: '/img/new2.mp4', alt: 'video2' },
-    { src: '/img/new1.mp4', alt: 'video1' },
-    { src: '/img/new2.mp4', alt: 'video2' },
+    
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

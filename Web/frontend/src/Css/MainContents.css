@@ -59,13 +59,13 @@
     animation: jellyAnimation 0.5s;
 }
 
-img {
+#imageList {
     cursor : pointer;
     filter: brightness(100%);
     transition : filter 0.5s ease;
 }
 
-img:hover {
+#imageList:hover {
     filter: brightness(70%);
 }
 

@@ -96,11 +96,7 @@ function LoginForm() {
             <input type="email" placeholder="EmailAddress" />
           </li>
           <li>
-            <button type="button" onClick={
-              () => {
-                
-              }
-            }>확인</button>
+            <button type="button" onClick={handleFormSubmit}>확인</button>
           </li>
         </ul>
       </div>

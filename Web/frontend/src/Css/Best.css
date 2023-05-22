@@ -93,6 +93,7 @@ div {
   border: none;
   width: 50px;
   left: 50px;
+  cursor: pointer;
 }
 
 .intro_leftBtn img {
@@ -106,6 +107,7 @@ div {
   background-color: transparent;
   border: none;
   width: 50px;
+  cursor: pointer;
 }
 
 .intro_rightBtn img {
@@ -132,10 +134,10 @@ div {
 
 @keyframes animate {
   0% {
-    transform: perspective(1500px) rotateY(0deg);
+    transform: perspective(1300px) rotateY(0deg);
   }
   100% {
-    transform: perspective(1500px) rotateY(0deg);
+    transform: perspective(1300px) rotateY(0deg);
   }
 }
 
@@ -147,7 +149,7 @@ div {
   height: 100%;
   transform-origin: center;
   transform-style: preserve-3d;
-  transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px);
+  transform: rotateY(calc(var(--i) * 60deg)) translateZ(400px);
   -webkit-box-reflect: below 0px linear-gradient(transparent, transparent, #004);
 }
 
