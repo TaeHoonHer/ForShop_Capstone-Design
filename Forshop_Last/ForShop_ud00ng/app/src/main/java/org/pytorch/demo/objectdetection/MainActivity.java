@@ -2,20 +2,25 @@ package org.pytorch.demo.objectdetection;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewStub;
@@ -82,10 +87,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String currentPhotoPath;
 
+    private FocusCircleView mFocusCircleView;
+
     // 기존 MainActivity의 멤버 변수 및 상수
     private GridOverlayView mGridOverlayView;
     private SwitchCompat mGridSwitch;
     // 기존 MainActivity의 멤버 변수 및 상수
+    private TextureView mtextureView;
+
 
     static class AnalysisResult {
         private final ArrayList<Result> mResults;
@@ -131,7 +140,75 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         } else {
             setupCameraX();
         }
+
+        mFocusCircleView = findViewById(R.id.focus_circle_view);
+
+        // "button_take_picture" 버튼을 찾아 클릭 이벤트 리스너를 설정합니다.
+        Button takePictureButton = findViewById(R.id.button_take_picture);
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 카메라 미리보기 화면을 저장합니다.
+                takePicture();
+            }
+        });
+
     }
+
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+            float x = event.getX();
+            float y = event.getY();
+            // 해당 좌표로 초점을 맞추도록 FocusCircleView에 설정
+            mFocusCircleView.setFocusPoint(new PointF(x, y));
+        }
+        return true;
+    }
+
+    private void takePicture() {
+        // TextureView에서 현재 화면을 Bitmap으로 캡처합니다.
+        Bitmap bitmap = mtextureView.getBitmap();
+
+        // 저장할 파일 경로와 파일 이름을 지정합니다.
+        String fileName = "captured_image.jpg";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File imageFile = new File(storageDir, fileName);
+
+        // 파일 저장을 위한 OutputStream을 생성합니다.
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(imageFile);
+            // Bitmap을 JPEG 형식으로 압축하여 파일에 저장합니다.
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+
+            // 갤러리에 사진을 추가합니다.
+            addImageToGallery(imageFile.getAbsolutePath());
+
+            Toast.makeText(MainActivity.this, "사진이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(MainActivity.this, "사진 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+        } finally {
+            // OutputStream을 닫습니다.
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void addImageToGallery(String imagePath) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File imageFile = new File(imagePath);
+        Uri contentUri = Uri.fromFile(imageFile);
+        mediaScanIntent.setData(contentUri);
+        sendBroadcast(mediaScanIntent);
+    }
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -179,10 +256,10 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     }
 
     private void setupCameraX() {
-        final TextureView textureView = getCameraPreviewTextureView();
+        mtextureView = getCameraPreviewTextureView();
         final PreviewConfig previewConfig = new PreviewConfig.Builder().build();
         final Preview preview = new Preview(previewConfig);
-        preview.setOnPreviewOutputUpdateListener(output -> textureView.setSurfaceTexture(output.getSurfaceTexture()));
+        preview.setOnPreviewOutputUpdateListener(output -> mtextureView.setSurfaceTexture(output.getSurfaceTexture()));
 
         final ImageAnalysisConfig imageAnalysisConfig =
                 new ImageAnalysisConfig.Builder()

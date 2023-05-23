@@ -24,9 +24,10 @@ public class GridOverlayView extends View {
     private void init() {
         mGridPaint = new Paint();
         mGridPaint.setColor(Color.WHITE);
-        mGridPaint.setStrokeWidth(1);
+        mGridPaint.setStrokeWidth(2); // 선의 굵기를 2로 설정
         mGridPaint.setStyle(Paint.Style.STROKE);
-        mGridPaint.setPathEffect(new DashPathEffect(new float[]{10, 10}, 0));
+        // 점선 대신 실선으로 설정
+        mGridPaint.setPathEffect(null);
     }
 
     @Override
