@@ -51,5 +51,5 @@
   "devDependencies": {
     "file-loader": "^6.2.0"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://192.168.37.158:8080"
 }

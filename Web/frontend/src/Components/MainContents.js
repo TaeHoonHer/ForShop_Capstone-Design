@@ -55,7 +55,7 @@ function MainContents() {
         {conimages.slice(0, visibleImages).map((image, index) => (
           <div className={`bg${index + 2}`} key={index}>
             <Link to = '/main/board'>
-              <img src={image.src} alt={image.alt} />
+              <img src={image.src} alt={image.alt} id='imageList'/>
             </Link>
           </div>
         ))}

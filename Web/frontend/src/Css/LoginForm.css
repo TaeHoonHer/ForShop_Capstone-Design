@@ -335,3 +335,18 @@
     border: none;
     cursor: pointer;
 }
+
+.suCheck {
+    width: 21%;
+    height : 45px;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+    font-weight: 600;
+    border : none;
+    border-radius: 20px;
+}
+
+.suCheck:hover {
+    animation: jellyAnimation 0.5s;
+}

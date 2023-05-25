@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainHeader.css';
+import axios from 'axios';
 
 const UPLink = styled(Link)`
   display: flex;
@@ -37,7 +38,6 @@ const DownLink = styled.button`
 `;
 
 const MainHeaderWrapper = styled.div`
-  position : abolsolute;
   top : 0;
   left : 0;
   margin : 0;
@@ -102,6 +102,14 @@ function MainHeader() {
     }
   };
 
+  useEffect(() => {
+    try {
+      axios.get('/api/auth/user').then((response)=>console.log(response));
+    } catch(error) {
+      console.log("Fail");
+    }
+  });
+  
   return (
     <MainHeaderWrapper id='main-header'>
       <Logo>
