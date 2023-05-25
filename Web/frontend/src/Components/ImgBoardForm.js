@@ -1,5 +1,4 @@
 import React from 'react';
-import DetailHeader from './DetailHeader';
 import styled from 'styled-components';
 
 const ImgBoardWrapper = styled.div`

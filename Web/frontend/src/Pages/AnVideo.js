@@ -140,14 +140,25 @@ const ProgressBar = styled.div`
   border-radius : 30px;
 `;
 
+const AnalysisBox = styled.div`
+  width: 100%;
+  height: 100%;
+  border: 2px solid #f386fd;
+  border-radius: 15px;
+  display: ${({ show }) => (show ? 'block' : 'none')};
+  z-index : 3;
+`;
+
 function AnVideo() {
 
   const [showProgress, setShowProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
+  const [showAnalysisBox, setShowAnalysisBox] = useState(false);
   const intervalRef = useRef();
 
   const startProgress = () => {
     setShowProgress(true);
+    setShowAnalysisBox(true);
     
     const interval = setInterval(() => {
       setProgressValue((prevValue) => {
@@ -195,7 +206,10 @@ function AnVideo() {
                         </SelectForm>
                     </div>
                 </FormHead>
-                <AnVideoForm/>
+                <AnVideoForm style={{ display: showAnalysisBox ? 'none' : 'block' }}/>
+                <AnalysisBox sho={showAnalysisBox}>
+
+                </AnalysisBox>
                 {showProgress ? (
                   <ProgressBarWrapper>
                     <ProgressBar value={progressValue} />

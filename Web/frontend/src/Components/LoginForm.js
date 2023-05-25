@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../Css/LoginForm.css';
 
@@ -6,23 +7,52 @@ function LoginForm() {
   const squareArr = Array.from({ length: 5 }, (_, i) => i);
   const colorArr = Array.from({ length: 3 }, (_, i) => i);
 
-  const [password, setPassword] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
   const [nickname, setNickname] = useState('');
-  const [userID, setUserID] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
+  const [userId, setUserId] = useState('');
+  const [email, setEmail] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleFormLogin = async (event) => {
+    event.preventDefault();
+
+    const lgData = {
+      userId,
+      userPassword
+    };
+
+    try {
+      const rsData = await axios.post('/api/auth/login', lgData).then((response) => {
+        const token = response.
+      });
+    } catch (error) {
+      if (error.rsData && error.rsData.status === 401) {
+        alert('입력하신 비밀번호 정보가 일치하지 않습니다.');
+      } else {
+        console.log(error);
+      }
+    }
+  }
 
   const handleFormSubmit = async () => {
     const user = {
       nickname,
-      userID,
-      password,
-      emailAddress
+      userId,
+      userPassword,
+      email
     };
 
     try {
-      const response = await axios.post('localhost:8080', user);
+      const response = await axios.post('/api/auth/signup', user).then(
+        // 회원가입 요청이 성공했으므로 사이드바를 닫습니다.
+        setSidebarOpen(false),
+
+        // 페이지를 /login으로 이동시킵니다.
+        navigate('/login')
+      );
     } catch (error) {
       console.log(error);
     }
@@ -37,6 +67,11 @@ function LoginForm() {
 
   const handleDuplicateCheck = () => {
     // 중복 확인 로직 작성
+  };
+
+  const redirectUrl = (event) => {
+    event.preventDefault();
+    window.location.href = 'http://192.168.37.158:8080/oauth2/authorization/kakao';
   };
 
   return (
@@ -60,11 +95,21 @@ function LoginForm() {
         <ul className="menu">
           SignUp
           <li>
-            <input type="text" placeholder="NickName" />
+            <input 
+              type="text" 
+              placeholder="NickName" 
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)} 
+            />
           </li>
           <li>
             <div className="input-with-button">
-              <input type="text" placeholder="UserID" />
+              <input 
+                type="text" 
+                placeholder="UserID" 
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+              />
               <button onClick={handleDuplicateCheck}>중복확인</button>
             </div>
           </li>
@@ -72,8 +117,8 @@ function LoginForm() {
             <input
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
             />
           </li>
           <li>
@@ -85,7 +130,7 @@ function LoginForm() {
                 onChange={(e) => setPasswordCheck(e.target.value)}
                 className='input-full-width'
               />
-              {password && passwordCheck && password !== passwordCheck && (
+              {userPassword && passwordCheck && userPassword !== passwordCheck && (
                 <p class="error-message" style={{ color: 'red', fontSize: '10px' }}>
                   입력하신 정보와 일치하지 않습니다. 다시 입력해주세요.
                 </p>
@@ -93,10 +138,15 @@ function LoginForm() {
             </div>
           </li>
           <li>
-            <input type="email" placeholder="EmailAddress" />
+            <input 
+              type="email" 
+              placeholder="EmailAddress"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)} 
+            />
           </li>
           <li>
-            <button type="button" onClick={handleFormSubmit}>확인</button>
+            <button className='suCheck' type="button" onClick={handleFormSubmit}>확인</button>
           </li>
         </ul>
       </div>
@@ -113,17 +163,27 @@ function LoginForm() {
               <h2>Login Form</h2>
               <form>
                 <div className="inputBox">
-                  <input type="text" placeholder="UserID" />
+                  <input 
+                  type="text" 
+                  placeholder="UserID" 
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                  />
                 </div>
                 <div className="inputBox">
-                  <input type="password" placeholder="Password" /> 
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={userPassword}
+                    onChange={(e) => setUserPassword(e.target.value)}
+                  />
                 </div>
                 <div className="inputBox">
                   <div className="submitContainer">
-                    <input type="submit" value="Login" />
+                    <input type="submit" value="Login" onClick={handleFormLogin}/>
                   </div>
                   <div className="kakaoButtonContainer">
-                    <button className="kakaoButton">
+                    <button className="kakaoButton" onClick={redirectUrl}>
                       <img src="/img/kakao_login.png" alt="Kakao Login" />
                     </button>
                   </div>
