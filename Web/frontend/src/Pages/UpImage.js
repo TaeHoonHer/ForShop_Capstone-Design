@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import UpImgForm from '../Components/UpImgForm';
 import '../Css/UpImage.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const UpImgFormWrapper = styled.div`
   width: 100vw;
@@ -104,6 +104,9 @@ const PopupWrapper = styled.div`
 function UpImage() {
   const [popupVisible, setPopupVisible] = useState(false);
 
+  const location = useLocation();
+  const videoData = new URLSearchParams(location.search).get("video");
+
   const handlePopupOpen = () => {
     setPopupVisible(true);
   };
@@ -122,10 +125,10 @@ function UpImage() {
                         <Link to ="/upload">
                             <LeftArrow img src ="/img/left-arrow.png"/>
                         </Link>
-                        <h2>Image Upload</h2>
+                        <h2>Upload</h2>
                     </div>
                 </FormHead>
-                <UpImgForm />
+                <UpImgForm video={videoData}/>
                 <CheckBtn className="CheckBtn">
                     <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
                 </CheckBtn>

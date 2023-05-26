@@ -19,12 +19,3 @@
   .CheckBtn:hover {
     animation: jellyAnimation 0.5s;
   }
-
-
-  .upMenu:hover {
-    color : #f386fd;
-  }
-
-  .anMenu {
-    color : #f386fd;
-  }

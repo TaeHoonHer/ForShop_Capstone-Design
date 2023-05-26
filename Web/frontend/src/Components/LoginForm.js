@@ -76,7 +76,7 @@ function LoginForm() {
 
   const redirectUrl = (event) => {
     event.preventDefault();
-    window.location.href = 'http://192.168.37.158:8080/oauth2/authorization/kakao';
+    window.location.href = 'http://192.168.0.11:8080/oauth2/authorization/kakao';
   };
 
   return (
@@ -114,6 +114,11 @@ function LoginForm() {
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
               />
+              {(userId.length < 7 || userId.length > 25) && (
+                <p class="error-message" style={{ color: 'red', fontSize: '10px' }}>
+                  아이디는 7~25자입니다. 다시 입력해주세요.
+                </p>
+              )}
           </li>
           <li>
             <input
@@ -122,6 +127,11 @@ function LoginForm() {
               value={userPassword}
               onChange={(e) => setUserPassword(e.target.value)}
             />
+            {(userPassword.length < 8 || userPassword.length > 30) && (
+                <p class="error-message" style={{ color: 'red', fontSize: '10px' }}>
+                  비밀번호는 8~30자 입니다. 다시 입력해주세요.
+                </p>
+              )}
           </li>
           <li>
             <div style={{ width:'100%', position : 'relative', margin: '0', padding: '0' }}>
