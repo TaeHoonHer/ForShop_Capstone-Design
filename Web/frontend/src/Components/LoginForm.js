@@ -18,18 +18,27 @@ function LoginForm() {
 
   const handleFormLogin = async (event) => {
     event.preventDefault();
-
+  
     const lgData = {
       userId,
       userPassword
     };
-
+  
     try {
-      const rsData = await axios.post('/api/auth/login', lgData).then((response) => {
-        const token = response.
-      });
+      const response = await axios.post('/api/auth/login', lgData);
+      
+      // Assuming your response data includes both access token and refresh token
+      const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
+      
+      // Store both tokens in local storage
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+  
+      // Set the default authorization header to use the access token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (error) {
-      if (error.rsData && error.rsData.status === 401) {
+      if (error.response && error.response.status === 401) {
         alert('입력하신 비밀번호 정보가 일치하지 않습니다.');
       } else {
         console.log(error);
@@ -65,13 +74,9 @@ function LoginForm() {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  const handleDuplicateCheck = () => {
-    // 중복 확인 로직 작성
-  };
-
   const redirectUrl = (event) => {
     event.preventDefault();
-    window.location.href = 'http://192.168.37.158:8080/oauth2/authorization/kakao';
+    window.location.href = 'http://192.168.0.11:8080/oauth2/authorization/kakao';
   };
 
   return (
@@ -103,15 +108,17 @@ function LoginForm() {
             />
           </li>
           <li>
-            <div className="input-with-button">
               <input 
                 type="text" 
-                placeholder="UserID" 
+                placeholder="UserID"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
               />
-              <button onClick={handleDuplicateCheck}>중복확인</button>
-            </div>
+              {(userId.length < 7 || userId.length > 25) && (
+                <p class="error-message" style={{ color: 'red', fontSize: '10px' }}>
+                  아이디는 7~25자입니다. 다시 입력해주세요.
+                </p>
+              )}
           </li>
           <li>
             <input
@@ -120,6 +127,11 @@ function LoginForm() {
               value={userPassword}
               onChange={(e) => setUserPassword(e.target.value)}
             />
+            {(userPassword.length < 8 || userPassword.length > 30) && (
+                <p class="error-message" style={{ color: 'red', fontSize: '10px' }}>
+                  비밀번호는 8~30자 입니다. 다시 입력해주세요.
+                </p>
+              )}
           </li>
           <li>
             <div style={{ width:'100%', position : 'relative', margin: '0', padding: '0' }}>

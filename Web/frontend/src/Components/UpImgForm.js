@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import '../Css/UpImgForm.css';
 
@@ -29,6 +29,12 @@ const Image = styled.div`
   img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
+  }
+
+  video {
+    width : 100%;
+    height : 100%;
     object-fit: contain;
   }
 `;
@@ -126,8 +132,16 @@ const FormContents = styled.div`
   display: flex;
 `;
 
-function UpImgForm() {
-    const [imageFile, setImageFile] = useState(null);
+function UpImgForm({ video }) {
+    const [mediaFile, setMediaFile] = useState(null);
+    const [isVideo, setIsVideo] = useState(false);
+
+    useEffect(() => {
+      if (video) {
+        setMediaFile(video);
+        setIsVideo(true);
+      }
+    }, [video]);
   
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -136,16 +150,11 @@ function UpImgForm() {
 
     const handleFileUpload = useCallback((file) => {
       if (file) {
-        // Check if the file is an image
-        if (!file.type.startsWith('image/')) {
-          alert('이미지 데이터만 가능합니다.');
-          return;
-        }
-    
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-          setImageFile(reader.result);
+          setMediaFile(reader.result);
+          setIsVideo(file.type.startsWith('video'));
         };
       } else {
         alert('No file chosen.');
@@ -166,9 +175,13 @@ function UpImgForm() {
       <FormBox onDrop={handleDrop} onDragOver={handleDragOver}>
       <FormContents>
         <ImageBox>
-          {imageFile ? (
+          {mediaFile ? (
             <Image>
-              <img src={imageFile} />
+              {isVideo ? (
+                <video src={mediaFile} autoPlay muted/>
+              ) : (
+                <img src={mediaFile} />
+              )}
             </Image>
           ) : (
             <UploadPrompt>

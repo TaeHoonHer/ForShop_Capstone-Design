@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import AnVideoForm from '../Components/AnVideoForm';
 import '../Css/AnVideo.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AnVdFormWrapper = styled.div`
   overflow : hidden;
@@ -54,9 +54,6 @@ const FormHead = styled.div`
   align-items: center;
 
   h2 {
-    position : absolute;
-    top : 0;
-    left : 38%;
     font-size: 2rem;
     text-align: center;
     letter-spacing: 2px;
@@ -95,46 +92,32 @@ const CheckBtn = styled.button`
   }
 `;
 
-const SelectForm = styled.div`
-  position : absolute;
-  top : 13px;
-  left : 83%;
-  width : 100%;
-  height : 50px;
+const ProgressBox = styled.div`
+  display : flex;
+  flex-direction : column;
   margin : 0;
   padding : 0;
-  display : flex;
-
-  button {
-    background : transparent;
-    border : none;
-    cursor : pointer;
-    font-size : 15px;
-  }
-`;
-
-const SelLink = styled(Link)`
-  background : transparent;
-  border : none;
-  margin-left : 10px;
-  padding-right : 10px;
+  justify-content : center;
+  align-items : center;
 `;
 
 const ProgressBarWrapper = styled.div`
   position: absolute;
   bottom: -10px;
   width: 80%;
-  height: 50px;
+  height: 30px;
   z-index: 3;
-  background-color: #f386fd;
+  background-color: white;
+  border : 2px solid #f386fd;
   box-sizing: border-box; // Include padding and border in the element's total width and height
   border-radius : 30px;
+  box-shadow : 2px 4px 10px #ddd;
 `;
 
 const ProgressBar = styled.div`
   width: ${({ value }) => `${value}%`};
   height: 100%;
-  background-color: #4caf50;
+  background-image: linear-gradient(#f386fd, #efc0f3);
   transition: width 0.5s ease-in-out;
   box-sizing: border-box; // Include padding and border in the element's total width and height
   border-radius : 30px;
@@ -142,21 +125,32 @@ const ProgressBar = styled.div`
 
 const AnalysisBox = styled.div`
   width: 100%;
-  height: 100%;
-  border: 2px solid #f386fd;
-  border-radius: 15px;
+  height: 75%;
+  border : none;
+  box-shadow : 1px 3px 4px #ddd;
+  border-radius : 0 0 20px 20px;
   display: ${({ show }) => (show ? 'block' : 'none')};
   z-index : 3;
 `;
 
 function AnVideo() {
+  const [videoFile1, setVideoFile1] = useState(null);
+  const [videoFile2, setVideoFile2] = useState(null);
 
   const [showProgress, setShowProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
   const [showAnalysisBox, setShowAnalysisBox] = useState(false);
   const intervalRef = useRef();
 
+  const navigate = useNavigate();
+
   const startProgress = () => {
+
+    if (!videoFile1 || !videoFile2) {
+      alert('파일을 모두 업로드 해주세요.');
+      return;
+    }
+
     setShowProgress(true);
     setShowAnalysisBox(true);
     
@@ -177,13 +171,14 @@ function AnVideo() {
     if (progressValue >= 100) {
       clearInterval(intervalRef.current);
       setShowProgress(false);
+      navigate("/anvideo/result");
     }
 
     // Component unmount시에 interval을 clear
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, [progressValue]);
+  }, [progressValue, navigate]);
 
     return (
         <AnVdFormWrapper>
@@ -195,25 +190,26 @@ function AnVideo() {
                         <Link to ="/upload">
                             <LeftArrow img src ="/img/left-arrow.png"/>
                         </Link>
-                        <h2>Video Analyze</h2>
-                        <SelectForm>
-                          <SelLink to = '/upvideo'>
-                            <button type = "button" className='upMenu'>UpLoad</button>
-                          </SelLink>
-                          <SelLink to = '/anvideo'>
-                            <button type = "button" className='anMenu'>Analyze</button>
-                          </SelLink>
-                        </SelectForm>
+                        <h2>Analysis</h2>
                     </div>
                 </FormHead>
-                <AnVideoForm style={{ display: showAnalysisBox ? 'none' : 'block' }}/>
-                <AnalysisBox sho={showAnalysisBox}>
-
+                <AnVideoForm
+                  isVisible={!showAnalysisBox}
+                  onUpload={(video1, video2) => {
+                    setVideoFile1(video1);
+                    setVideoFile2(video2);
+                  }}
+                  />
+                <AnalysisBox show={showAnalysisBox}>
+                  룰루
                 </AnalysisBox>
                 {showProgress ? (
-                  <ProgressBarWrapper>
-                    <ProgressBar value={progressValue} />
-                  </ProgressBarWrapper>
+                  <ProgressBox>
+                    <p>Loading...</p>
+                    <ProgressBarWrapper>
+                      <ProgressBar value={progressValue} />
+                    </ProgressBarWrapper>
+                  </ProgressBox>
                 ) : (
                   <CheckBtn className="CheckBtn">
                     <button type='button' onClick={startProgress} className='check'>Start!</button>

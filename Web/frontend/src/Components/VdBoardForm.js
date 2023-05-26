@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../Css/ImgBoardForm.css';
+import '../Css/VdBoardForm.css';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,7 +13,6 @@ function ImgBoardForm() {
   const title = query.get("title");
   const src = query.get("src");
   const ct = query.get("content");
-  const keyword = query.get("keyword") ? query.get("keyword").split(" ").map(word => `# ${word}`).join(" ") : "";
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -35,10 +34,8 @@ function ImgBoardForm() {
   return (
     <div className='ImgboardWrapper'>
         <div className='boardBox'>
-            <div className='imgContainer'>
-                <div className='imgBox'>
-                    <img src={src} alt={title} />
-                </div>
+            <div className='vdContainer'>
+              <video src={src} alt={title} autoPlay muted/>
             </div>
             <div className='chatbox'>
                 <div className='idBox'>
@@ -47,7 +44,6 @@ function ImgBoardForm() {
                 </div>
                 <div className='titleBox'>
                     <h2>{title}</h2>
-                    <h3>{keyword}</h3>
                 </div>
                 <div className='ctBox'>
                     <p>{ct}</p>
