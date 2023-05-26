@@ -1,12 +1,16 @@
 import '../Css/Banner.css'
 import React, { useState } from 'react';
 
-function Banner() {
+function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue}) {
     const [keyword, setKeyword] = useState('Keyword');
 
     const handleSelectChange = (event) => {
-        setKeyword(event.target.value);
+        setSelectedKeyword(event.target.value);
     };
+
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    }
 
     const dropdownStyle = {
         color: '#f386fd',
@@ -26,7 +30,7 @@ function Banner() {
                     <option value="ID" style={dropdownStyle}>ID</option>
                 </select>
                 <img src="../img/search.png"/>
-                <input className='searchIn' placeholder={keyword + ' 검색'}></input>
+                <input className='searchIn' placeholder={selectedKeyword + ' 검색'} onChange={handleInputChange}></input>
             </div>
         </div>
     );

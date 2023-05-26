@@ -1,0 +1,122 @@
+.resultWrapper {
+    width : 90%;
+    height : 90%;
+    margin : 0;
+    padding : 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultTitle {
+    width : 100%;
+    height : 10%;
+    display : flex;
+    justify-content: center;
+    margin : 0;
+    padding : 0;
+    align-items: center;
+}
+
+.resultTitle p {
+    font-size: 1em;
+    color: black;
+    text-align: center;
+}
+
+.ResultBox {
+    width : 100%;;
+    height : 90%;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    margin : 0;
+    padding : 0;
+    border : 1px solid #f386fd;
+    border-radius: 10px;
+}
+
+.ResultContents {
+    width : 50%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResultContents video {
+    width : 100%;
+    height : 60%;
+    margin : 0;
+    padding : 0;
+    object-fit: cover;
+}
+
+.ResultContents p {
+    font-size: 1em;
+    color: black;
+    font-weight: 800;
+}
+
+.ResultDetails {
+    width : 50%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chartBox {
+    width : 100%;
+    height : 70%;
+    margin : 0;
+    padding : 0;
+}
+
+.detailBox {
+    width : 100%;
+    height : 30%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailBox button {
+    width : 70px;
+    height : 40px;
+    background-color: #f386fd;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 1px 3px 5px #ddd;
+}
+
+.detailBox button:hover {
+    animation : jellyAnimation 0.3s;
+}
+
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

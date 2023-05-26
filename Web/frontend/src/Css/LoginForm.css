@@ -25,7 +25,7 @@
   background: #f098f8;
   color : #fff;
   transition : 0.5s;
-  padding : 40px;
+  padding : 50px;
   z-index : 98;
   font-size: 30px;
 }
@@ -47,41 +47,13 @@
     align-items: center;
 }
 
-.input-with-button {
-    width : 100%;
-    display : flex;
-    margin : 0;
-    padding : 0;
-    justify-content: center;
-    align-items: center;
-}
-
-.input-with-button input {
-    width : 77%;
-}
-
-.input-with-button button {
-  width: 21%;
-  height : 45px;
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-  margin-left: 10px;
-  font-weight: 600;
-  border : none;
-  border-radius: 20px;
-}
-
-.input-with-button button:hover {
-    animation: jellyAnimation 0.5s;
-}
-
 .sidebar ul li input {
   width : 77%;
   background: rgba(255, 255, 255, 0.2);
   border : none;
   outline: none;
   padding : 10px 20px;
+  margin-left: 10%;
   border-radius: 35px;
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
   border : 1px solid rgba(255, 255, 255, 0.5);
@@ -93,13 +65,15 @@
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
 }
 
-.sidebar ul li input[type="submit"] {
+.sidebar button {
   background: #fff;
-  color: #666;
+  color: #333;
   max-width: 100px;
   cursor: pointer;
   margin-bottom: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 1px 3px 4px #f386fd;
 }
 
 .sidebar ul li input[type="submit"]:hover {
@@ -137,7 +111,7 @@
 .error-message {
     position: absolute;
     bottom: -20px; 
-    left: 5px;
+    left: 45px;
     color: red;
     font-size: 12px;
 }
@@ -345,6 +319,7 @@
     font-weight: 600;
     border : none;
     border-radius: 20px;
+    margin-left: 10%;
 }
 
 .suCheck:hover {

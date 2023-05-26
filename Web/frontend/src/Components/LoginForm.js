@@ -18,18 +18,27 @@ function LoginForm() {
 
   const handleFormLogin = async (event) => {
     event.preventDefault();
-
+  
     const lgData = {
       userId,
       userPassword
     };
-
+  
     try {
-      const rsData = await axios.post('/api/auth/login', lgData).then((response) => {
-        const token = response.
-      });
+      const response = await axios.post('/api/auth/login', lgData);
+      
+      // Assuming your response data includes both access token and refresh token
+      const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
+      
+      // Store both tokens in local storage
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+  
+      // Set the default authorization header to use the access token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (error) {
-      if (error.rsData && error.rsData.status === 401) {
+      if (error.response && error.response.status === 401) {
         alert('입력하신 비밀번호 정보가 일치하지 않습니다.');
       } else {
         console.log(error);
@@ -63,10 +72,6 @@ function LoginForm() {
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleDuplicateCheck = () => {
-    // 중복 확인 로직 작성
   };
 
   const redirectUrl = (event) => {
@@ -103,15 +108,12 @@ function LoginForm() {
             />
           </li>
           <li>
-            <div className="input-with-button">
               <input 
                 type="text" 
-                placeholder="UserID" 
+                placeholder="UserID"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
               />
-              <button onClick={handleDuplicateCheck}>중복확인</button>
-            </div>
           </li>
           <li>
             <input

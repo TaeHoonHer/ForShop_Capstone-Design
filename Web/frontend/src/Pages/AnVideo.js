@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import AnVideoForm from '../Components/AnVideoForm';
 import '../Css/AnVideo.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAnimations } from '@react-three/drei';
 
 const AnVdFormWrapper = styled.div`
   overflow : hidden;
@@ -142,7 +143,7 @@ const ProgressBar = styled.div`
 
 const AnalysisBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 75%;
   border: 2px solid #f386fd;
   border-radius: 15px;
   display: ${({ show }) => (show ? 'block' : 'none')};
@@ -155,6 +156,8 @@ function AnVideo() {
   const [progressValue, setProgressValue] = useState(0);
   const [showAnalysisBox, setShowAnalysisBox] = useState(false);
   const intervalRef = useRef();
+
+  const navigate = useNavigate();
 
   const startProgress = () => {
     setShowProgress(true);
@@ -177,13 +180,14 @@ function AnVideo() {
     if (progressValue >= 100) {
       clearInterval(intervalRef.current);
       setShowProgress(false);
+      navigate("/anvideo/result");
     }
 
     // Component unmount시에 interval을 clear
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, [progressValue]);
+  }, [progressValue, navigate]);
 
     return (
         <AnVdFormWrapper>
@@ -206,9 +210,9 @@ function AnVideo() {
                         </SelectForm>
                     </div>
                 </FormHead>
-                <AnVideoForm style={{ display: showAnalysisBox ? 'none' : 'block' }}/>
-                <AnalysisBox sho={showAnalysisBox}>
-
+                <AnVideoForm isVisible={!showAnalysisBox}/>
+                <AnalysisBox show={showAnalysisBox}>
+                  룰루
                 </AnalysisBox>
                 {showProgress ? (
                   <ProgressBarWrapper>

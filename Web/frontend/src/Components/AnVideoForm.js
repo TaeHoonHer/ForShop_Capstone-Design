@@ -57,7 +57,7 @@ const FormContents = styled.div`
   display: flex;
 `;
 
-function AnVideoForm() {
+function AnVideoForm({ isVisible }) {
   const [videoFile1, setVideoFile1] = useState(null); // 첫 번째 비디오 파일 상태
   const [videoFile2, setVideoFile2] = useState(null); // 두 번째 비디오 파일 상태
 
@@ -99,7 +99,7 @@ function AnVideoForm() {
   };
 
   return (
-    <FormBox>
+    <FormBox style ={{ display: isVisible ? 'flex' : 'none' }}>
       <FormContents>
         <VideoBox onDrop={(event) => handleDrop(event, 1)} onDragOver={handleDragOver}> {/* 첫 번째 드롭 영역 */}
           {videoFile1 ? (
