@@ -14,7 +14,7 @@ function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue}) {
 
     const dropdownStyle = {
         color: '#f386fd',
-        fontSize: '7px',
+        fontSize: '12px',
         border: 'none'
     };
 
@@ -25,7 +25,7 @@ function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue}) {
             </video>
             <h2>4Shop</h2>
             <div className='search'>
-                <select value={keyword} onChange={handleSelectChange} style={dropdownStyle} className='scSelect'>
+                <select value={selectedKeyword} onChange={handleSelectChange} style={dropdownStyle} className='scSelect'>
                     <option value="Keyword" style={dropdownStyle}>Keyword</option>
                     <option value="ID" style={dropdownStyle}>ID</option>
                 </select>

@@ -10,7 +10,8 @@
 
 .ContentsContainer div {
     position: relative;
-    padding-bottom: 100%;
+    padding-bottom: 80%;
+    overflow: hidden;
 }
 
 .ContentsContainer img {
@@ -100,6 +101,6 @@
     display: none;
   }
   
-  .image-container:hover .imageInfo {
+  .image-container img:hover ~ .imageInfo {
     display: block;
-  }
+}

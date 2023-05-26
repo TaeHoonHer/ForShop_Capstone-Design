@@ -20,11 +20,7 @@ function ImgBoardForm() {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-
-    // Add new comment to comments array
     setComments([...comments, newComment]);
-
-    // Clear input field
     setNewComment('');
   }
 
