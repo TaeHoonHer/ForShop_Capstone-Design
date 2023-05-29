@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../Css/ImgBoardForm.css';
+import axios from 'axios';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -18,11 +19,42 @@ function ImgBoardForm() {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios.get(`/api/comments/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}` 
+        }
+    }).then(response => {
+        if(response.status === 200) {
+          setComments(response.data);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+  },[]);
+
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    setComments([...comments, newComment]);
-    setNewComment('');
-  }
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios.post(`/api/comments/${id}`, { text: newComment }, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}` 
+        }
+    }).then(response => {
+        if(response.status === 200) {
+          setComments([...comments, response.data]);
+          setNewComment('');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+  };
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -58,7 +90,7 @@ function ImgBoardForm() {
                     <form onSubmit={handleCommentSubmit}>
                         <input 
                         type="text" 
-                        value={newComment} 
+                        value={newComment}
                         onChange={handleCommentChange} 
                         placeholder="Write a comment..."
                         />

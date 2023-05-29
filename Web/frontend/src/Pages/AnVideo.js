@@ -4,6 +4,7 @@ import DetailHeader from '../Components/DetailHeader';
 import AnVideoForm from '../Components/AnVideoForm';
 import '../Css/AnVideo.css';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AnVdFormWrapper = styled.div`
   overflow : hidden;
@@ -123,48 +124,54 @@ const ProgressBar = styled.div`
   border-radius : 30px;
 `;
 
-const AnalysisBox = styled.div`
-  width: 100%;
-  height: 75%;
-  border : none;
-  box-shadow : 1px 3px 4px #ddd;
-  border-radius : 0 0 20px 20px;
-  display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index : 3;
-`;
-
 function AnVideo() {
   const [videoFile1, setVideoFile1] = useState(null);
   const [videoFile2, setVideoFile2] = useState(null);
 
   const [showProgress, setShowProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
-  const [showAnalysisBox, setShowAnalysisBox] = useState(false);
   const intervalRef = useRef();
 
   const navigate = useNavigate();
 
-  const startProgress = () => {
+  const startProgress = async () => {
 
     if (!videoFile1 || !videoFile2) {
-      alert('파일을 모두 업로드 해주세요.');
+      alert('Please upload all files.');
       return;
     }
-
+  
     setShowProgress(true);
-    setShowAnalysisBox(true);
-    
-    const interval = setInterval(() => {
-      setProgressValue((prevValue) => {
-        // If the value is already 100, return it as is
-        if (prevValue >= 100) {
-          clearInterval(interval);
-          return prevValue;
+  
+    const formData = new FormData();
+    formData.append('video1', videoFile1);
+    formData.append('video2', videoFile2);
+  
+    const accessToken = localStorage.getItem('accessToken');
+  
+    // POST video files to server
+    try {
+      const response = await axios.post('/api/uploadVideo', formData, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: function(progressEvent) {
+          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgressValue(percentCompleted);
         }
-        // Otherwise, increment the value
-        return prevValue + 10;
       });
-    }, 1000);
+    
+      if (response.data.status !== 200) {
+        console.log("Failed to upload videos due to server error.");
+        return;
+      }
+    
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -194,18 +201,14 @@ function AnVideo() {
                     </div>
                 </FormHead>
                 <AnVideoForm
-                  isVisible={!showAnalysisBox}
                   onUpload={(video1, video2) => {
                     setVideoFile1(video1);
                     setVideoFile2(video2);
                   }}
-                  />
-                <AnalysisBox show={showAnalysisBox}>
-                  룰루
-                </AnalysisBox>
+                />
                 {showProgress ? (
                   <ProgressBox>
-                    <p>Loading...</p>
+                    <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
                     <ProgressBarWrapper>
                       <ProgressBar value={progressValue} />
                     </ProgressBarWrapper>

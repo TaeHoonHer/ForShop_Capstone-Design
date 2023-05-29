@@ -44,7 +44,7 @@ const routes = [
         component: AnVideoResult
     },
     {
-        path: '/main-video',
+        path: '/mainvideo',
         component: MainVideo
     },
     {

@@ -5,17 +5,17 @@ import '../Css/Chart.css';
 
 ChartJS.register(...registerables);
 
-function Chart() {
+function Chart({ time, rate }) {
     const chartRef = useRef(null);
     const myChart = useRef(null);
 
     useEffect(() => {
         // Prepare the data
         const data = {
-            labels: Array.from({ length: 12 }, (_, i) => (i + 1) * 5), // Create an array [5, 10, 15, ..., 60]
+            labels: time, // Use time prop for labels
             datasets: [{
                 label: 'Accuracy',
-                data: Array.from({ length: 12 }, () => Math.floor(Math.random() * 101)), // Create an array of 60 random values
+                data: rate, // Use rate prop for data
                 fill: false,
                 borderColor: '#f386fd', // Change line color
                 tension: 0.1
@@ -62,7 +62,7 @@ function Chart() {
         return () => {
             myChart.current.destroy();
         };
-    }, []);
+    }, [time, rate]); // Add time and rate to the dependency array to update the chart when these props change
 
     return (
         <div className='chartWrapper'>

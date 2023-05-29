@@ -9,6 +9,7 @@ const NextLink = styled(Link)`
 `;
 
 function Best() {
+
   const levelvideos = [
     { src: '/img/new1.mp4', alt: 'video1' },
     { src: '/img/new2.mp4', alt: 'video2' },

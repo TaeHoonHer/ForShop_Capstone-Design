@@ -18,7 +18,7 @@ function LoginForm() {
 
   const handleFormLogin = async (event) => {
     event.preventDefault();
-  
+
     const lgData = {
       userId,
       userPassword
@@ -26,17 +26,19 @@ function LoginForm() {
   
     try {
       const response = await axios.post('/api/auth/login', lgData);
-      
-      // Assuming your response data includes both access token and refresh token
+
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
+  
+      if (response.data.status === 200) {
+        navigate('/main');
+      } else { 
+        navigate('/login');
+        alert('로그인 오류')
+      }
       
-      // Store both tokens in local storage
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-  
-      // Set the default authorization header to use the access token
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (error) {
       if (error.response && error.response.status === 401) {
         alert('입력하신 비밀번호 정보가 일치하지 않습니다.');

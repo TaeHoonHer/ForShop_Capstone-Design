@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import '../Css/DetailHeader.css';
+import axios from 'axios';
 
 const UPLink = styled(Link)`
   display: flex;
@@ -53,6 +54,29 @@ const MenuItem = styled.li`
 `;
 
 function DetailHeader() {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        
+        const response = await axios.get('/api/auth/user', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        if (response.data.stauts === 200) {
+          setUserId(response.data.userId);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <DetailHeaderWrapper id='detail-header'>
@@ -73,7 +97,9 @@ function DetailHeader() {
         <MenuItem>
           <li>
             <Link to='/login'>
-              <p className='nav-link2' style={{ color: '#fd86fd' }}>Login</p>
+            <p className='nav-link2' style={{ color: '#fd86fd' }}>
+                {userId ? `${userId}님` : 'Login'}
+              </p>
             </Link>
           </li>
         </MenuItem>

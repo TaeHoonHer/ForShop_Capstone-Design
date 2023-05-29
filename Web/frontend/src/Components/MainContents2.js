@@ -1,25 +1,48 @@
 import '../Css/MainContents2.css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function MainContents2() {
+function MainContents2({ selectedKeyword, searchValue }) {
     const [visibleVideos, setVisibleVideos] = useState(8);
-    const convideos = [
-        { src: '/img/dance.mp4', id: 1, title: 'video1', content: '하이요1' },
-        { src: '/img/intro3.mp4', id: 2, title: 'video2', content: '하이요2' },
-        { src: '/img/banner.mp4', id: 3, title: 'video3', content: '하이요3' },
-        { src: '/img/new1.mp4', id: 4, title: 'video4', content: '하이요4' },
-        { src: '/img/new2.mp4', id: 5, title: 'video5', content: '하이요5' },
-        { src: '/img/v1.mp4', id: 6, title: 'video6', content: '하이요6' },
-        { src: '/img/v2.mp4', id: 7, title: 'video7', content: '하이요7' },
-        { src: '/img/v3.mp4', id: 8, title: 'video8', content: '하이요8' },
-        { src: '/img/v4.mp4', id: 9, title: 'video9', content: '하이요9' },
-        { src: '/img/v5.mp4', id: 10, title: 'video10', content: '하이요10' },
-    ];
+    const [convideos, setConvideos] = useState([]);
 
-    const handleShowMore = () => {
-        setVisibleVideos(prevVisibleVideos => prevVisibleVideos + 8);
-    };
+    useEffect(() => {
+        const fetchAccessToken = async () => {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+
+                const videoResponse = await axios.get('/api/videos', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+        
+                const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'flv'];
+                const filteredVideos = videoResponse.data.filter(video => {
+                    const extension = video.src.split('.').pop();
+                    return videoExtensions.includes(extension);
+                });
+                setConvideos(filteredVideos);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchAccessToken();
+    }, []);
+
+    const filteredVideos = searchValue === ''
+    ? convideos
+    : convideos.filter((video) => {
+        if (selectedKeyword === 'ID') {
+          return String(video.id) === searchValue;
+        } else if (selectedKeyword === 'Keyword') {
+          return video.keyword.includes(searchValue);
+        } else {
+          return true; // 선택한 키워드가 없을 경우, 모든 이미지를 표시합니다.
+        }
+    });
 
     const containerRef = useRef(null);
 
@@ -28,23 +51,29 @@ function MainContents2() {
         const videoElems = container.querySelectorAll('video');
 
         videoElems.forEach((video, index) => {
-            video.style.animationDelay = '${index * 100}ms';
+            video.style.animationDelay = `${index * 100}ms`;
             video.classList.add('fadeup');
         });
     }, [visibleVideos]);
 
+    const handleShowMore = () => {
+        setVisibleVideos(prevVisibleVideos => prevVisibleVideos + 8);
+    };
+
     return (
         <div className='MainContents'>
             <div className='ContentsContainer' ref={ containerRef }>
-                {convideos.slice(0, visibleVideos).map((video, index) => (
+                {filteredVideos.slice(0, visibleVideos).map((video, index) => (
                   <div className={`bg${index + 2}`} key={index}>
-                    <Link to={`/main/vdboard/?id=${video.id}&title=${video.title}&src=${video.src}&content=${video.content}`}>
-                        <video src={video.src} alt={video.alt} autoPlay loop muted />
+                    <Link to={`/main/vdboard/?id=${video.id}&title=${video.title}&src=${video.src}&content=${video.content}&keyword=${video.keyword}`}>
+                        <video
+                            src={video.src}
+                            alt={video.alt} autoPlay loop muted />
                     </Link>
                   </div>
                 ))}
             </div>
-            {visibleVideos < convideos.length && (
+            {visibleVideos < filteredVideos.length && (
                 <div className='ButtonContainer'>
                   <button className="ShowMoreButton" onClick={handleShowMore}>
                     더 보기

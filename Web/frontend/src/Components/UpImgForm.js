@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import '../Css/UpImgForm.css';
+import axios from 'axios';
 
 const FormBox = styled.form`
   width: 100%;
@@ -132,9 +133,13 @@ const FormContents = styled.div`
   display: flex;
 `;
 
-function UpImgForm({ video }) {
+function UpImgForm(props) {
+    const { video, onUpload } = props;
     const [mediaFile, setMediaFile] = useState(null);
     const [isVideo, setIsVideo] = useState(false);
+    const [title, setTitle] = useState("");
+    const [hashtag, setHashtag] = useState("");
+    const [contents, setContents] = useState("");
 
     useEffect(() => {
       if (video) {
@@ -142,6 +147,23 @@ function UpImgForm({ video }) {
         setIsVideo(true);
       }
     }, [video]);
+
+    const handleTitleChange = (event) => {
+      setTitle(event.target.value);
+    };
+
+    const handleHashtagChange = (event) => {
+      setHashtag(event.target.value);
+    };
+
+    const handleContentsChange = (event) => {
+      setContents(event.target.value);
+    };
+
+    const handleUpload = (e) => {
+      e.preventDefault();
+      onUpload({ title, hashtag, contents, mediaFile });
+    };
   
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -172,7 +194,7 @@ function UpImgForm({ video }) {
     };
 
     return (
-      <FormBox onDrop={handleDrop} onDragOver={handleDragOver}>
+      <FormBox onDrop={handleDrop} onDragOver={handleDragOver} onSubmit={handleUpload}>
       <FormContents>
         <ImageBox>
           {mediaFile ? (
@@ -201,19 +223,15 @@ function UpImgForm({ video }) {
                   <div className="title">
                     <InTitle>
                       <p>Title</p>
-                      <input type="text" className="ttarea" placeholder="제목 입력" />
+                      <input type="text" className="ttarea" placeholder="제목 입력" value={title} onChange={handleTitleChange} />
                     </InTitle>
-                  </div>
-                  <div className="keyword">
                     <InKeyword>
                       <p>HashTag</p>
-                      <input type="text" className="karea" placeholder="키워드 입력" />
+                      <input type="text" className="karea" placeholder="키워드 입력" value={hashtag} onChange={handleHashtagChange} />
                     </InKeyword>
-                  </div>
-                  <div className="contents">
                     <InContents>
                       <p>Contents</p>
-                      <input type="textarea" className="ctarea" placeholder="내용 입력" />
+                      <input type="textarea" className="ctarea" placeholder="내용 입력" value={contents} onChange={handleContentsChange} />
                     </InContents>
                   </div>
                 </div>

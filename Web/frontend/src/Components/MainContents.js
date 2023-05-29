@@ -1,23 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../Css/MainContents.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function MainContents({ selectedKeyword, searchValue }) {
-  const conimages = [
-    { src: '/img/a1.jpg', id: 1, title: 'image1', content: '하이요1', keyword: '산 모두들' },
-    { src: '/img/a2.jpg', id: 2, title: 'image2', content: '하이요2', keyword: '산 모두들' },
-    { src: '/img/a3.jpg', id: 3, title: 'image3', content: '하이요3', keyword: '산 모두들' },
-    { src: '/img/a4.jpg', id: 4, title: 'image4', content: '하이요4', keyword: '산 모두들' },
-    { src: '/img/a5.jpg', id: 5, title: 'image5', content: '하이요5', keyword: '산 모두들' },
-    { src: '/img/a6.jpg', id: 6, title: 'image6', content: '하이요6', keyword: '산 모두들' },
-    { src: '/img/a7.jpg', id: 7, title: 'image7', content: '하이요7', keyword: '산 모두들' },
-    { src: '/img/a8.jpg', id: 8, title: 'image8', content: '하이요8', keyword: '산 모두들' },
-    { src: '/img/b1.jpg', id: 9, title: 'image9', content: '하이요9', keyword: '산 모두들' },
-    { src: '/img/b2.jpg', id: 10, title: 'image10', content: '하이요10', keyword: '산 모두들' },
-    { src: '/img/b3.jpg', id: 11, title: 'image11', content: '하이요11', keyword: '산 모두들' },
-    { src: '/img/b4.jpg', id: 12, title: 'image12', content: '하이요12', keyword: '산 모두들' },
-    /* 서버에서 업로드 이미지 파일들을 받을 곳 */
-  ];
+  const [conimages, setConimages] = useState([
+    
+  ]);
+  const [visibleImages, setVisibleImages] = useState(8); // 초기에 보여지는 이미지 수
+  const [hoveredImage, setHoveredImage] = useState(null);
+
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        
+        const imageResponse = await axios.get('/api/images', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}` 
+          }
+        });
+        
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+        const filteredImages = imageResponse.data.filter(image => {
+          const extension = image.src.split('.').pop();
+          return imageExtensions.includes(extension);
+        });
+        setConimages(filteredImages);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchAccessToken();
+  }, []);
 
   const filteredImages = searchValue === ''
     ? conimages
@@ -27,13 +43,11 @@ function MainContents({ selectedKeyword, searchValue }) {
         } else if (selectedKeyword === 'Keyword') {
           return image.keyword.includes(searchValue);
         } else {
-          return true; // 선택한 키워드가 없을 경우, 모든 이미지를 표시합니다.
+          return true;
         }
   });
 
   const containerRef = useRef(null);
-  const [visibleImages, setVisibleImages] = useState(8); // 초기에 보여지는 이미지 수
-  const [hoveredImage, setHoveredImage] = useState(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -62,7 +76,7 @@ function MainContents({ selectedKeyword, searchValue }) {
       <div className="ContentsContainer" ref={containerRef}>
         {filteredImages.slice(0, visibleImages).map((image, index) => (
           <div className={`bg${index + 2} image-container`} key={index}>
-            <Link to={`/main/imgboard/?id=${image.id}&title=${image.title}&src=${image.src}&content=${image.content}&keyword=${image.keyword}`}>
+            <Link to={`/main/imgboard/?id=${image.userId}&title=${image.title}&src=${image.src}&content=${image.content}&keyword=${image.keyword}`}>
               <img 
                 src={image.src} 
                 alt={image.alt} 

@@ -4,6 +4,7 @@ import DetailHeader from '../Components/DetailHeader';
 import UpImgForm from '../Components/UpImgForm';
 import '../Css/UpImage.css';
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const UpImgFormWrapper = styled.div`
   width: 100vw;
@@ -115,36 +116,63 @@ function UpImage() {
     setPopupVisible(false);
   };
 
-    return (
-        <UpImgFormWrapper>
-            <DetailHeader />
-            <BackgroundOverlay />
-            <FormContainer className='FormContainer'>
-                <FormHead>
-                    <div className='formhead'>
-                        <Link to ="/upload">
-                            <LeftArrow img src ="/img/left-arrow.png"/>
-                        </Link>
-                        <h2>Upload</h2>
-                    </div>
-                </FormHead>
-                <UpImgForm video={videoData}/>
-                <CheckBtn className="CheckBtn">
-                    <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
-                </CheckBtn>
-                <PopupWrapper visible={popupVisible}>
-                  <div class = "popup" id = "popup">
-                    <img src = "/img/checked.png" alt="Success"/>
-                    <h2>Success!</h2>
-                    <p>Your upload has been successfully submitted!</p>
-                    <Link to ="/main">
-                      <button type = "button" class = "chBtn" onClick={handlePopupClose}>OK</button>
-                    </Link>
+  const handleUpload = async (data) => {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('hashtag', data.hashtag);
+    formData.append('contents', data.contents);
+    formData.append('mediaFile', data.mediaFile);
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      const response = await axios.post("YOUR_SERVER_URL", formData, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+
+      if (response.status === 200) {
+        handlePopupOpen(); 
+      } else {
+        console.error("Response status is not 200");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+      <UpImgFormWrapper>
+          <DetailHeader />
+          <BackgroundOverlay />
+          <FormContainer className='FormContainer'>
+              <FormHead>
+                  <div className='formhead'>
+                      <Link to ="/upload">
+                          <LeftArrow img src ="/img/left-arrow.png"/>
+                      </Link>
+                      <h2>Upload</h2>
                   </div>
-                </PopupWrapper>
-            </FormContainer>
-        </UpImgFormWrapper>
-    )
+              </FormHead>
+              <UpImgForm video={videoData} onUpload={handleUpload}/>
+              <CheckBtn className="CheckBtn">
+                  <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
+              </CheckBtn>
+              <PopupWrapper visible={popupVisible}>
+                <div class = "popup" id = "popup">
+                  <img src = "/img/checked.png" alt="Success"/>
+                  <h2>Success!</h2>
+                  <p>Your upload has been successfully submitted!</p>
+                  <Link to ="/main">
+                    <button type = "button" class = "chBtn" onClick={handlePopupClose}>OK</button>
+                  </Link>
+                </div>
+              </PopupWrapper>
+          </FormContainer>
+      </UpImgFormWrapper>
+  )
 }
 
 export default UpImage;

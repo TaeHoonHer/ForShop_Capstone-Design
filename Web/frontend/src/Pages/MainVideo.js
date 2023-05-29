@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../Css/MainVideo.css'
 
 import Banner from '../Components/Banner';
@@ -7,12 +7,15 @@ import MainContents2 from '../Components/MainContents2';
 import Footer from '../Components/Footer';
 
 function MainVideo() {
+    const [selectedKeyword, setSelectedKeyword] = useState('Keyword');
+    const [searchValue, setSearchValue] = useState('');
+
     return (
         <div className='Main'>
             <MainHeader/>
-            <Banner/>
+            <Banner selectedKeyword={selectedKeyword} setSelectedKeyword={setSelectedKeyword} setSearchValue={setSearchValue}/>
             <div className='MainBox'>
-                <MainContents2/>
+                <MainContents2 selectedKeyword={selectedKeyword} searchValue={searchValue}/>
             </div>
             <Footer/>
         </div>

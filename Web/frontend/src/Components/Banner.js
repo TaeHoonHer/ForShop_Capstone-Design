@@ -17,11 +17,11 @@ function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue}) {
         fontSize: '12px',
         border: 'none'
     };
-
+    
     return (
         <div className="Banner">
             <video autoPlay muted loop>
-                <source src="../img/banner.mp4" type="video/mp4"></source>
+                <source src="/img/banner.mp4" type="video/mp4"></source>
             </video>
             <h2>4Shop</h2>
             <div className='search'>
@@ -29,7 +29,7 @@ function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue}) {
                     <option value="Keyword" style={dropdownStyle}>Keyword</option>
                     <option value="ID" style={dropdownStyle}>ID</option>
                 </select>
-                <img src="../img/search.png"/>
+                <img src="/img/search.png"/>
                 <input className='searchIn' placeholder={selectedKeyword + ' 검색'} onChange={handleInputChange}></input>
             </div>
         </div>
