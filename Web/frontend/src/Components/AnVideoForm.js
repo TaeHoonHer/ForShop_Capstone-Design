@@ -116,29 +116,32 @@ function AnVideoForm() {
   const [videoFile2, setVideoFile2] = useState(null); // 두 번째 비디오 파일 상태
   const [showProgress, setShowProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
+  const [fileObject1, setFileObject1] = useState(null);
+  const [fileObject2, setFileObject2] = useState(null);
   const intervalRef = useRef();
   const navigate = useNavigate();
 
-  const handleFileChange = (event, index) => { // index 추가하여 어떤 드롭 영역에서 파일을 선택했는지 구분
+  const handleFileChange = (event, index) => {
     const file = event.target.files[0];
     handleFileUpload(file, index);
   };
 
   const handleFileUpload = useCallback((file, index) => {
     if (file) {
-      // Check if the file is an MP4 video
       if (file.type !== 'video/mp4') {
         alert('영상 데이터만 가능합니다.');
         return;
       }
-  
+
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (index === 1) {
-          setVideoFile1(reader.result); // 첫 번째 드롭 영역의 파일 업로드 상태를 변경
+          setVideoFile1(reader.result);
+          setFileObject1(file);  // Save the file object
         } else if (index === 2) {
-          setVideoFile2(reader.result); // 두 번째 드롭 영역의 파일 업로드 상태를 변경
+          setVideoFile2(reader.result);
+          setFileObject2(file);  // Save the file object
         }
       };
     } else {
@@ -146,7 +149,7 @@ function AnVideoForm() {
     }
   }, []);
 
-  const handleDrop = useCallback((event, index) => { // index 추가하여 어떤 드롭 영역에서 파일을 드롭했는지 구분
+  const handleDrop = useCallback((event, index) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     handleFileUpload(file, index);
@@ -156,22 +159,21 @@ function AnVideoForm() {
     event.preventDefault();
   };
 
-  const startProgress = async () => {
-
-    if (!videoFile1 || !videoFile2) {
+  const startProgress = async (e) => {
+    e.preventDefault();
+    if (!fileObject1 || !fileObject2) {
       alert('Please upload all files.');
       return;
     }
-  
+
     setShowProgress(true);
-  
+
     const formData = new FormData();
-    formData.append('originalVideo', videoFile1);
-    formData.append('compareVideo', videoFile2);
-  
+    formData.append('originalVideo', fileObject1);  // Add the file object to formData
+    formData.append('compareVideo', fileObject2);  // Add the file object to formData
+
     const accessToken = localStorage.getItem('accessToken');
-  
-    // POST video files to server
+
     try {
       const response = await axios.post('/api/analyzing/upload', formData, {
         headers: {
@@ -183,17 +185,14 @@ function AnVideoForm() {
           setProgressValue(percentCompleted);
         }
       });
-      
-      if (response.data.status !== 200) {
-        console.log("Failed to upload videos due to server error.");
-        return;
-      }
-      
+
       console.log(response);
     } catch (error) {
       console.error(error);
       return;
     }
+
+    e.stopPropagation();
   };
 
   useEffect(() => {
@@ -256,7 +255,7 @@ function AnVideoForm() {
         <ProgressBox>
           <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
           <ProgressBarWrapper>
-            <ProgressBar value={progressValue} />
+            <ProgressBar value={progressValue}/>
           </ProgressBarWrapper>
         </ProgressBox>
         ) : (

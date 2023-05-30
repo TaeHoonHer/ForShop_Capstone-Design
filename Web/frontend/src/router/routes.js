@@ -49,7 +49,7 @@ const routes = [
         component: MainVideo
     },
     {
-        path: '/main/imgboard',
+        path: '/main/imgboard/:articleId',
         component: ImageBoard
     },
     {
