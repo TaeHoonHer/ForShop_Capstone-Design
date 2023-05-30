@@ -10,7 +10,8 @@ const FormBox = styled.form`
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -252,16 +253,16 @@ function AnVideoForm() {
         </VideoBox>
       </FormContents>
       {showProgress ? (
-          <ProgressBox>
-            <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
-            <ProgressBarWrapper>
-              <ProgressBar value={progressValue} />
-            </ProgressBarWrapper>
-          </ProgressBox>
+        <ProgressBox>
+          <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
+          <ProgressBarWrapper>
+            <ProgressBar value={progressValue} />
+          </ProgressBarWrapper>
+        </ProgressBox>
         ) : (
-          <CheckBtn className="CheckBtn">
-            <button type='button' onClick={startProgress} className='check'>Start!</button>
-          </CheckBtn>
+        <CheckBtn className="CheckBtn">
+          <button type='button' onClick={startProgress} className='check'>Start!</button>
+        </CheckBtn>
       )}
     </FormBox>
   );

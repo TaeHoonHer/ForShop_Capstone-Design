@@ -3,7 +3,7 @@ import '../Css/ResultVideo.css';
 
 function ResultVideo () {
     const [score, setScore] = useState(0);
-    const targetScore = 100; // The score you want to reach
+    const targetScore = 100; 
     const scoreImg = [
         {src: '/img/res1.gif', alt: '75 ~ 100', level: 4},
         {src: '/img/res2.gif', alt: '50 ~ 75', level: 3},
