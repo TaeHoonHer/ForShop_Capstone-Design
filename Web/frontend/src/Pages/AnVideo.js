@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import AnVideoForm from '../Components/AnVideoForm';
 import '../Css/AnVideo.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AnVdFormWrapper = styled.div`
   overflow : hidden;
@@ -72,114 +72,9 @@ const LeftArrow = styled.img`
   cursor : pointer;
 `;
 
-const CheckBtn = styled.button`
-  width: 80px;
-  height: 50px;
-  margin : 0;
-  background: #f386fd;
-  backdrop-filter: blur(20px);
-  border-radius : 20px;
-  color: white;
-  border: none;
-  cursor : pointer;
-  button {
-    background: transparent;
-    font-size: 15px;
-    border : none;
-    font-size : 17px;
-    color : white;
-    cursor : pointer;
-  }
-`;
 
-const ProgressBox = styled.div`
-  display : flex;
-  flex-direction : column;
-  margin : 0;
-  padding : 0;
-  justify-content : center;
-  align-items : center;
-`;
-
-const ProgressBarWrapper = styled.div`
-  position: absolute;
-  bottom: -10px;
-  width: 80%;
-  height: 30px;
-  z-index: 3;
-  background-color: white;
-  border : 2px solid #f386fd;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
-  box-shadow : 2px 4px 10px #ddd;
-`;
-
-const ProgressBar = styled.div`
-  width: ${({ value }) => `${value}%`};
-  height: 100%;
-  background-image: linear-gradient(#f386fd, #efc0f3);
-  transition: width 0.5s ease-in-out;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
-`;
-
-const AnalysisBox = styled.div`
-  width: 100%;
-  height: 75%;
-  border : none;
-  box-shadow : 1px 3px 4px #ddd;
-  border-radius : 0 0 20px 20px;
-  display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index : 3;
-`;
 
 function AnVideo() {
-  const [videoFile1, setVideoFile1] = useState(null);
-  const [videoFile2, setVideoFile2] = useState(null);
-
-  const [showProgress, setShowProgress] = useState(false);
-  const [progressValue, setProgressValue] = useState(0);
-  const [showAnalysisBox, setShowAnalysisBox] = useState(false);
-  const intervalRef = useRef();
-
-  const navigate = useNavigate();
-
-  const startProgress = () => {
-
-    if (!videoFile1 || !videoFile2) {
-      alert('파일을 모두 업로드 해주세요.');
-      return;
-    }
-
-    setShowProgress(true);
-    setShowAnalysisBox(true);
-    
-    const interval = setInterval(() => {
-      setProgressValue((prevValue) => {
-        // If the value is already 100, return it as is
-        if (prevValue >= 100) {
-          clearInterval(interval);
-          return prevValue;
-        }
-        // Otherwise, increment the value
-        return prevValue + 10;
-      });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (progressValue >= 100) {
-      clearInterval(intervalRef.current);
-      setShowProgress(false);
-      navigate("/anvideo/result");
-    }
-
-    // Component unmount시에 interval을 clear
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [progressValue, navigate]);
-
     return (
         <AnVdFormWrapper>
             <DetailHeader />
@@ -193,28 +88,7 @@ function AnVideo() {
                         <h2>Analysis</h2>
                     </div>
                 </FormHead>
-                <AnVideoForm
-                  isVisible={!showAnalysisBox}
-                  onUpload={(video1, video2) => {
-                    setVideoFile1(video1);
-                    setVideoFile2(video2);
-                  }}
-                  />
-                <AnalysisBox show={showAnalysisBox}>
-                  룰루
-                </AnalysisBox>
-                {showProgress ? (
-                  <ProgressBox>
-                    <p>Loading...</p>
-                    <ProgressBarWrapper>
-                      <ProgressBar value={progressValue} />
-                    </ProgressBarWrapper>
-                  </ProgressBox>
-                ) : (
-                  <CheckBtn className="CheckBtn">
-                    <button type='button' onClick={startProgress} className='check'>Start!</button>
-                  </CheckBtn>
-                )}
+                <AnVideoForm/>
             </FormContainer>
         </AnVdFormWrapper>
     )

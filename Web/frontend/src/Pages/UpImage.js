@@ -71,26 +71,6 @@ const LeftArrow = styled.img`
   cursor : pointer;
 `;
 
-const CheckBtn = styled.button`
-  width: 80px;
-  height: 50px;
-  margin : 0;
-  background: #f386fd;
-  backdrop-filter: blur(20px);
-  border-radius : 20px;
-  color: white;
-  border: none;
-  cursor : pointer;
-  button {
-    background: transparent;
-    font-size: 15px;
-    border : none;
-    font-size : 20px;
-    color : white;
-    cursor : pointer;
-  }
-`;
-
 const PopupWrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -103,7 +83,6 @@ const PopupWrapper = styled.div`
 
 function UpImage() {
   const [popupVisible, setPopupVisible] = useState(false);
-
   const location = useLocation();
   const videoData = new URLSearchParams(location.search).get("video");
 
@@ -111,40 +90,45 @@ function UpImage() {
     setPopupVisible(true);
   };
 
+  const handleFormSubmit = (response) => {
+    if (response.status === 200) {
+      handlePopupOpen();
+    } else {
+      console.error("Response status is not 200");
+    }
+  };
+
   const handlePopupClose = () => {
     setPopupVisible(false);
   };
 
-    return (
-        <UpImgFormWrapper>
-            <DetailHeader />
-            <BackgroundOverlay />
-            <FormContainer className='FormContainer'>
-                <FormHead>
-                    <div className='formhead'>
-                        <Link to ="/upload">
-                            <LeftArrow img src ="/img/left-arrow.png"/>
-                        </Link>
-                        <h2>Upload</h2>
-                    </div>
-                </FormHead>
-                <UpImgForm video={videoData}/>
-                <CheckBtn className="CheckBtn">
-                    <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
-                </CheckBtn>
-                <PopupWrapper visible={popupVisible}>
-                  <div class = "popup" id = "popup">
-                    <img src = "/img/checked.png" alt="Success"/>
-                    <h2>Success!</h2>
-                    <p>Your upload has been successfully submitted!</p>
-                    <Link to ="/main">
-                      <button type = "button" class = "chBtn" onClick={handlePopupClose}>OK</button>
+  return (
+      <UpImgFormWrapper>
+          <DetailHeader />
+          <BackgroundOverlay />
+          <FormContainer className='FormContainer'>
+              <FormHead>
+                <div className='formhead'>
+                    <Link to ="/upload">
+                        <LeftArrow img src ="/img/left-arrow.png"/>
                     </Link>
-                  </div>
-                </PopupWrapper>
-            </FormContainer>
-        </UpImgFormWrapper>
-    )
+                    <h2>Upload</h2>
+                </div>
+              </FormHead>
+              <UpImgForm video={videoData} onFormSubmit={handleFormSubmit}/>
+              <PopupWrapper visible={popupVisible}>
+                <div class = "popup" id = "popup">
+                  <img src = "/img/checked.png" alt="Success"/>
+                  <h2>Success!</h2>
+                  <p>Your upload has been successfully submitted!</p>
+                  <Link to ="/main">
+                    <button type = "button" class = "chBtn" onClick={handlePopupClose}>OK</button>
+                  </Link>
+                </div>
+              </PopupWrapper>
+          </FormContainer>
+      </UpImgFormWrapper>
+  )
 }
 
 export default UpImage;

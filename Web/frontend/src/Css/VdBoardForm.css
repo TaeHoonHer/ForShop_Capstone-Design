@@ -1,4 +1,4 @@
-.ImgboardWrapper {
+.VdboardWrapper {
     width : 100vw;
     height : 90vh;
     padding : 0;
@@ -69,10 +69,16 @@
     height : 10%;
     margin : 0 0 0 35px;
     padding : 0;
+    display: flex;
 }
 
 .titleBox h2 {
     font-size : 30px;
+}
+
+.titleBox h3 {
+    line-height: 3;
+    margin-left: 3%;
 }
 
 .ctBox {

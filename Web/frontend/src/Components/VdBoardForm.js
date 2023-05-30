@@ -1,38 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../Css/VdBoardForm.css';
+import axios from 'axios';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-function ImgBoardForm() {
+function VdBoardForm() {
   const query = useQuery();
 
   const id = query.get("id");
   const title = query.get("title");
   const src = query.get("src");
   const ct = query.get("content");
+  const keyword = query.get("keyword") ? query.get("keyword").split(" ").map(word => `# ${word}`).join(" ") : "";
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios.get(`api/comments/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}` 
+      }
+    }).then(response => {
+      if(response.status === 200) {
+        setComments(response.data);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, []);
+
   const handleCommentSubmit = (event) => {
     event.preventDefault();
 
-    // Add new comment to comments array
-    setComments([...comments, newComment]);
+    const accessToken = localStorage.getItem('accessToken');
 
-    // Clear input field
-    setNewComment('');
-  }
+    axios.post(`api/comments/${id}`, { text: newComment }, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}` 
+      }
+    }).then(response => {
+        if(response.status === 200) {
+          setComments([...comments, response.data]);
+          setNewComment('');
+        }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  };
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   }
 
   return (
-    <div className='ImgboardWrapper'>
+    <div className='VdboardWrapper'>
         <div className='boardBox'>
             <div className='vdContainer'>
               <video src={src} alt={title} autoPlay muted/>
@@ -44,6 +73,7 @@ function ImgBoardForm() {
                 </div>
                 <div className='titleBox'>
                     <h2>{title}</h2>
+                    <h3>{keyword}</h3>
                 </div>
                 <div className='ctBox'>
                     <p>{ct}</p>
@@ -71,4 +101,4 @@ function ImgBoardForm() {
   );
 }
 
-export default ImgBoardForm;
+export default VdBoardForm;

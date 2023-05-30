@@ -20,7 +20,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.0",
+    "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.1",
     "react-toastify": "^9.1.2",
@@ -56,5 +56,5 @@
     "file-loader": "^6.2.0",
     "react-app-rewired": "^2.2.1"
   },
-  "proxy": "http://192.168.0.11:8080"
+  "proxy": "http://10.50.210.36:8080"
 }

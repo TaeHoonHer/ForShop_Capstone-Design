@@ -9,6 +9,7 @@ import MainVideo from '../Pages/MainVideo';
 import ImageBoard from '../Pages/ImageBoard';
 import videoBoard from '../Pages/videoBoard';
 import AnVideoResult from '../Pages/AnVideoResult';
+import Mypage from '../Pages/Mypage';
 
 const routes = [
     {
@@ -44,7 +45,7 @@ const routes = [
         component: AnVideoResult
     },
     {
-        path: '/main-video',
+        path: '/mainvideo',
         component: MainVideo
     },
     {
@@ -55,6 +56,10 @@ const routes = [
         path: '/main/vdboard',
         component: videoBoard
     },
+    {
+        path: '/mypage',
+        component: Mypage
+    }
 ];
 
 export default routes;

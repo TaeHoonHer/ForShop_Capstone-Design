@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import Footer from '../Components/Footer';
@@ -11,10 +12,13 @@ const BoardWrapper = styled.div`
 `;
 
 function ImageBoard () {
+    const location = useLocation();
+    const image = location.state?.image || {};
+
     return (
         <BoardWrapper>
             <DetailHeader/>
-            <ImgBoardForm/>
+            <ImgBoardForm imageId={image.id} />
             <Footer/>
         </BoardWrapper>
     );

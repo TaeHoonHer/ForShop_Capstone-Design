@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { TimeChart as ChartJS, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import '../Css/Chart.css';
 
 ChartJS.register(...registerables);
 
-function Chart({ time, rate }) {
+function TimeChart({ time, rate }) {
     const chartRef = useRef(null);
     const myChart = useRef(null);
 
@@ -71,4 +71,4 @@ function Chart({ time, rate }) {
     );
 }
 
-export default Chart;
+export default TimeChart;
