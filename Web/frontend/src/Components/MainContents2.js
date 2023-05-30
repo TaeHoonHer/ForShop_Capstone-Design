@@ -4,45 +4,42 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function MainContents2({ selectedKeyword, searchValue }) {
-    const [visibleVideos, setVisibleVideos] = useState(8);
     const [convideos, setConvideos] = useState([]);
+    const [visibleVideos, setVisibleVideos] = useState(8);
+    const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'flv', 'wmv'];
 
     useEffect(() => {
         const fetchAccessToken = async () => {
             try {
                 const accessToken = localStorage.getItem('accessToken');
+                const params = {};
 
-                const videoResponse = await axios.get('/api/videos', {
+                if (selectedKeyword !== 'Keyword' && searchValue) {
+                    params.searchType = selectedKeyword.toUpperCase();
+                    params.searchValue = searchValue;
+                }
+
+                const response = await axios.get('/api/articles', {
+                    params,
                     headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
+                      Authorization: `Bearer ${accessToken}`,
+                    },
                 });
-        
-                const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'flv'];
-                const filteredVideos = videoResponse.data.filter(video => {
-                    const extension = video.src.split('.').pop();
+
+                const videoData = response.data.content.filter(item => {
+                    const fileName = item.storedName;
+                    const extension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
                     return videoExtensions.includes(extension);
                 });
-                setConvideos(filteredVideos);
+                    
+                    setConvideos(videoData);
             } catch (error) {
                 console.error(error);
             }
-        }
+        };
 
         fetchAccessToken();
-    }, []);
-
-    const filteredVideos = searchValue === ''
-    ? convideos
-    : convideos.filter((video) => {
-        if (selectedKeyword === 'ID') {
-          return String(video.id) === searchValue;
-        } else if (selectedKeyword === 'Keyword') {
-          return video.keyword.includes(searchValue);
-        } else {
-          return true; // 선택한 키워드가 없을 경우, 모든 이미지를 표시합니다.
-        }
-    });
+    }, [selectedKeyword, searchValue]);
 
     const containerRef = useRef(null);
 
@@ -63,17 +60,20 @@ function MainContents2({ selectedKeyword, searchValue }) {
     return (
         <div className='MainContents'>
             <div className='ContentsContainer' ref={ containerRef }>
-                {filteredVideos.slice(0, visibleVideos).map((video, index) => (
+                {convideos.slice(0, visibleVideos).map((video, index) => (
                   <div className={`bg${index + 2}`} key={index}>
-                    <Link to={`/main/vdboard/?id=${video.id}&title=${video.title}&src=${video.src}&content=${video.content}&keyword=${video.keyword}`}>
+                    <Link to={{
+                        pathname: `/main/vdboard${video.id}`,
+                    }}>
                         <video
-                            src={video.src}
+                            src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + video.storedName}
+                            key = {video.id}
                             alt={video.alt} autoPlay loop muted />
                     </Link>
                   </div>
                 ))}
             </div>
-            {visibleVideos < filteredVideos.length && (
+            {visibleVideos < convideos.length && (
                 <div className='ButtonContainer'>
                   <button className="ShowMoreButton" onClick={handleShowMore}>
                     더 보기

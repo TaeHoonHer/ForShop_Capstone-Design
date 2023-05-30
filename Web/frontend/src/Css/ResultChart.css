@@ -1,0 +1,90 @@
+.chartBox1 {
+    width : 100%;
+    height : 50%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+    margin-left: 5%;
+}
+
+.cb1Title {
+    width : 100%;
+    height : 20%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+}
+
+.cb1Title p {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cb1Contents {
+    width : 80%;
+    height : 80%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+}
+
+.chartBox2 {
+    width : 100%;
+    height : 50%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    margin-left: 5%;
+}
+
+.cbBox {
+    width : 100%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+}
+
+.cb2Title {
+    width : 100%;
+    height : 20%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+}
+
+.cb2Title p {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cb2Contents {
+    width : 100%;
+    height : 80%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items : center;
+}
+

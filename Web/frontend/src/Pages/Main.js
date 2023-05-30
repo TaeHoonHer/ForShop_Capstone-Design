@@ -9,13 +9,22 @@ import Footer from '../Components/Footer';
 function Main() {
     const [selectedKeyword, setSelectedKeyword] = useState('Keyword');
     const [searchValue, setSearchValue] = useState('');
+    const [submittedSearchValue, setSubmittedSearchValue] = useState('');
 
     return (
         <div className='Main'>
             <MainHeader/>
-            <Banner selectedKeyword={selectedKeyword} setSelectedKeyword={setSelectedKeyword} setSearchValue={setSearchValue}/>
+            <Banner
+                selectedKeyword={selectedKeyword}
+                setSelectedKeyword={setSelectedKeyword}
+                setSearchValue={setSearchValue}
+                setSubmittedSearchValue={setSubmittedSearchValue}
+            />
             <div className='MainBox'>
-                <MainContents selectedKeyword={selectedKeyword} searchValue={searchValue}/>
+                <MainContents
+                    selectedKeyword={selectedKeyword}
+                    searchValue={submittedSearchValue}
+                />
             </div>
             <Footer/>
         </div>

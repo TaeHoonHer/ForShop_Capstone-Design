@@ -4,7 +4,6 @@ import DetailHeader from '../Components/DetailHeader';
 import UpImgForm from '../Components/UpImgForm';
 import '../Css/UpImage.css';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
 
 const UpImgFormWrapper = styled.div`
   width: 100vw;
@@ -72,26 +71,6 @@ const LeftArrow = styled.img`
   cursor : pointer;
 `;
 
-const CheckBtn = styled.button`
-  width: 80px;
-  height: 50px;
-  margin : 0;
-  background: #f386fd;
-  backdrop-filter: blur(20px);
-  border-radius : 20px;
-  color: white;
-  border: none;
-  cursor : pointer;
-  button {
-    background: transparent;
-    font-size: 15px;
-    border : none;
-    font-size : 20px;
-    color : white;
-    cursor : pointer;
-  }
-`;
-
 const PopupWrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -104,7 +83,6 @@ const PopupWrapper = styled.div`
 
 function UpImage() {
   const [popupVisible, setPopupVisible] = useState(false);
-
   const location = useLocation();
   const videoData = new URLSearchParams(location.search).get("video");
 
@@ -112,35 +90,16 @@ function UpImage() {
     setPopupVisible(true);
   };
 
-  const handlePopupClose = () => {
-    setPopupVisible(false);
+  const handleFormSubmit = (response) => {
+    if (response.status === 200) {
+      handlePopupOpen();
+    } else {
+      console.error("Response status is not 200");
+    }
   };
 
-  const handleUpload = async (data) => {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('hashtag', data.hashtag);
-    formData.append('contents', data.contents);
-    formData.append('mediaFile', data.mediaFile);
-
-    const accessToken = localStorage.getItem('accessToken');
-
-    try {
-      const response = await axios.post("YOUR_SERVER_URL", formData, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'multipart/form-data',
-        }
-      });
-
-      if (response.status === 200) {
-        handlePopupOpen(); 
-      } else {
-        console.error("Response status is not 200");
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  const handlePopupClose = () => {
+    setPopupVisible(false);
   };
 
   return (
@@ -149,17 +108,14 @@ function UpImage() {
           <BackgroundOverlay />
           <FormContainer className='FormContainer'>
               <FormHead>
-                  <div className='formhead'>
-                      <Link to ="/upload">
-                          <LeftArrow img src ="/img/left-arrow.png"/>
-                      </Link>
-                      <h2>Upload</h2>
-                  </div>
+                <div className='formhead'>
+                    <Link to ="/upload">
+                        <LeftArrow img src ="/img/left-arrow.png"/>
+                    </Link>
+                    <h2>Upload</h2>
+                </div>
               </FormHead>
-              <UpImgForm video={videoData} onUpload={handleUpload}/>
-              <CheckBtn className="CheckBtn">
-                  <button type='button' onClick={handlePopupOpen} className='check'>Go!</button>
-              </CheckBtn>
+              <UpImgForm video={videoData} onFormSubmit={handleFormSubmit}/>
               <PopupWrapper visible={popupVisible}>
                 <div class = "popup" id = "popup">
                   <img src = "/img/checked.png" alt="Success"/>

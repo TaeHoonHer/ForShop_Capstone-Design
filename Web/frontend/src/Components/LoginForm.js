@@ -30,7 +30,7 @@ function LoginForm() {
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
   
-      if (response.data.status === 200) {
+      if (response.status === 200) {
         navigate('/main');
       } else { 
         navigate('/login');
@@ -78,7 +78,7 @@ function LoginForm() {
 
   const redirectUrl = (event) => {
     event.preventDefault();
-    window.location.href = 'http://192.168.0.11:8080/oauth2/authorization/kakao';
+    window.location.href = 'http://192.168.0.11:8080/oauth2/authorization/kakao?redirect_uri=http://192.168.137.1:8080/main';
   };
 
   return (

@@ -1,0 +1,73 @@
+.MypageWrapper {
+    width : 100vw;
+    min-height : 100vh;
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MypageBox {
+    width : 80%;
+    height : 80%;
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Myinfo {
+    width : 100%;
+    height : 30%;
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.Myimg {
+    width : 50%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Myimg img {
+    width : 40%;
+    height : 40%;
+    object-fit: contain;
+    border-radius: 100px;
+}
+
+.Mycontents {
+    width : 100%;
+    height : 70%;
+    margin : 0;
+    padding: 30px 60px 30px 60px;
+    box-sizing: border-box;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Myoptions {
+    
+}
+
+.Myimgcontainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+

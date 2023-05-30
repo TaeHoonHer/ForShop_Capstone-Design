@@ -67,7 +67,7 @@ function DetailHeader() {
           }
         });
 
-        if (response.data.stauts === 200) {
+        if (response.status === 200) {
           setUserId(response.data.userId);
         }
       } catch (error) {
@@ -78,6 +78,12 @@ function DetailHeader() {
     fetchUserData();
   }, []);
 
+  const handleClick = (event) => {
+    if (userId) {
+      event.preventDefault();
+    }
+  }
+
   return (
     <DetailHeaderWrapper id='detail-header'>
       <Logo>
@@ -87,16 +93,18 @@ function DetailHeader() {
         </Link>
       </Logo>
       <MenuList>
-      <MenuItem>
+        <MenuItem>
           <li>
             <Link to='/main'>
-              <p className='nav-link2' style={{ color: '#fd86fd' }}>Home</p>
+              <p className='nav-link2' style={{ color: '#fd86fd' }}>
+                Home
+              </p>
             </Link>
           </li>
         </MenuItem>
         <MenuItem>
           <li>
-            <Link to='/login'>
+            <Link to='/login' onClick={handleClick}>
             <p className='nav-link2' style={{ color: '#fd86fd' }}>
                 {userId ? `${userId}님` : 'Login'}
               </p>

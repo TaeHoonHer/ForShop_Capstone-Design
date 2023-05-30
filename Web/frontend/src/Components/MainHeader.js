@@ -114,7 +114,7 @@ function MainHeader() {
           }
         });
 
-        if (response.data.status === 200) {
+        if (response.status === 200) {
           setUserId(response.data.userId);
         }
       } catch (error) {
@@ -124,6 +124,12 @@ function MainHeader() {
 
     fetchUserData();
   }, []);
+
+  const handleClick = (event) => {
+    if (userId) {
+      event.preventDefault();
+    }
+  }
   
   return (
     <MainHeaderWrapper id='main-header'>
@@ -159,7 +165,7 @@ function MainHeader() {
         </MenuItem>
         <MenuItem>
           <li>
-            <Link to='/login'>
+            <Link to='/login' onClick={handleClick}>
               <p className='nav-link2' style={{ color: '#fd86fd' }}>
                 {userId ? `${userId}님` : 'Login'}
               </p>

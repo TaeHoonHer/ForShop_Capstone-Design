@@ -133,20 +133,41 @@ const FormContents = styled.div`
   display: flex;
 `;
 
+const CheckBtn = styled.button`
+  width: 80px;
+  height: 50px;
+  margin : 0;
+  background: #f386fd;
+  backdrop-filter: blur(20px);
+  border-radius : 20px;
+  color: white;
+  border: none;
+  cursor : pointer;
+  button {
+    background: transparent;
+    font-size: 15px;
+    border : none;
+    font-size : 20px;
+    color : white;
+    cursor : pointer;
+  }
+`;
+
 function UpImgForm(props) {
-    const { video, onUpload } = props;
+    const { video: videoProp, onFormSubmit } = props;
     const [mediaFile, setMediaFile] = useState(null);
+    const [fileObject, setFileObject] = useState(null);
     const [isVideo, setIsVideo] = useState(false);
     const [title, setTitle] = useState("");
     const [hashtag, setHashtag] = useState("");
     const [contents, setContents] = useState("");
-
+  
     useEffect(() => {
-      if (video) {
-        setMediaFile(video);
+      if (videoProp) {  // Use renamed prop here
+        setMediaFile(videoProp);
         setIsVideo(true);
       }
-    }, [video]);
+    }, [videoProp]);
 
     const handleTitleChange = (event) => {
       setTitle(event.target.value);
@@ -160,9 +181,38 @@ function UpImgForm(props) {
       setContents(event.target.value);
     };
 
-    const handleUpload = (e) => {
+    const handleUpload = async (e) => {
       e.preventDefault();
-      onUpload({ title, hashtag, contents, mediaFile });
+      let content = contents + hashtag;
+    
+      // Check if the fileObject is not null
+      if (fileObject) {
+        try {
+          const formDataToUpload = new FormData();
+          formDataToUpload.append('title', title);
+          formDataToUpload.append('content', content);
+          formDataToUpload.append('multipartFile', fileObject);
+  
+          const accessToken = localStorage.getItem('accessToken');
+          console.log(accessToken);
+  
+          const response = await axios.post("/api/articles", formDataToUpload, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'multipart/form-data',
+            }
+            
+          });
+  
+          onFormSubmit(response); // call the callback here
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        console.log('No file selected');
+      }
+    
+      e.stopPropagation();
     };
   
     const handleFileChange = (event) => {
@@ -172,14 +222,15 @@ function UpImgForm(props) {
 
     const handleFileUpload = useCallback((file) => {
       if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
+          setFileObject(file); // add this line
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
           setMediaFile(reader.result);
           setIsVideo(file.type.startsWith('video'));
-        };
+          };
       } else {
-        alert('No file chosen.');
+          alert('No file chosen.');
       }
     }, []);
 
@@ -234,6 +285,9 @@ function UpImgForm(props) {
                       <input type="textarea" className="ctarea" placeholder="내용 입력" value={contents} onChange={handleContentsChange} />
                     </InContents>
                   </div>
+                  <CheckBtn className="CheckBtn">
+                    <button type='button' onClick={handleUpload} className='check'>Go!</button>
+                  </CheckBtn>
                 </div>
             </MainContents>
         </FormContents>
