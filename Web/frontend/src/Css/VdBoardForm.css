@@ -20,7 +20,7 @@
 }
 
 .vdContainer {
-    width : 50%;
+    width : 70%;
     height : 100%;
     margin : 0 5px 0 0;
     padding : 0;
@@ -30,7 +30,7 @@
 }
 
 .chatbox {
-    width : 50%;
+    width : 30%;
     height : 100%;
     margin : 0 0 0 5px;
     padding : 20px;
@@ -136,9 +136,28 @@
 .ch form button:hover {
     background-color: #f386fd;
     color : white;
+    animation: jellyAnimation 0.5s;
 }
 
 .comment {
     text-decoration: underline;
     text-decoration-color: #eee;
 }
+
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

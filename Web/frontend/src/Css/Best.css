@@ -17,7 +17,7 @@ div {
   font-size: 2.5rem;
   position: absolute;
   top: 15%;
-  left: 39.4%;
+  left: 42%;
   background-color: transparent;
 }
 
@@ -134,10 +134,10 @@ div {
 
 @keyframes animate {
   0% {
-    transform: perspective(1300px) rotateY(0deg);
+    transform: perspective(700px) rotateY(0deg);
   }
   100% {
-    transform: perspective(1300px) rotateY(0deg);
+    transform: perspective(700px) rotateY(0deg);
   }
 }
 

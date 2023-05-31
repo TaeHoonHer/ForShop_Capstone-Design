@@ -60,6 +60,7 @@ const MainContents = styled.div`
   }
   width: 50%;
   height: 100%;
+  margin-top : 4%;
   .ContentsBox {
     width: 100%;
     height: 100%;
@@ -69,6 +70,7 @@ const MainContents = styled.div`
 `;
 
 const InTitle = styled.div`
+  margin-top : 30px;
   input {
     width: 85%;
     height: 50px;
@@ -136,7 +138,8 @@ const FormContents = styled.div`
 const CheckBtn = styled.button`
   width: 80px;
   height: 50px;
-  margin : 0;
+  margin-top : 10%;
+  padding : 0;
   background: #f386fd;
   backdrop-filter: blur(20px);
   border-radius : 20px;

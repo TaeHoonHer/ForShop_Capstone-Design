@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import '../Css/AnVideoForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../Css/LoadingScreen.css';
 
 const FormBox = styled.form`
   width: 100%;
@@ -80,45 +81,23 @@ const CheckBtn = styled.button`
   }
 `;
 
-const ProgressBox = styled.div`
-  display : flex;
-  flex-direction : column;
-  margin : 0;
-  padding : 0;
-  justify-content : center;
-  align-items : center;
-`;
-
-const ProgressBarWrapper = styled.div`
+const LoadingText = styled.p`
   position: absolute;
-  bottom: -10px;
-  width: 80%;
-  height: 30px;
-  z-index: 3;
-  background-color: white;
-  border : 2px solid #f386fd;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
-  box-shadow : 2px 4px 10px #ddd;
-`;
-
-const ProgressBar = styled.div`
-  width: ${({ value }) => `${value}%`};
-  height: 100%;
-  background-image: linear-gradient(#f386fd, #efc0f3);
-  transition: width 0.5s ease-in-out;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: linear-gradient(to right, #f386fd, gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 function AnVideoForm() {
-  const [videoFile1, setVideoFile1] = useState(null); // 첫 번째 비디오 파일 상태
-  const [videoFile2, setVideoFile2] = useState(null); // 두 번째 비디오 파일 상태
-  const [showProgress, setShowProgress] = useState(false);
-  const [progressValue, setProgressValue] = useState(0);
+  const [videoFile1, setVideoFile1] = useState(null);
+  const [videoFile2, setVideoFile2] = useState(null);
   const [fileObject1, setFileObject1] = useState(null);
   const [fileObject2, setFileObject2] = useState(null);
-  const intervalRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleFileChange = (event, index) => {
@@ -166,8 +145,6 @@ function AnVideoForm() {
       return;
     }
 
-    setShowProgress(true);
-
     const formData = new FormData();
     formData.append('originalVideo', fileObject1);  // Add the file object to formData
     formData.append('compareVideo', fileObject2);  // Add the file object to formData
@@ -175,40 +152,38 @@ function AnVideoForm() {
     const accessToken = localStorage.getItem('accessToken');
 
     try {
+      setIsLoading(true);  // Start loading
       const response = await axios.post('/api/analyzing/upload', formData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: function(progressEvent) {
-          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgressValue(percentCompleted);
         }
-      });
+      })
+      .then(response => {
+        console.log(response.data);
+        navigate("/anvideo/result");
+      })
 
-      console.log(response);
     } catch (error) {
       console.error(error);
       return;
+    } finally {
+      setIsLoading(false);  // Stop loading
     }
 
     e.stopPropagation();
   };
 
-  useEffect(() => {
-    if (progressValue >= 100) {
-      clearInterval(intervalRef.current);
-      setShowProgress(false);
-      navigate("/anvideo/result");
-    }
-  
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [progressValue, navigate]);
-
   return (
     <FormBox>
+      {isLoading ? (
+        <div class="lds-roller">
+          <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+          <LoadingText>Analyzing...</LoadingText>
+        </div>
+      ) : (
+        // Main component
+      <>
       <FormContents>
         <VideoBox onDrop={(event) => handleDrop(event, 1)} onDragOver={handleDragOver}> {/* 첫 번째 드롭 영역 */}
           {videoFile1 ? (
@@ -251,17 +226,10 @@ function AnVideoForm() {
           )}
         </VideoBox>
       </FormContents>
-      {showProgress ? (
-        <ProgressBox>
-          <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
-          <ProgressBarWrapper>
-            <ProgressBar value={progressValue}/>
-          </ProgressBarWrapper>
-        </ProgressBox>
-        ) : (
-        <CheckBtn className="CheckBtn">
-          <button type='button' onClick={startProgress} className='check'>Start!</button>
-        </CheckBtn>
+      <CheckBtn className="CheckBtn">
+        <button type='button' onClick={startProgress} className='check'>Start!</button>
+      </CheckBtn>
+      </>
       )}
     </FormBox>
   );
