@@ -63,8 +63,7 @@ function MainContents({ selectedKeyword, searchValue }) {
         {conimages.slice(0, visibleImages).map((image, index) => (
           <div className={`bg${index + 2} image-container`} key={index}>
             <Link to={{
-              pathname: `/imgboard`,
-              state: { image }
+              pathname: `/main/imgboard/${image.id}`,
             }}>
               <img 
                 src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + image.storedName}

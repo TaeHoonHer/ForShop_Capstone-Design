@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import '../Css/ResultChart.css';
 import Chart from '../Components/Chart';
+import { useNavigate } from 'react-router-dom';
 
 
 const ChartWrapper = styled.div`
@@ -27,6 +28,12 @@ const ChartContainer = styled.div`
 `;
 
 function ResultChart () {
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate('/anvideo');
+    };
+    
 
   return (
     <ChartWrapper>
@@ -56,6 +63,9 @@ function ResultChart () {
                     <Chart/>
                 </div>
             </div>
+        </div>
+        <div className='AgainBtn'>
+            <button type = 'button' className='againBtn' onClick={handleBack}>Again?</button>
         </div>
       </ChartContainer>
     </ChartWrapper>
