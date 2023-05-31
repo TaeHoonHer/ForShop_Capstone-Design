@@ -31,6 +31,7 @@ function LoginForm() {
       const refreshToken = response.data.refreshToken;
   
       if (response.status === 200) {
+        setUserId(response.data.userId);
         navigate('/main');
       } else { 
         navigate('/login');
@@ -39,6 +40,7 @@ function LoginForm() {
       
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         alert('입력하신 비밀번호 정보가 일치하지 않습니다.');
@@ -78,7 +80,7 @@ function LoginForm() {
 
   const redirectUrl = (event) => {
     event.preventDefault();
-    window.location.href = 'http://192.168.0.11:8080/oauth2/authorization/kakao?redirect_uri=http://192.168.137.1:8080/main';
+    window.location.href = 'http://10.50.210.36:8080/oauth2/authorization/kakao';
   };
 
   return (
