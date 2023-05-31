@@ -16,12 +16,12 @@ export default function Intro() {
             <Images />
           </Scroll>
           <Scroll html>
-            <div style={{ transform: 'translate3d(65vw, 192vh, 0)' }}>
-              Image Contents Platform Service
+            <div style={{ transform: 'translate3d(65vw, 192vh, 0)', color : '#fff' }}>
+              Camera Platform Service
               <br />
-              RealTime-Guideline
+              Guideline
               <br />
-              Video Motion Analysis
+              Share images like SNS
               <br />
             </div>
           </Scroll>
@@ -50,7 +50,7 @@ function Lens({ children, damping = 0.15, ...props }) {
     )
 
     state.gl.setRenderTarget(buffer)
-    state.gl.setClearColor('#000000')
+    state.gl.setClearColor('#000')
     state.gl.render(scene, state.camera)
     state.gl.setRenderTarget(null)
   })
@@ -85,21 +85,21 @@ function Images() {
   })
 
   const handleButtonClick = () => {
-    navigate('/upimg');
+    navigate('/main');
   }
 
   return (
     <group ref={group}>
-      <Image position={[-2, 0, 0]} scale={[4, height, 1]} url="/img/cat.jpg" />
-      <Image position={[2, 0, 3]} scale={3} url="/img/couple.jpg" />
-      <Image position={[-2.05, -height, 6]} scale={[1, 3, 1]} url="/img/b2.jpg" />
-      <Image position={[-0.6, -height, 9]} scale={[1, 2, 1]} url="/img/a8.jpg" />
-      <Image position={[0.75, -height, 10.5]} scale={1.5} url="/img/a5.jpg"/>
-      <Image position={[0, -height * 1.5, 7.5]} scale={[1.5, 3, 1]} url="/img/a3.jpg" />
-      <Image position={[0, -height * 2 - height / 4, 0]} scale={[width, height / 1.1, 1]} url="/img/a7.jpg" />
+      <Image position={[-2, 0, 0]} scale={[4, height, 1]} url="/img/model1.png" color="#a0a0a0" />
+      <Image position={[2, 0, 3]} scale={3} url="/img/model2.jpg" color="#c0c0c0"/>
+      <Image position={[-2.05, -height, 6]} scale={[1, 3, 1]} url="/img/model7.jpg" />
+      <Image position={[-0.6, -height, 9]} scale={[1, 2, 1]} url="/img/model5.jpg" />
+      <Image position={[0.75, -height, 10.5]} scale={1.5} url="/img/model4.jpg" color="#d0d0d0"/>
+      <Image position={[0, -height * 1.5, 7.5]} scale={[1.5, 3, 1]} url="/img/model8.jpg" color="#fff"/>
+      <Image position={[0, -height * 2 - height / 4, 0]} scale={[width, height / 1.1, 1]} url="/img/model6.png" />
       <mesh position={[0, -height * 2 - height / 4, 0.1]} scale={[width, height / 1.1, 1]}>
         <Html center scaleFactor={20}>
-          <button class = "to_mainBtn" 
+          <button class = "to_Btn" 
             style={{ 
               zIndex: 1, 
               position: 'relative', 
@@ -117,6 +117,28 @@ function Images() {
           </button>
         </Html>
       </mesh>
+      <mesh position={[2.1, -height * 1.35 - height / 4, 0.1]} scale={[width, height / 1, 0.8]}>
+        <Html center scaleFactor={20}>
+          <button className='to_Btn'
+            style={{ 
+              zIndex: 1, 
+              position: 'relative', 
+              width: '150px', 
+              height: '70px', 
+              fontSize: '20px', 
+              borderRadius: '20px', 
+              cursor: 'pointer', 
+              border: 'none',
+              backgroundColor: '#f386fd',
+              color: 'white', 
+              boxShadow: '0px 2px 4px #888',
+              margin: '20px 0'
+            }} 
+            onClick={() => alert('To be Continued...')}>
+            Download?
+          </button>
+        </Html>
+      </mesh>
     </group>
   )
 }
@@ -124,12 +146,12 @@ function Images() {
 function Typography() {
   const state = useThree()
   const { width, height } = state.viewport.getCurrentViewport(state.camera, [0, 0, 12])
-  const shared = { font: 'https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap', letterSpacing: -0.1, color: 'white' }
+  const shared = { font: 'https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap', letterSpacing: -0.1, color: 'gold' }
   return (
     <>
       <Text children="Guide" anchorX="left" position={[-width / 2.5, -height / 10, 12]} {...shared} />
       <Text children="Analysis" anchorX="right" position={[width / 2.5, -height * 2, 12]} {...shared} />
-      <Text children="Rate" position={[0, -height * 4.624, 12]} {...shared} />
+      <Text children="Upload" position={[0, -height * 4.624, 12]} {...shared} />
     </>
   )
 }

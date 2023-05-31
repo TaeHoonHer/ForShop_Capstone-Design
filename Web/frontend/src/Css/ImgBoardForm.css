@@ -1,0 +1,146 @@
+.ImgboardWrapper {
+    width : 100vw;
+    height : 90vh;
+    padding : 0;
+    margin : 0;
+    background-color: white;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boardBox {
+    width : 80%;
+    height : 80%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgContainer {
+    width : 50%;
+    height : 100%;
+    margin : 0 5px 0 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chatbox {
+    width : 50%;
+    height : 100%;
+    margin : 0 0 0 5px;
+    padding : 20px;
+    display : flex;
+    flex-direction: column;
+    border: 1px solid #f386fd;
+    border-radius: 10px;
+}
+
+.idBox {
+    width : 50%;
+    height : 10%;
+    margin : 0;
+    padding : 0;
+    display:flex;
+}
+
+.idBox img {
+    width : 30px;
+    height : 30px;
+}
+
+.idBox p {
+    font-size : 20px;
+    margin-left: 5px;
+}
+
+.imgBox {
+    width : 100%;
+    height : 100%;
+    padding : 0;
+    margin : 0;
+}
+
+.imgBox img {
+    width : 100%;
+    height : 100%;
+    object-fit: cover;
+}
+
+.titleBox {
+    width : 80%;
+    height : 10%;
+    margin : 0 0 0 35px;
+    padding : 0;
+    display : flex;
+}
+
+.titleBox h2 {
+    font-size : 30px;
+}
+
+.ctBox {
+    width : 100%;
+    height : 10%;
+    margin : 0 0 0 35px;
+    padding : 0;
+}
+
+.ctBox p {
+    font-size : 15px;
+}
+
+.ch {
+    position : relative;
+    width : 100%;
+    height : 70%;
+    margin : 0;
+    padding : 0;
+}
+
+.commentUserImg {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+.ch form {
+    position : absolute;
+    bottom : 0;
+    border: none;
+    margin-left: 30px;
+}
+
+.ch form input {
+    border : none;
+    border-bottom: 1px solid #f386fd;
+}
+
+.ch form input:focus {
+    outline: none;
+}
+
+.ch form button{
+    width : 60px;
+    height : 30px;
+    background-color: transparent;
+    border: 1px solid #fe86fd;
+    border-radius: 10px;
+    color : black;
+    margin-left: 30px;
+    cursor : pointer;
+}
+
+.ch form button:hover {
+    background-color: #f386fd;
+    color : white;
+}
+
+.comment {
+    text-decoration: underline;
+    text-decoration-color: #eee;
+}

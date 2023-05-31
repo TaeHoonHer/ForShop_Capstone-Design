@@ -1,27 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../Css/MainContents.css';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import axios from 'axios';
 
-function MainContents() {
-  const conimages = [
-    { src: '/img/a1.jpg', alt: 'image1' },
-    { src: '/img/a2.jpg', alt: 'image2' },
-    { src: '/img/a3.jpg', alt: 'image3' },
-    { src: '/img/a4.jpg', alt: 'image4' },
-    { src: '/img/a5.jpg', alt: 'image5' },
-    { src: '/img/a6.jpg', alt: 'image6' },
-    { src: '/img/a7.jpg', alt: 'image7' },
-    { src: '/img/a8.jpg', alt: 'image8' },
-    { src: '/img/b1.jpg', alt: 'image9' },
-    { src: '/img/b2.jpg', alt: 'image10' },
-    { src: '/img/b3.jpg', alt: 'image11' },
-    { src: '/img/b4.jpg', alt: 'image12' },
-    /* 서버에서 업로드 이미지 파일들을 받을 곳 */
-  ];
+function MainContents({ selectedKeyword, searchValue }) {
+  const [conimages, setConimages] = useState([]);
+  const [visibleImages, setVisibleImages] = useState(8); // 초기에 보여지는 이미지 수
+  const imageExtensions = ['png', 'jpg', 'jpeg', 'gif'];
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const params = {};
+
+        if (selectedKeyword !== 'Keyword' && searchValue) {
+          params.searchType = selectedKeyword.toUpperCase();
+          params.searchValue = searchValue;
+        }
+
+        const response = await axios.get('/api/articles', {
+          params,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const imageData = response.data.content.filter(item => {
+          const fileName = item.storedName;
+          const extension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+          return imageExtensions.includes(extension);
+        });
+
+        setConimages(imageData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchArticles();
+  }, [selectedKeyword, searchValue]);
 
   const containerRef = useRef(null);
-  const [visibleImages, setVisibleImages] = useState(8); // 초기에 보여지는 이미지 수
 
   useEffect(() => {
     const container = containerRef.current;
@@ -31,31 +51,26 @@ function MainContents() {
       img.style.animationDelay = `${index * 100}ms`;
       img.classList.add('fadeup');
     });
-  }, [visibleImages]); // visibleImages 변경 시에만 실행되도록 설정
+  }, [visibleImages]);
 
   const handleShowMore = () => {
-    setVisibleImages(prevVisibleImages => prevVisibleImages + 8); // 8개씩 추가로 보여주도록 업데이트
-  };
-
-  const handleImageMouseEnter = (e, image) => {
-    e.target.classList.add('image-hover');
-    e.target.setAttribute('data-userId', image.userID);
-    e.target.setAttribute('data-title', image.title);
-  };
-
-  const handleImageMouseLeave = (e) => {
-    e.target.classList.remove('image-hover');
-    e.target.removeAttribute('data-userId');
-    e.target.removeAttribute('data-title');
+    setVisibleImages(prevVisibleImages => prevVisibleImages + 8);
   };
 
   return (
     <div className="MainContents">
       <div className="ContentsContainer" ref={containerRef}>
         {conimages.slice(0, visibleImages).map((image, index) => (
-          <div className={`bg${index + 2}`} key={index}>
-            <Link to = '/main/board'>
-              <img src={image.src} alt={image.alt} />
+          <div className={`bg${index + 2} image-container`} key={index}>
+            <Link to={{
+              pathname: `/imgboard`,
+              state: { image }
+            }}>
+              <img 
+                src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + image.storedName}
+                key = {image.id}
+                className='imageList'
+              />
             </Link>
           </div>
         ))}

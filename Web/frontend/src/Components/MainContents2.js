@@ -1,24 +1,45 @@
 import '../Css/MainContents2.css';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function MainContents2() {
+function MainContents2({ selectedKeyword, searchValue }) {
+    const [convideos, setConvideos] = useState([]);
     const [visibleVideos, setVisibleVideos] = useState(8);
-    const convideos = [
-        { src: '/img/dance.mp4', alt: 'video1' },
-        { src: '/img/intro3.mp4', alt: 'video2' },
-        { src: '/img/banner.mp4', alt: 'video3' },
-        { src: '/img/new1.mp4', alt: 'video4' },
-        { src: '/img/new2.mp4', alt: 'video5' },
-        { src: '/img/v1.mp4', alt: 'video6' },
-        { src: '/img/v2.mp4', alt: 'video7' },
-        { src: '/img/v3.mp4', alt: 'video8' },
-        { src: '/img/v4.mp4', alt: 'video9' },
-        { src: '/img/v5.mp4', alt: 'video10' },
-    ];
+    const videoExtensions = ['mp4', 'avi', 'mkv', 'mov', 'flv', 'wmv'];
 
-    const handleShowMore = () => {
-        setVisibleVideos(prevVisibleVideos => prevVisibleVideos + 8);
-    };
+    useEffect(() => {
+        const fetchAccessToken = async () => {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const params = {};
+
+                if (selectedKeyword !== 'Keyword' && searchValue) {
+                    params.searchType = selectedKeyword.toUpperCase();
+                    params.searchValue = searchValue;
+                }
+
+                const response = await axios.get('/api/articles', {
+                    params,
+                    headers: {
+                      Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                const videoData = response.data.content.filter(item => {
+                    const fileName = item.storedName;
+                    const extension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+                    return videoExtensions.includes(extension);
+                });
+                    
+                    setConvideos(videoData);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchAccessToken();
+    }, [selectedKeyword, searchValue]);
 
     const containerRef = useRef(null);
 
@@ -27,17 +48,28 @@ function MainContents2() {
         const videoElems = container.querySelectorAll('video');
 
         videoElems.forEach((video, index) => {
-            video.style.animationDelay = '${index * 100}ms';
+            video.style.animationDelay = `${index * 100}ms`;
             video.classList.add('fadeup');
         });
     }, [visibleVideos]);
+
+    const handleShowMore = () => {
+        setVisibleVideos(prevVisibleVideos => prevVisibleVideos + 8);
+    };
 
     return (
         <div className='MainContents'>
             <div className='ContentsContainer' ref={ containerRef }>
                 {convideos.slice(0, visibleVideos).map((video, index) => (
                   <div className={`bg${index + 2}`} key={index}>
-                    <video src={video.src} alt={video.alt} autoPlay loop muted />
+                    <Link to={{
+                        pathname: `/main/vdboard${video.id}`,
+                    }}>
+                        <video
+                            src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + video.storedName}
+                            key = {video.id}
+                            alt={video.alt} autoPlay loop muted />
+                    </Link>
                   </div>
                 ))}
             </div>

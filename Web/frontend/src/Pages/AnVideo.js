@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DetailHeader from '../Components/DetailHeader';
 import AnVideoForm from '../Components/AnVideoForm';
@@ -54,9 +54,6 @@ const FormHead = styled.div`
   align-items: center;
 
   h2 {
-    position : absolute;
-    top : 0;
-    left : 38%;
     font-size: 2rem;
     text-align: center;
     letter-spacing: 2px;
@@ -75,105 +72,9 @@ const LeftArrow = styled.img`
   cursor : pointer;
 `;
 
-const CheckBtn = styled.button`
-  width: 80px;
-  height: 50px;
-  margin : 0;
-  background: #f386fd;
-  backdrop-filter: blur(20px);
-  border-radius : 20px;
-  color: white;
-  border: none;
-  cursor : pointer;
-  button {
-    background: transparent;
-    font-size: 15px;
-    border : none;
-    font-size : 17px;
-    color : white;
-    cursor : pointer;
-  }
-`;
 
-const SelectForm = styled.div`
-  position : absolute;
-  top : 13px;
-  left : 83%;
-  width : 100%;
-  height : 50px;
-  margin : 0;
-  padding : 0;
-  display : flex;
-
-  button {
-    background : transparent;
-    border : none;
-    cursor : pointer;
-    font-size : 15px;
-  }
-`;
-
-const SelLink = styled(Link)`
-  background : transparent;
-  border : none;
-  margin-left : 10px;
-  padding-right : 10px;
-`;
-
-const ProgressBarWrapper = styled.div`
-  position: absolute;
-  bottom: -10px;
-  width: 80%;
-  height: 50px;
-  z-index: 3;
-  background-color: #f386fd;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
-`;
-
-const ProgressBar = styled.div`
-  width: ${({ value }) => `${value}%`};
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.5s ease-in-out;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
-  border-radius : 30px;
-`;
 
 function AnVideo() {
-
-  const [showProgress, setShowProgress] = useState(false);
-  const [progressValue, setProgressValue] = useState(0);
-  const intervalRef = useRef();
-
-  const startProgress = () => {
-    setShowProgress(true);
-    
-    const interval = setInterval(() => {
-      setProgressValue((prevValue) => {
-        // If the value is already 100, return it as is
-        if (prevValue >= 100) {
-          clearInterval(interval);
-          return prevValue;
-        }
-        // Otherwise, increment the value
-        return prevValue + 10;
-      });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (progressValue >= 100) {
-      clearInterval(intervalRef.current);
-      setShowProgress(false);
-    }
-
-    // Component unmount시에 interval을 clear
-    return () => {
-      clearInterval(intervalRef.current);
-    };
-  }, [progressValue]);
-
     return (
         <AnVdFormWrapper>
             <DetailHeader />
@@ -184,27 +85,10 @@ function AnVideo() {
                         <Link to ="/upload">
                             <LeftArrow img src ="/img/left-arrow.png"/>
                         </Link>
-                        <h2>Video Analyze</h2>
-                        <SelectForm>
-                          <SelLink to = '/upvideo'>
-                            <button type = "button" className='upMenu'>UpLoad</button>
-                          </SelLink>
-                          <SelLink to = '/anvideo'>
-                            <button type = "button" className='anMenu'>Analyze</button>
-                          </SelLink>
-                        </SelectForm>
+                        <h2>Analysis</h2>
                     </div>
                 </FormHead>
                 <AnVideoForm/>
-                {showProgress ? (
-                  <ProgressBarWrapper>
-                    <ProgressBar value={progressValue} />
-                  </ProgressBarWrapper>
-                ) : (
-                  <CheckBtn className="CheckBtn">
-                    <button type='button' onClick={startProgress} className='check'>Start!</button>
-                  </CheckBtn>
-                )}
             </FormContainer>
         </AnVdFormWrapper>
     )

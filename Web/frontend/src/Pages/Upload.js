@@ -58,7 +58,7 @@ const ImgLink = styled(Link)`
     p {
         position : absolute;
         top : 50%;
-        left : 35%;
+        left : 33%;
         font-size : 3rem;
         color : black;
         font-family : 'Poppins';
@@ -80,7 +80,7 @@ const VdLink = styled(Link)`
     p {
         position : absolute;
         top : 50%;
-        left: 47%;
+        left: 36%;
         font-size: 3rem;
         color: white;
         font-family: 'Poppins';
@@ -97,17 +97,17 @@ function Upload() {
                     <li>
                         <ImgLink to = '/upimg' className='imglink'>
                             <img src='/img/person.jpg' alt='image button'/>
-                            <p className='selOption'>Image</p>
+                            <p className='selOption'>Upload</p>
                         </ImgLink>
                     </li>
                 </MenuItem>
                 <MenuItem>
                     <li>
-                        <VdLink to = '/upvideo' className='vdlink'>
+                        <VdLink to = '/anvideo' className='vdlink'>
                             <video autoPlay muted loop>
                                 <source src="../img/dance.mp4" type="video/mp4"></source>
                             </video>
-                            <p className='selOption'>Video</p>
+                            <p className='selOption'>Analysis</p>
                         </VdLink>
                     </li>
                 </MenuItem>

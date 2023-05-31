@@ -4,10 +4,12 @@ import Best from '../Pages/Best';
 import Login from '../Pages/Login';
 import Upload from '../Pages/Upload';
 import UpImage from '../Pages/UpImage';
-import UpVideo from '../Pages/UpVideo';
 import AnVideo from '../Pages/AnVideo';
 import MainVideo from '../Pages/MainVideo';
 import ImageBoard from '../Pages/ImageBoard';
+import videoBoard from '../Pages/videoBoard';
+import AnVideoResult from '../Pages/AnVideoResult';
+import Mypage from '../Pages/Mypage';
 
 const routes = [
     {
@@ -35,21 +37,29 @@ const routes = [
         component: UpImage
     },
     {
-        path: '/upvideo',
-        component: UpVideo
-    },
-    {
         path: '/anvideo',
         component: AnVideo
     },
     {
-        path: '/main-video',
+        path: '/anvideo/result',
+        component: AnVideoResult
+    },
+    {
+        path: '/mainvideo',
         component: MainVideo
     },
     {
-        path: '/main/board',
+        path: '/main/imgboard',
         component: ImageBoard
     },
+    {
+        path: '/main/vdboard',
+        component: videoBoard
+    },
+    {
+        path: '/mypage',
+        component: Mypage
+    }
 ];
 
 export default routes;
