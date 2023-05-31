@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function ImgBoardForm({ imageId }) {
   const [image, setImage] = useState({});
-  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const { articleId } = useParams();
 
@@ -31,21 +30,33 @@ function ImgBoardForm({ imageId }) {
 
    }, [imageId]);
 
-  const handleCommentSubmit = (event) => {
+   const handleCommentSubmit = (event) => {
     event.preventDefault();
-
+  
     const accessToken = localStorage.getItem('accessToken');
-
+  
     axios.post('/api/comments/new', {
-                   articleId : articleId,
-                   content : newComment
-                 }, {
+        articleId: articleId,
+        content : newComment 
+      }, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${accessToken}` 
       }
     }).then(response => {
-      if (response.status === 200) {
-      }
+        if(response.status === 200) {
+          // 코멘트가 성공적으로 저장되면 코멘트를 다시 불러옵니다.
+          axios.get(`/api/articles/${articleId}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}` 
+            }
+          }).then(response => {
+            setImage(response.data);
+            setNewComment('');  // Comment input field 초기화
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        }
     })
     .catch(error => {
       console.error(error);
@@ -54,7 +65,7 @@ function ImgBoardForm({ imageId }) {
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
-  }
+  };
 
   if (!articleId) {
     navigate("/main");

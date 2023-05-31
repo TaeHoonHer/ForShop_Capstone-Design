@@ -1,54 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../Css/VdBoardForm.css';
 import axios from 'axios';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-function VdBoardForm() {
-  const query = useQuery();
-
-  const id = query.get("id");
-  const title = query.get("title");
-  const src = query.get("src");
-  const ct = query.get("content");
-  const keyword = query.get("keyword") ? query.get("keyword").split(" ").map(word => `# ${word}`).join(" ") : "";
-
-  const [comments, setComments] = useState([]);
+function VdBoardForm({ videoId }) {
+  const [video, setVideo] = useState({});
   const [newComment, setNewComment] = useState('');
+  const { articleId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+
+    if(!articleId) return;
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.get(`api/comments/${id}`, {
+    axios.get(`/api/articles/${articleId}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}` 
       }
     }).then(response => {
-      if(response.status === 200) {
-        setComments(response.data);
-      }
+      setVideo(response.data);
     })
     .catch(error => {
       console.error(error);
     });
-  }, []);
+  }, [videoId]);
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-
+  
     const accessToken = localStorage.getItem('accessToken');
-
-    axios.post(`api/comments/${id}`, { text: newComment }, {
+  
+    axios.post('/api/comments/new', {
+        articleId: articleId,
+        content : newComment 
+      }, {
       headers: {
         'Authorization': `Bearer ${accessToken}` 
       }
     }).then(response => {
         if(response.status === 200) {
-          setComments([...comments, response.data]);
-          setNewComment('');
+          // 코멘트가 성공적으로 저장되면 코멘트를 다시 불러옵니다.
+          axios.get(`/api/articles/${articleId}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}` 
+            }
+          }).then(response => {
+            setVideo(response.data);
+            setNewComment('');  // Comment input field 초기화
+          })
+          .catch(error => {
+            console.error(error);
+          });
         }
     })
     .catch(error => {
@@ -58,33 +62,38 @@ function VdBoardForm() {
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
-  }
+  };
+
+  if (!articleId) {
+    navigate("/main");
+  };
 
   return (
     <div className='VdboardWrapper'>
         <div className='boardBox'>
             <div className='vdContainer'>
-              <video src={src} alt={title} autoPlay muted/>
+              <div className='vdBox'>
+                <video src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + video.storedName} alt={video.title} autoPlay muted/>
+              </div>
             </div>
             <div className='chatbox'>
                 <div className='idBox'>
                     <img src = "/img/user.png"/>
-                    <p>{id}</p>
+                    <p>{video.nickname}</p>
                 </div>
                 <div className='titleBox'>
-                    <h2>{title}</h2>
-                    <h3>{keyword}</h3>
+                    <h2>{video.title}</h2>
                 </div>
                 <div className='ctBox'>
-                    <p>{ct}</p>
+                    <p>{video.content}</p>
                 </div>
                 <div className='ch'>
-                    {comments.map((comment, index) => (
-                        <div key={index} className='comment'>
-                            <img src="/img/user.png" alt="User" className="commentUserImg" />
-                            {comment}
-                        </div>
-                    ))}
+                {video.articleCommentResponse ? Object.entries(video.articleCommentResponse).map(([key, comment]) => (
+                    <div className='comment' key={key}>
+                      <img src="/img/user.png" alt="User" className="commentUserImg" />
+                      {comment.nickname}&nbsp;&nbsp;&nbsp;&nbsp;{comment.content}
+                    </div>
+                    )) : null}
                     <form onSubmit={handleCommentSubmit}>
                         <input 
                         type="text" 

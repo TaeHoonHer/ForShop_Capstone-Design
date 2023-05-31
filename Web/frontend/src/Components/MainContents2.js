@@ -32,7 +32,7 @@ function MainContents2({ selectedKeyword, searchValue }) {
                     return videoExtensions.includes(extension);
                 });
                     
-                    setConvideos(videoData);
+                setConvideos(videoData);
             } catch (error) {
                 console.error(error);
             }
@@ -63,7 +63,7 @@ function MainContents2({ selectedKeyword, searchValue }) {
                 {convideos.slice(0, visibleVideos).map((video, index) => (
                   <div className={`bg${index + 2}`} key={index}>
                     <Link to={{
-                        pathname: `/main/vdboard${video.id}`,
+                        pathname: `/main/vdboard/${video.id}`,
                     }}>
                         <video
                             src={"https://forshop-bucket.s3.ap-northeast-2.amazonaws.com/" + video.storedName}

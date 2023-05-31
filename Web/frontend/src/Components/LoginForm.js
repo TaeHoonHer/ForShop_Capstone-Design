@@ -78,11 +78,6 @@ function LoginForm() {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  const redirectUrl = (event) => {
-    event.preventDefault();
-    window.location.href = 'http://10.50.210.36:8080/oauth2/authorization/kakao';
-  };
-
   return (
     <div className="LoginForm">
       {isSidebarOpen && (
@@ -197,11 +192,6 @@ function LoginForm() {
                 <div className="inputBox">
                   <div className="submitContainer">
                     <input type="submit" value="Login" onClick={handleFormLogin}/>
-                  </div>
-                  <div className="kakaoButtonContainer">
-                    <button className="kakaoButton" onClick={redirectUrl}>
-                      <img src="/img/kakao_login.png" alt="Kakao Login" />
-                    </button>
                   </div>
                 </div>
                 <p className="forget">

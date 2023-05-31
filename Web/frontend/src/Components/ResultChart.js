@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../Css/ResultChart.css';
-import Chart from '../Components/Chart';
-import { useNavigate } from 'react-router-dom';
+import {Chart, Chart2} from './Chart';
 
 
 const ChartWrapper = styled.div`
     position : relative;
     width : 100vw;
-    min-height : 150vh;
+    height : 50vh;
     margin : 0;
     padding : 0;
     justify-content : center;
@@ -27,45 +26,18 @@ const ChartContainer = styled.div`
     align-items : center;
 `;
 
-function ResultChart () {
-    const navigate = useNavigate();
-
-    const handleBack = () => {
-        navigate('/anvideo');
-    };
+function ResultChart ({data}) {
     
-
+    //data의 값에는 const data = {"타임스코어" : [100, 90, 80 .... 80], "조인트스코어?" : [100,100,20,30,...50]}
+  console.log(data);
   return (
     <ChartWrapper>
       <ChartContainer>
-        <div className='chartBox1'>
-            <div className='cb1Title'>
-                <p>종합 차트</p>
+        <div className='chartContainer' style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <div style={{ display: "flex", justifyContent: "space-around", width: "80%" }}>
+                <Chart rate={data.time_score} />    {/*여기는 타임 스코어 데이터만 넘겨주면 됩니다. */}
+                <Chart2 rate={data.joint_score} />  {/*여기는 조인트 스코어 데이터만 넘겨주면 됩니다. */}
             </div>
-            <div className='cb1Contents'>
-                <Chart/>
-            </div>
-        </div>
-        <div className='chartBox2'>
-            <div className='cbBox'>
-                <div className='cb2Title'>
-                    <p>시간 차트</p>
-                </div>
-                <div className='cb2Contents'>
-                    <Chart/>
-                </div>
-            </div>
-            <div className='cbBox'>
-                <div className='cb2Title'>
-                    <p>각도 차트</p>
-                </div>
-                <div className='cb2Contents'>
-                    <Chart/>
-                </div>
-            </div>
-        </div>
-        <div className='AgainBtn'>
-            <button type = 'button' className='againBtn' onClick={handleBack}>Again?</button>
         </div>
       </ChartContainer>
     </ChartWrapper>

@@ -18,6 +18,9 @@ const FadeInAnimation = keyframes`
 `;
 
 const UploadHeaderWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     overflow: hidden;
     width : 100vw;
     height : 100vh;
@@ -58,7 +61,7 @@ const ImgLink = styled(Link)`
     p {
         position : absolute;
         top : 50%;
-        left : 33%;
+        left : 35%;
         font-size : 3rem;
         color : black;
         font-family : 'Poppins';
@@ -80,7 +83,7 @@ const VdLink = styled(Link)`
     p {
         position : absolute;
         top : 50%;
-        left: 36%;
+        left: 40%;
         font-size: 3rem;
         color: white;
         font-family: 'Poppins';

@@ -53,7 +53,7 @@ const routes = [
         component: ImageBoard
     },
     {
-        path: '/main/vdboard',
+        path: '/main/vdboard/:articleId',
         component: videoBoard
     },
     {

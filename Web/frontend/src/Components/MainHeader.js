@@ -141,6 +141,14 @@ function MainHeader() {
       </Logo>
       <MenuList>
         <MenuItem>
+          <li>
+            <UPLink to='/mypage'>
+              <img id='upicon' src='/img/user.png' alt='upload icon' style={{ width: '20px', height: '20px' }}/>
+              <p className='nav-link2' style={{ color: '#fd86fd' }}>MyPage</p>
+            </UPLink>
+          </li>
+        </MenuItem>
+        <MenuItem>
           <DownLink>
             <Link to={menuName === 'Images' ? '/main' : '/main-video'}>
               <p className='nav-link2'>{menuName}</p>
