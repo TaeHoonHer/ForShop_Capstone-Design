@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public record ArticleDto(
         Long id,
         UserAccountDto userAccountDto,
-        PhotoDto photo,
+        PhotoDto photoDto,
         String title,
         String content,
         Set<HashtagDto> hashtagDtos,

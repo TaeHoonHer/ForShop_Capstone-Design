@@ -5,9 +5,9 @@ import com.forshop.project.domain.UserAccount;
 import java.time.LocalDateTime;
 
 public record UserAccountDto (
-        Long id,
-        String email,
+        String userId,
         String userPassword,
+        String email,
         String nickname,
         LocalDateTime createdAt,
         String createdBy,
@@ -15,23 +15,19 @@ public record UserAccountDto (
         String modifiedBy
 ){
 
-    public static UserAccountDto of(Long id, String email, String userPassword, String nickname, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new UserAccountDto(id, email, userPassword, nickname, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static UserAccountDto of(String userId, String userPassword, String email, String nickname, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new UserAccountDto(userId, userPassword, email, nickname, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
-    public static UserAccountDto of(String email, String userPassword, String nickname) {
-        return new UserAccountDto(null, email, userPassword, nickname, null, null, null, null);
-    }
-
-    public static UserAccountDto of(Long id, String email, String userPassword, String nickname) {
-        return new UserAccountDto(id, email, userPassword, nickname, null, null, null, null);
+    public static UserAccountDto of(String userId, String userPassword, String email,String nickname) {
+        return new UserAccountDto(userId, userPassword, email, nickname, null, null, null, null);
     }
 
     public static  UserAccountDto from(UserAccount entity) {
         return new UserAccountDto(
-                entity.getId(),
-                entity.getEmail(),
+                entity.getUserId(),
                 entity.getUserPassword(),
+                entity.getEmail(),
                 entity.getNickname(),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
@@ -42,6 +38,7 @@ public record UserAccountDto (
 
     public UserAccount toEntity() {
         return UserAccount.of(
+                userId,
                 userPassword,
                 email,
                 nickname
