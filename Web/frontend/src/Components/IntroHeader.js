@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
   position: absolute;
@@ -50,6 +50,7 @@ const MenuItem = styled.p`
 `;
 
 function Header() {
+  const location = useLocation();
   return (
     <HeaderWrapper>
       <Logo>
@@ -59,11 +60,13 @@ function Header() {
         </Link>
       </Logo>
       <MenuList>
-        <MenuItem>
-          <Link to="/IntroimgMain">
-            <p className='nav-link' style={{ color: '#fd86fd' }}>Home</p>
-          </Link>
-        </MenuItem>
+        {location.pathname !== "/IntroimgMain" && (
+          <MenuItem>
+            <Link to="/IntroimgMain">
+              <p className='nav-link' style={{ color: '#fd86fd' }}>Home</p>
+            </Link>
+          </MenuItem>
+        )}
       </MenuList>
     </HeaderWrapper>
   );

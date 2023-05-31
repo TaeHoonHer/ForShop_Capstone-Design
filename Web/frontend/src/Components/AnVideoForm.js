@@ -1,6 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import '../Css/AnVideoForm.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const FormBox = styled.form`
   width: 100%;
@@ -57,9 +59,64 @@ const FormContents = styled.div`
   display: flex;
 `;
 
+const CheckBtn = styled.button`
+  width: 80px;
+  height: 50px;
+  margin : 0;
+  background: #f386fd;
+  backdrop-filter: blur(20px);
+  border-radius : 20px;
+  color: white;
+  border: none;
+  cursor : pointer;
+  button {
+    background: transparent;
+    font-size: 15px;
+    border : none;
+    font-size : 17px;
+    color : white;
+    cursor : pointer;
+  }
+`;
+
+const ProgressBox = styled.div`
+  display : flex;
+  flex-direction : column;
+  margin : 0;
+  padding : 0;
+  justify-content : center;
+  align-items : center;
+`;
+
+const ProgressBarWrapper = styled.div`
+  position: absolute;
+  bottom: -10px;
+  width: 80%;
+  height: 30px;
+  z-index: 3;
+  background-color: white;
+  border : 2px solid #f386fd;
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+  border-radius : 30px;
+  box-shadow : 2px 4px 10px #ddd;
+`;
+
+const ProgressBar = styled.div`
+  width: ${({ value }) => `${value}%`};
+  height: 100%;
+  background-image: linear-gradient(#f386fd, #efc0f3);
+  transition: width 0.5s ease-in-out;
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+  border-radius : 30px;
+`;
+
 function AnVideoForm() {
   const [videoFile1, setVideoFile1] = useState(null); // 첫 번째 비디오 파일 상태
   const [videoFile2, setVideoFile2] = useState(null); // 두 번째 비디오 파일 상태
+  const [showProgress, setShowProgress] = useState(false);
+  const [progressValue, setProgressValue] = useState(0);
+  const intervalRef = useRef();
+  const navigate = useNavigate();
 
   const handleFileChange = (event, index) => { // index 추가하여 어떤 드롭 영역에서 파일을 선택했는지 구분
     const file = event.target.files[0];
@@ -97,6 +154,58 @@ function AnVideoForm() {
   const handleDragOver = (event) => {
     event.preventDefault();
   };
+
+  const startProgress = async () => {
+
+    if (!videoFile1 || !videoFile2) {
+      alert('Please upload all files.');
+      return;
+    }
+  
+    setShowProgress(true);
+  
+    const formData = new FormData();
+    formData.append('originalVideo', videoFile1);
+    formData.append('compareVideo', videoFile2);
+  
+    const accessToken = localStorage.getItem('accessToken');
+  
+    // POST video files to server
+    try {
+      const response = await axios.post('/api/analyzing/upload', formData, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: function(progressEvent) {
+          let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgressValue(percentCompleted);
+        }
+      });
+      
+      if (response.data.status !== 200) {
+        console.log("Failed to upload videos due to server error.");
+        return;
+      }
+      
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (progressValue >= 100) {
+      clearInterval(intervalRef.current);
+      setShowProgress(false);
+      navigate("/anvideo/result");
+    }
+  
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, [progressValue, navigate]);
 
   return (
     <FormBox>
@@ -142,6 +251,18 @@ function AnVideoForm() {
           )}
         </VideoBox>
       </FormContents>
+      {showProgress ? (
+          <ProgressBox>
+            <p style={{ color : 'black'}}>{progressValue < 100 ? 'Loading...' : 'Upload complete!'}</p>
+            <ProgressBarWrapper>
+              <ProgressBar value={progressValue} />
+            </ProgressBarWrapper>
+          </ProgressBox>
+        ) : (
+          <CheckBtn className="CheckBtn">
+            <button type='button' onClick={startProgress} className='check'>Start!</button>
+          </CheckBtn>
+      )}
     </FormBox>
   );
 }

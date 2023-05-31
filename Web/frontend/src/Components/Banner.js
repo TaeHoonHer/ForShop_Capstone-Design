@@ -1,32 +1,42 @@
 import '../Css/Banner.css'
-import React, { useState } from 'react';
+import React from 'react';
 
-function Banner() {
-    const [keyword, setKeyword] = useState('Keyword');
+function Banner({ selectedKeyword, setSelectedKeyword, setSearchValue, setSubmittedSearchValue}) {
 
     const handleSelectChange = (event) => {
-        setKeyword(event.target.value);
+        setSelectedKeyword(event.target.value);
     };
+
+    const handleInputChange = (event) => {
+        setSearchValue(event.target.value);
+    }
+
+    const handleKeyDown = (event) => {  // 추가된 부분
+        if (event.key === 'Enter') {
+            setSubmittedSearchValue(event.target.value);
+        }
+    }
 
     const dropdownStyle = {
         color: '#f386fd',
-        fontSize: '7px',
+        fontSize: '12px',
         border: 'none'
     };
-
+    
     return (
         <div className="Banner">
             <video autoPlay muted loop>
-                <source src="../img/banner.mp4" type="video/mp4"></source>
+              <source src="/img/banner.mp4" type="video/mp4"></source>
             </video>
             <h2>4Shop</h2>
             <div className='search'>
-                <select value={keyword} onChange={handleSelectChange} style={dropdownStyle} className='scSelect'>
-                    <option value="Keyword" style={dropdownStyle}>Keyword</option>
-                    <option value="ID" style={dropdownStyle}>ID</option>
-                </select>
-                <img src="../img/search.png"/>
-                <input className='searchIn' placeholder={keyword + ' 검색'}></input>
+              <select value={selectedKeyword} onChange={handleSelectChange} style={dropdownStyle} className='scSelect'>
+                <option value="NICKNAME" style={dropdownStyle}>Nickname</option>
+                <option value="TITLE" style={dropdownStyle}>Title</option>
+                <option value="HASHTAG" style={dropdownStyle}>Hashtag</option>
+              </select>
+              <img src="/img/search.png"/>
+              <input className='searchIn' placeholder={selectedKeyword + ' 검색'} onChange={handleInputChange} onKeyDown={handleKeyDown}></input>
             </div>
         </div>
     );

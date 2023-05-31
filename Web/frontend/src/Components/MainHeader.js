@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import '../Css/MainHeader.css';
+import axios from 'axios';
 
 const UPLink = styled(Link)`
   display: flex;
@@ -37,7 +38,6 @@ const DownLink = styled.button`
 `;
 
 const MainHeaderWrapper = styled.div`
-  position : abolsolute;
   top : 0;
   left : 0;
   margin : 0;
@@ -86,6 +86,7 @@ function MainHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [menuName, setMenuName] = useState('Images');
   const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
 
   const handleDownClick = (e) => {
     e.stopPropagation();
@@ -98,10 +99,38 @@ function MainHeader() {
     if(name === 'Images'){
       navigate('/main');
     } else {
-      navigate('/main-video');
+      navigate('/mainvideo');
     }
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+
+        const response = await axios.get('/api/auth/user', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        if (response.status === 200) {
+          setUserId(response.data.userId);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleClick = (event) => {
+    if (userId) {
+      event.preventDefault();
+    }
+  }
+  
   return (
     <MainHeaderWrapper id='main-header'>
       <Logo>
@@ -111,33 +140,35 @@ function MainHeader() {
         </Link>
       </Logo>
       <MenuList>
-      <MenuItem>
-      <DownLink>
-        <Link to={menuName === 'Images' ? '/main' : '/main-video'}>
-          <p className='nav-link2'>{menuName}</p>
-        </Link>
-        <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} onClick={handleDownClick} />
-      </DownLink>
-      <DropdownMenu isOpen={isOpen}>
-        {menuName === 'Images' ? (
-          <div onClick={() => handleMenuClick('Videos')}>
-            <li>
-              <p className='nav-link2'>Videos</p>
-            </li>
-          </div>
-        ) : (
-          <div onClick={() => handleMenuClick('Images')}>
-            <li>
-              <p className='nav-link2'>Images</p>
-            </li>
-          </div>
-        )}
-      </DropdownMenu>
-    </MenuItem>
+        <MenuItem>
+          <DownLink>
+            <Link to={menuName === 'Images' ? '/main' : '/main-video'}>
+              <p className='nav-link2'>{menuName}</p>
+            </Link>
+            <img id='down' src='/img/down.png' alt='dropdown icon' style={{ width: '20px', height: '20px' }} onClick={handleDownClick} />
+          </DownLink>
+          <DropdownMenu isOpen={isOpen}>
+            {menuName === 'Images' ? (
+              <div onClick={() => handleMenuClick('Videos')}>
+                <li>
+                  <p className='nav-link2'>Videos</p>
+                </li>
+              </div>
+            ) : (
+              <div onClick={() => handleMenuClick('Images')}>
+                <li>
+                  <p className='nav-link2'>Images</p>
+                </li>
+              </div>
+            )}
+          </DropdownMenu>
+        </MenuItem>
         <MenuItem>
           <li>
-            <Link to='/login'>
-              <p className='nav-link2' style={{ color: '#fd86fd' }}>Login</p>
+            <Link to='/login' onClick={handleClick}>
+              <p className='nav-link2' style={{ color: '#fd86fd' }}>
+                {userId ? `${userId}님` : 'Login'}
+              </p>
             </Link>
           </li>
         </MenuItem>
