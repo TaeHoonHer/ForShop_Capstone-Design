@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "createdAt"),

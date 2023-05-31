@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Table(indexes = {
         @Index(columnList = "storedName", unique = true),
         @Index(columnList = "createdAt"),

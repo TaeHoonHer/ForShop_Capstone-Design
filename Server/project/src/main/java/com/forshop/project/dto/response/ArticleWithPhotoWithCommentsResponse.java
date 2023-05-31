@@ -1,5 +1,6 @@
 package com.forshop.project.dto.response;
 
+import com.forshop.project.dto.ArticleDto;
 import com.forshop.project.dto.ArticleWithPhotoWithCommentDtos;
 import com.forshop.project.dto.HashtagDto;
 import com.forshop.project.dto.PhotoDto;
@@ -52,5 +53,4 @@ public record ArticleWithPhotoWithCommentsResponse( //게시글 사진 댓글
                         .collect(Collectors.toCollection(LinkedHashSet::new))
         );
     }
-
 }

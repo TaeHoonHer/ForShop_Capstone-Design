@@ -33,8 +33,8 @@ public record ArticleResponse( //게시글과 사진과 해시태그
                 dto.id(),
                 dto.title(),
                 dto.content(),
-                dto.photo().storedName(),
-                dto.photo().realName(),
+                dto.photoDto().storedName(),
+                dto.photoDto().realName(),
                 dto.hashtagDtos().stream()
                                 .map(HashtagDto::hashtagName)
                                 .collect(Collectors.toUnmodifiableSet()),
