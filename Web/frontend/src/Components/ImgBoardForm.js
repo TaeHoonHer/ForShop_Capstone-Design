@@ -1,52 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import '../Css/ImgBoardForm.css';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function ImgBoardForm({ imageId }) {
   const [image, setImage] = useState({});
-  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const { articleId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!imageId) return;
+    console.log(articleId);
+    if (!articleId) return;
     const accessToken = localStorage.getItem('accessToken');
 
-    axios.get(`/api/imgboard/${imageId}`, {
+    console.log("get 요청 시작");
+    axios.get(`/api/articles/${articleId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }).then(response => {
+    }).then((response) => {
       setImage(response.data);
+      console.log(image.articleCommentResponse);
     })
     .catch(error => {
       console.error(error);
     });
 
-    axios.get(`/api/comments/${imageId}`, {
-    }).then(response => {
-      if (response.status === 200) {
-        setComments(response.data.articleId);
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  }, [imageId]);
+   }, [imageId]);
 
-  const handleCommentSubmit = (event) => {
+   const handleCommentSubmit = (event) => {
     event.preventDefault();
-
+  
     const accessToken = localStorage.getItem('accessToken');
-
-    axios.post(`/api/comments/${imageId}`, { text: newComment }, {
+  
+    axios.post('/api/comments/new', {
+        articleId: articleId,
+        content : newComment 
+      }, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${accessToken}` 
       }
     }).then(response => {
-      if (response.status === 200) {
-        setComments([...comments, response.data]);
-        setNewComment('');
-      }
+        if(response.status === 200) {
+          // 코멘트가 성공적으로 저장되면 코멘트를 다시 불러옵니다.
+          axios.get(`/api/articles/${articleId}`, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}` 
+            }
+          }).then(response => {
+            setImage(response.data);
+            setNewComment('');  // Comment input field 초기화
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        }
     })
     .catch(error => {
       console.error(error);
@@ -55,9 +65,11 @@ function ImgBoardForm({ imageId }) {
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
-  }
+  };
 
-  if (!imageId) return null;
+  if (!articleId) {
+    navigate("/main");
+  };
 
   return (
     <div className='ImgboardWrapper'>
@@ -70,7 +82,7 @@ function ImgBoardForm({ imageId }) {
         <div className='chatbox'>
           <div className='idBox'>
             <img src="/img/user.png" />
-            <p>{image.id}</p>
+            <p>{image.nickname}</p>
           </div>
           <div className='titleBox'>
             <h2>{image.title}</h2>
@@ -79,12 +91,12 @@ function ImgBoardForm({ imageId }) {
             <p>{image.content}</p>
           </div>
           <div className='ch'>
-            {comments.map((comment, index) => (
-              <div key={index} className='comment'>
-                <img src="/img/user.png" alt="User" className="commentUserImg" />
-                {comment.text}
-              </div>
-            ))}
+          {image.articleCommentResponse ? Object.entries(image.articleCommentResponse).map(([key, comment]) => (
+            <div className='comment' key={key}>
+              <img src="/img/user.png" alt="User" className="commentUserImg" />
+              {comment.nickname}&nbsp;&nbsp;&nbsp;&nbsp;{comment.content}
+            </div>
+            )) : null}
             <form onSubmit={handleCommentSubmit}>
               <input
                 type="text"

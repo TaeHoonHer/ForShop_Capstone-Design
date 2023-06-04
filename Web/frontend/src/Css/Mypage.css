@@ -1,20 +1,28 @@
 .MypageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width : 100vw;
-    min-height : 100vh;
+    min-height : 120vh;
     margin : 0;
     padding : 0;
-    box-sizing: border-box;
+}
+
+.MypageContainer {
+    width : 80%;
+    height : 80%;
+    margin : auto;
+    padding : 0;
     display : flex;
     justify-content: center;
     align-items: center;
 }
 
 .MypageBox {
-    width : 80%;
-    height : 80%;
+    width : 100%;
+    height : 100%;
     margin : 0;
     padding : 0;
-    box-sizing: border-box;
     display : flex;
     flex-direction: column;
     justify-content: center;
@@ -22,11 +30,10 @@
 }
 
 .Myinfo {
-    width : 100%;
+    width : 70%;
     height : 30%;
     margin : 0;
     padding : 0;
-    box-sizing: border-box;
     display : flex;
     align-items: center;
     justify-content: center;
@@ -36,38 +43,133 @@
 .Myimg {
     width : 50%;
     height : 100%;
-    margin : 0;
-    padding : 0;
+    margin : 0 50px 0 0;
+    padding : 10px;
     display : flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 
 .Myimg img {
-    width : 40%;
-    height : 40%;
+    width : 15%;
+    height : 15%;
     object-fit: contain;
-    border-radius: 100px;
+    border-radius : 50%;
+    border : 2px solid #f386fd;
+}
+
+.Myresume {
+    width : 50%;
+    height : 100%;
+    margin : 0;
+    padding : 0;
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .Mycontents {
     width : 100%;
     height : 70%;
-    margin : 0;
+    margin : 5% 0 0 0;
     padding: 30px 60px 30px 60px;
     box-sizing: border-box;
     display : flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    border-top : 1px solid #f386fd;
+}
+
+.Mycontents h2 {
+    font-size: 2rem;
+}
+
+.MytTitle {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.Mycontents h2 {
+    text-align: center;
 }
 
 .Myoptions {
-    
+    display : flex;
+    justify-content: flex-end;
+    width: 100%;
 }
+
+.delete {
+    width : 100px;
+    height : 50px;
+    background-color: rgb(255, 53, 53);
+    color : #fff;
+    font-size: 15px;
+    border : none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+    box-shadow: 0 4px 3px #d3d3d3;
+}
+
+.delete:hover {
+    animation: jellyAnimation 0.5s;
+}
+
+.settings {
+    width : 100px;
+    height : 50px;
+    background-color: #f386fd;
+    color : #fff;
+    font-size: 15px;
+    border : none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.settings:hover {
+    animation: jellyAnimation 0.5s;
+}
+
 
 .Myimgcontainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
+    margin-top: 5%;
 }
+
+.Myimgcontainer img {
+    width : 400px;
+    height : 400px;
+    object-fit: cover;
+}
+
+.Myimgcontainer input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    background-color: #f386fd;
+    border: none;
+    cursor: pointer;
+}
+@keyframes jellyAnimation {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(0.8);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 

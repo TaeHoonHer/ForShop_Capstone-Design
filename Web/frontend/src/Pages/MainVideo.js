@@ -7,7 +7,7 @@ import MainContents2 from '../Components/MainContents2';
 import Footer from '../Components/Footer';
 
 function MainVideo() {
-    const [selectedKeyword, setSelectedKeyword] = useState('Keyword');
+    const [selectedKeyword, setSelectedKeyword] = useState('Nickname');
     const [searchValue, setSearchValue] = useState('');
     const [submittedSearchValue, setSubmittedSearchValue] = useState('');
 

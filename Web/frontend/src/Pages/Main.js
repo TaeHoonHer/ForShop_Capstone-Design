@@ -7,7 +7,7 @@ import MainContents from '../Components/MainContents';
 import Footer from '../Components/Footer';
 
 function Main() {
-    const [selectedKeyword, setSelectedKeyword] = useState('Keyword');
+    const [selectedKeyword, setSelectedKeyword] = useState('Nickname');
     const [searchValue, setSearchValue] = useState('');
     const [submittedSearchValue, setSubmittedSearchValue] = useState('');
 
