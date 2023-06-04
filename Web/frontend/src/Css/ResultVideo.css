@@ -1,19 +1,19 @@
 .RSVideoWrapper {
-    width : 100vw;
-    height : 100vh;
-    margin : 0;
-    padding : 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    display : flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .RSVideoContainer {
-    width : 90%;
-    height : 90%;
-    margin : 0 0 6% 0;
-    padding : 0;
+    width: 90%;
+    height: 90%;
+    margin: 0 0 6% 0;
+    padding: 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -22,60 +22,61 @@
 }
 
 .RSVideoTitle {
-    width : 100%;
-    height : 15%;
-    margin : 0;
-    padding : 0;
+    width: 100%;
+    height: 15%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    display :flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .RSVideoTitle p {
-    font-size : 2rem;
+    font-size: 2rem;
     font-weight: 600;
     text-align: center;
 }
 
 .RSVideoBox {
-    width : 100%;
-    height : 70%;
-    margin : 0;
-    padding : 0;
+    width: 100%;
+    height: 70%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    display : flex;
+    display: flex;
     justify-content: center;
     align-items: center;
+    gap: 2%;
 }
 
 .RSVideo {
-    width : 50%;
-    height : 100%;
-    margin : 0;
-    padding : 0;
+    width: 100%; /* 변경된 부분 */
+    height: 100%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 .rsvideo {
-    width : 100%;
-    height : 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
 .RSVideoPoint {
-    width : 100%;
-    height : 15%;
-    margin : 0;
-    padding : 0;
-    display : flex;
+    width: 100%;
+    height: 15%;
+    margin: 0;
+    padding: 0;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.RSVideoPoint img{
-    width : 100px;
-    height : 100px;
+.RSVideoPoint img {
+    width: 100px;
+    height: 100px;
     object-fit: contain;
     margin-bottom: 1%;
     margin-right: 2%;
