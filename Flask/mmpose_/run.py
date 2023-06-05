@@ -534,8 +534,8 @@ app = Flask(__name__)
 def test():
     # AWS 인증 정보 설정
     session = boto3.Session(
-        aws_access_key_id="AKIATGBVLRJRM2XGIMNC",
-        aws_secret_access_key='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'
+        aws_access_key_id="",
+        aws_secret_access_key='7'
     )
     
     # S3 클라이언트 생성
