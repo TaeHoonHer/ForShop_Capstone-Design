@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- 설정에 따라 신뢰할 수 있는 인증서 authorities 추가 -->
+        </trust-anchors>
+    </base-config>
+</network-security-config>
