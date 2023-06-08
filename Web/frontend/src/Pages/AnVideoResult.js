@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import '../Css/AnVideoResult.css';
 import DetailHeader from '../Components/DetailHeader';
 import ResultVideo from '../Components/ResultVideo';
 import ResultChart from '../Components/ResultChart';
 import Footer from '../Components/Footer';
+import axios from 'axios';
 
 const ResultWrapper = styled.div`
   width : 100vw;
@@ -16,6 +17,12 @@ const ResultWrapper = styled.div`
 `;
 
 function AnVideoResult () {
+  
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    
+  })
   return (
     <ResultWrapper>
       <DetailHeader/>

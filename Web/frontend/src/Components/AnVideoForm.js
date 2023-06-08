@@ -4,6 +4,8 @@ import '../Css/AnVideoForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../Css/LoadingScreen.css';
+import { useDispatch } from 'react-redux';
+import { setResponseData } from '.././actions';
 
 const FormBox = styled.form`
   width: 100%;
@@ -100,6 +102,8 @@ function AnVideoForm() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleFileChange = (event, index) => {
     const file = event.target.files[0];
     handleFileUpload(file, index);
@@ -161,7 +165,8 @@ function AnVideoForm() {
       })
       .then(response => {
         console.log(response.data);
-        navigate("/anvideo/result");
+        localStorage.setItem('obj', JSON.stringify(response.data));
+        navigate("/anvideo/result"); 
       })
 
     } catch (error) {
