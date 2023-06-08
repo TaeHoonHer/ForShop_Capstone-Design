@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import '../Css/ResultChart.css';
 import {Chart, Chart2} from './Chart';
+import { useNavigate } from 'react-router-dom';
 
 
 const ChartWrapper = styled.div`
@@ -27,7 +28,6 @@ const ChartContainer = styled.div`
 `;
 
 function ResultChart () {
-
   const time_score = [97,69,80,97,96,89,87,97,85,77,54,77,54,86,54]
   const joint_score = [90,88,86,76,93,97,88,80,86,69,65,76,84];  
   // const data = JSON.parse(localStorage.getItem('obj'));

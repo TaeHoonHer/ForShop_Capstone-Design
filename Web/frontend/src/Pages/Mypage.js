@@ -8,15 +8,26 @@ import axios from 'axios';
 function Mypage() {
     const [myinfos, setMyinfos] = useState([]);
     const [selectedImages, setSelectedImages] = useState([]);
+    const [user, setUser] = useState([]);
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
+
+        axios.get('/api/auth/user', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }).then((response) => {
+            console.log(response.data);
+            setUser(response.data);
+        })
 
         axios.get('/api/articles/mypage', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         }).then((response) => {
+            console.log(response.data);
             setMyinfos(response.data);
         })
         .catch(error => {
@@ -57,8 +68,8 @@ function Mypage() {
                             <img src="/img/user.png"/>
                         </div>
                         <div className='Myresume'>
-                            <h2 className='nickname'>{myinfos[0] && myinfos[0].nickname}</h2>
-                            <h3 className='email'>{myinfos[0] && myinfos[0].email}</h3>
+                            <h2 className='nickname'>{user.userNickname}</h2>
+                            <h3 className='email'>{user.userEmail}</h3>
                         </div>
                     </div>
                     <div className='Mycontents'>
@@ -68,7 +79,9 @@ function Mypage() {
                         </div>
                         <hr/>
                         <div className='Myimgcontainer'>
-                        {myinfos && myinfos.map((info, index) => {
+                        
+                         {
+                         myinfos.content && myinfos.content.map((info, index) => {
                             return (
                               <div key = {index}>
                                 <Link to={{
@@ -86,7 +99,9 @@ function Mypage() {
                                 />
                               </div>
                             )
-                        })}
+                        })
+                        }
+                        
                         </div>
                     </div>
                 </div>

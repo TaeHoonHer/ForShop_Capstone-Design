@@ -20,7 +20,7 @@
 }
 
 .imgContainer {
-    width : 50%;
+    width : 60%;
     height : 100%;
     margin : 0 5px 0 0;
     padding : 0;
@@ -30,7 +30,7 @@
 }
 
 .chatbox {
-    width : 50%;
+    width : 40%;
     height : 100%;
     margin : 0 0 0 5px;
     padding : 20px;
