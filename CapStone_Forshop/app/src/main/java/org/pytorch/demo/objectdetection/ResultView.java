@@ -58,11 +58,6 @@ public class ResultView extends View {
             return;
         }
 
-        int lineStartY = 1800;
-        int lineStopY = 1000;
-
-        int lineMinY = (int) (lineStartY - (lineStopY - lineStartY) * 0.1);
-        int lineMaxY = (int) (lineStopY + (lineStopY - lineStartY) * 0.1);
 
         for (Result r : mResults) {
             if(r.classIndex == 1) {
@@ -97,16 +92,21 @@ public class ResultView extends View {
                 canvas.drawText(ratioText, result.rect.left - 170 , result.rect.top - 5, paint);
             }
 
-            paintLine.setStrokeWidth(5);
+            paintLine.setStrokeWidth(6);
             paintLine.setColor(Color.RED);
+            paintLine.setAlpha(128);
 
             if (result.classIndex == 2) {
-                if (result.rect.bottom >= 900 && result.rect.bottom <= 900) {
+                int lineY = 1100;
+                int lineMinY = (int) (lineY - (lineY * 0.05));
+                int lineMaxY = (int) (lineY + (lineY * 0.05));
+                if (result.rect.bottom >= lineMinY && result.rect.bottom <= lineMaxY) {
                     paintLine.setColor(Color.GREEN);
                 }
-                else
+                else {
                     paintLine.setColor(Color.RED);
-                canvas.drawLine(400, 1000, 700 , 1000, paintLine);
+                }
+                canvas.drawLine(400, lineY, 700 , lineY, paintLine);
             }
 
             float textWidth = paint.measureText(ratioText);

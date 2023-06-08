@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                         .build();
         final ImageAnalysis imageAnalysis = new ImageAnalysis(imageAnalysisConfig);
         imageAnalysis.setAnalyzer((image, rotationDegrees) -> {
-            if (SystemClock.elapsedRealtime() - mLastAnalysisResultTime < 10) {
+            if (SystemClock.elapsedRealtime() - mLastAnalysisResultTime < 0.01) { //0.01
                 return;
             }
 
