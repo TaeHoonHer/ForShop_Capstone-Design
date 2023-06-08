@@ -58,5 +58,5 @@
     "file-loader": "^6.2.0",
     "react-app-rewired": "^2.2.1"
   },
-  "proxy": "http://10.50.210.36:8080"
+  "proxy": "http://10.50.240.28:8080"
 }

@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import '../Css/AnVideoForm.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../Css/LoadingScreen.css';
 import { useDispatch } from 'react-redux';
-import { setResponseData } from '.././actions';
 
 const FormBox = styled.form`
   width: 100%;
@@ -142,41 +140,13 @@ function AnVideoForm() {
     event.preventDefault();
   };
 
-  const startProgress = async (e) => {
-    e.preventDefault();
-    if (!fileObject1 || !fileObject2) {
-      alert('Please upload all files.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('originalVideo', fileObject1);  // Add the file object to formData
-    formData.append('compareVideo', fileObject2);  // Add the file object to formData
-
-    const accessToken = localStorage.getItem('accessToken');
-
-    try {
-      setIsLoading(true);  // Start loading
-      const response = await axios.post('/api/analyzing/upload', formData, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'multipart/form-data',
-        }
-      })
-      .then(response => {
-        console.log(response.data);
-        localStorage.setItem('obj', JSON.stringify(response.data));
-        navigate("/anvideo/result"); 
-      })
-
-    } catch (error) {
-      console.error(error);
-      return;
-    } finally {
-      setIsLoading(false);  // Stop loading
-    }
-
-    e.stopPropagation();
+  const startProgress = () => {
+    setIsLoading(true);
+  
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/anvideo/result');
+    }, 5000);
   };
 
   return (

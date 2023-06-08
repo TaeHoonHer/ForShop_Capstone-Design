@@ -186,7 +186,7 @@ function UpImgForm(props) {
 
     const handleUpload = async (e) => {
       e.preventDefault();
-      let content = contents + hashtag;
+      let content = contents + "    " +  hashtag;
     
       // Check if the fileObject is not null
       if (fileObject) {
