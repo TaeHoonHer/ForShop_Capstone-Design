@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">4shop</string>
+    <string name="image_view">Image View</string>
+    <string name="detect">Detect</string>
+    <string name="run_model">Running the model...</string>
+    <string name="job_success">Follower</string>
+    <string name="ratings">Star Ratings</string>
+    <string name="about_me">About Me</string>
+    <string name="my_desc">"Hello, I'm TaeHoon, an Android developer from the 4shop team"</string>
+    <string name="restart">Restart</string>
+    <string name="contact">Contact</string>
+    <string name="select">Select</string>
+    <string name="skills">Skills</string>
+    <string name="live">Live</string>
+</resources>
